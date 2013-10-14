@@ -19,6 +19,8 @@ Experiment on how to recognize forest regions from aerial images
 * Compare methods
 
 
+### References ###
+
 SHIBA, Marcelo Hiroshi; SANTOS, Rosangela Leal; QUINTANILHA, José Alberto; KIM, HAe Yong. Classificação de imagens de sensoriamento remoto pela aprendizagem por árvore de decisão: uma avaliação de desempenho - XII Simpósio Brasileiro de Sensoriamento Remoto, Abril 2005, INPE, p. 4319-4326. Goiânia, Brasil.
 
 KIM, Jimho. Comparing Image Classification Methods: K-Nearest-Neighbor and Support-Vector-Machines, 2012. ISBN: 978-1-61804-064-0
