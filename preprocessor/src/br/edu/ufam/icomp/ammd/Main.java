@@ -3,6 +3,7 @@ package br.edu.ufam.icomp.ammd;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
+import java.awt.image.DataBufferByte;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -52,6 +53,7 @@ public class Main {
                     File output = new File(config.getProcessedDataDirectory() + "/" + imageCount + "_" + x + "_" + y
                             + ".jpg");
                     ImageIO.write(chunk, "jpg", output);
+                    System.out.println("Average color: "+getAverageColor(chunk));
                 }
             }
         } catch (IOException e) {
@@ -128,20 +130,18 @@ public class Main {
         long greenBucket = 0;
         long blueBucket = 0;
         long pixelCount = 0;
-
-        // for (int y = 0; y < bitmap.getHeight(); y++) {
-        //     for (int x = 0; x < bitmap.getWidth(); x++) {
-        //         Color c = bitmap.getPixel(x, y);
-
-        //         pixelCount++;
-        //         redBucket += Color.red(c);
-        //         greenBucket += Color.green(c);
-        //         blueBucket += Color.blue(c);
-        //         // does alpha matter?
-        //     }
-        // }
-
-        return Color.WHITE;//Color.rgb(redBucket / pixelCount, greenBucket / pixelCount, blueBucket / pixelCount);
+        // byte[] pixels = ((DataBufferByte) bitmap.getRaster().getDataBuffer()).getData();
+        for (int y = 0; y < bitmap.getHeight(); y++) {
+            for (int x = 0; x < bitmap.getWidth(); x++) {
+                Color c = new Color(bitmap.getRGB(x, y));
+                pixelCount++;
+                redBucket += c.getRed();
+                greenBucket += c.getGreen();
+                blueBucket += c.getBlue();
+                // does alpha matter?
+            }
+        }
+        return new Color(redBucket / pixelCount, greenBucket / pixelCount, blueBucket / pixelCount);
     }
 
 }
