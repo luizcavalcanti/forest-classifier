@@ -5,16 +5,17 @@
         <delete dir="dist" />
     </target>
 
-    <target name="build">
+    <target name="build" depends="clean">
         <mkdir dir="bin" />
         <javac srcdir="src" destdir="bin" />
 
         <mkdir dir="dist" />
-        <jar destfile="dist/Preprocessor.jar" basedir="bin">
+        <jar destfile="dist/preprocessor.jar" basedir="bin">
             <manifest>
                 <attribute name="Main-Class" value="br.edu.ufam.icomp.ammd.Main"/>
             </manifest>
         </jar>
+        <!-- <copy file="config.properties" tofile="dist/config.properties" /> -->
     </target>
 
 </project>

@@ -3,7 +3,6 @@ package br.edu.ufam.icomp.ammd;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
-import java.awt.image.DataBufferByte;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -28,6 +27,9 @@ public class Main {
     private static void preprocessImages() {
         loadImageList();
         long splitStart = System.currentTimeMillis();
+        File pid = new File(config.getProcessedDataDirectory());
+        if (!pid.exists())
+            pid.mkdir();
         for (String imagePath : imageList) {
             splitImage(imagePath);
         }
@@ -53,7 +55,6 @@ public class Main {
                     File output = new File(config.getProcessedDataDirectory() + "/" + imageCount + "_" + x + "_" + y
                             + ".jpg");
                     ImageIO.write(chunk, "jpg", output);
-                    System.out.println("Average color: "+getAverageColor(chunk));
                 }
             }
         } catch (IOException e) {
@@ -141,7 +142,7 @@ public class Main {
                 // does alpha matter?
             }
         }
-        return new Color(redBucket / pixelCount, greenBucket / pixelCount, blueBucket / pixelCount);
+        return new Color((int)(redBucket/pixelCount), (int)(greenBucket/pixelCount), (int)(blueBucket/pixelCount));
     }
 
 }
