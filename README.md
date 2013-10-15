@@ -13,13 +13,14 @@ Experiment on how to recognize forest regions from aerial images
 * <del>Export processed data to .arff format</del>
 
 #### database tools ####
-* Visual classification (for train and test bases)
+* Visual classification (for training and test data)
 
 #### classifier ####
 * kNN (KIM et al. 2012)
 * Decision trees (SHIBA et al. 2005)
 * SVM (SHIBA et al. 2005)
 * Compare methods
+* GUI for presentation
 
 
 ### References ###
