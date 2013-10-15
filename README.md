@@ -9,13 +9,16 @@ Experiment on how to recognize forest regions from aerial images
 * <del>Original image segmentation (the stupid way)</del>
 * Attribute collecting
     * <del>Average color of region</del>
-    * need more attributes...
-* Export processed data to .arff format
+    * Contrast enhancing prior to color collection?
+* <del>Export processed data to .arff format</del>
+
+#### database tools ####
+* Visual classification (for train and test bases)
 
 #### classifier ####
 * kNN (KIM et al. 2012)
 * Decision trees (SHIBA et al. 2005)
-* SVM
+* SVM (SHIBA et al. 2005)
 * Compare methods
 
 
