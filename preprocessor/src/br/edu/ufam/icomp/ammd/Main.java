@@ -25,6 +25,7 @@ public class Main {
 
     private static void preprocessImages() {
         loadImageList();
+        DataManager.createARFFFile();
         long splitStart = System.currentTimeMillis();
         File pid = new File(config.getProcessedDataDirectory());
         if (!pid.exists())
@@ -33,6 +34,7 @@ public class Main {
             splitImage(imagePath);
         }
         long splitEnd = System.currentTimeMillis();
+        DataManager.persistARFFFile();
         System.out.println("Images splited in " + (splitEnd - splitStart) + "ms");
     }
 
@@ -54,6 +56,9 @@ public class Main {
                     File output = new File(config.getProcessedDataDirectory() + "/" + imageCount + "_" + x + "_" + y
                             + ".jpg");
                     ImageIO.write(chunk, "jpg", output);
+                    Color c = ImageUtil.getAverageColor(chunk);
+                    String data = output.getName()+","+c.getRed()+","+c.getGreen()+","+c.getBlue()+",";
+                    DataManager.appendARFFData(data);
                 }
             }
         } catch (IOException e) {
