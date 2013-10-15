@@ -1,4 +1,4 @@
-package br.edu.ufam.icom.ammd;
+package br.edu.ufam.icomp.ammd;
 
 import java.awt.Color;
 import java.awt.image.BufferedImage;

@@ -1,21 +1,20 @@
-<project name="ForestClassified" default="build">
+<project name="preprocessor" default="build">
 
     <target name="clean">
-        <delete dir="bin" />
+        <delete dir="preprocessor/bin" />
         <delete dir="dist" />
     </target>
 
     <target name="build" depends="clean">
-        <mkdir dir="bin" />
-        <javac srcdir="src" destdir="bin" />
+        <mkdir dir="preprocessor/bin" />
+        <javac srcdir="preprocessor/src" destdir="preprocessor/bin" includeantruntime="false" />
 
         <mkdir dir="dist" />
-        <jar destfile="dist/preprocessor.jar" basedir="bin">
+        <jar destfile="dist/preprocessor.jar" basedir="preprocessor/bin">
             <manifest>
                 <attribute name="Main-Class" value="br.edu.ufam.icomp.ammd.Main"/>
             </manifest>
         </jar>
-        <!-- <copy file="config.properties" tofile="dist/config.properties" /> -->
     </target>
 
 </project>

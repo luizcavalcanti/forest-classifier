@@ -1,0 +1,13 @@
+<project name="ForestClassifier" default="build">
+
+    <target name="clean">
+        <delete dir="dist" />
+    </target>
+
+    <target name="build" depends="clean">
+        <mkdir dir="dist" />
+        <ant antfile="preprocessor/build.xml" target="build" />
+        <copy file="config.properties" tofile="dist/config.properties" />
+    </target>
+
+</project>
