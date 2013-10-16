@@ -2,14 +2,12 @@
 
     <target name="clean">
         <delete dir="preprocessor/bin" />
-        <delete dir="dist" />
     </target>
 
     <target name="build" depends="clean">
         <mkdir dir="preprocessor/bin" />
         <javac srcdir="preprocessor/src" destdir="preprocessor/bin" includeantruntime="false" />
 
-        <mkdir dir="dist" />
         <jar destfile="dist/preprocessor.jar" basedir="preprocessor/bin">
             <manifest>
                 <attribute name="Main-Class" value="br.edu.ufam.icomp.ammd.Main"/>
