@@ -4,9 +4,14 @@ import java.awt.image.BufferedImage;
 
 import javax.swing.JFrame;
 
-public class Main {
+public class VisualClassifier {
 
     public static void main(String[] args) {
+        if (args.length != 2) {
+            System.err.println("Parameters needed: arff-file config-file");
+        }
+        String arffFilePath = args[0];
+        ARFFDataProvider.loadData(arffFilePath);
         new ManualClassifierFrame().setVisible(true);
     }
 
@@ -14,15 +19,17 @@ public class Main {
 
 class ManualClassifierFrame extends JFrame {
 
-    public ManualClassifierFrame() {
+	private static final long serialVersionUID = 1L;
+
+	public ManualClassifierFrame() {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 
 }
 
-class ARRFDataProvider {
+class ARFFDataProvider {
 
-    public static void loadData() {
+    public static void loadData(String arffFilePath) {
     }
 
     public static boolean hasUnclassifiedData() {
