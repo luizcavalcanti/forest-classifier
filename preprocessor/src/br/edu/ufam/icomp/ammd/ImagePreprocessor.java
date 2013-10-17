@@ -43,11 +43,12 @@ public class ImagePreprocessor {
 
     private static void splitImage(String imagePath) {
         try {
-            BufferedImage img = ImageIO.read(new File(imagePath));
+            File source = new File(imagePath);
+            BufferedImage img = ImageIO.read(source);
             int chunkHeight = config.getChunkHeight();
             int chunkWidth = config.getChunkWidth();
             int verticalPieces = img.getHeight() / chunkHeight;
-            int horizontalPieces = img.getHeight() / chunkWidth;
+            int horizontalPieces = img.getWidth() / chunkWidth;
             imageCount++;
             for (int x = 0; x < verticalPieces; x++) {
                 for (int y = 0; y < horizontalPieces; y++) {
@@ -60,7 +61,7 @@ public class ImagePreprocessor {
                             + ".jpg");
                     ImageIO.write(chunk, "jpg", output);
                     Color c = ImageUtil.getAverageColor(chunk);
-                    String data = output.getName()+","+c.getRed()+","+c.getGreen()+","+c.getBlue()+",";
+                    String data = output.getName()+","+source.getName()+","+c.getRed()+","+c.getGreen()+","+c.getBlue()+",";
                     DataManager.appendARFFData(data);
                 }
             }

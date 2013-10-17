@@ -17,6 +17,7 @@ public class DataManager {
         arffBuffer.append("@RELATION forest\n");
         arffBuffer.append('\n');
         arffBuffer.append("@ATTRIBUTE filename STRING\n");
+        arffBuffer.append("@ATTRIBUTE sourceImage STRING\n");
         arffBuffer.append("@ATTRIBUTE averageRed NUMERIC\n");
         arffBuffer.append("@ATTRIBUTE averageGreen NUMERIC\n");
         arffBuffer.append("@ATTRIBUTE averageBlue NUMERIC\n");

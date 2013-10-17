@@ -6,6 +6,8 @@ import java.util.Properties;
 
 public class Configuration {
 
+	private static Configuration instance;
+	
     private String rawDataDirectory;
     private String processedDataDirectory;
     private int chunkWidth;
@@ -15,14 +17,16 @@ public class Configuration {
     }
 
     public static Configuration loadConfiguration() {
-        try {
-            Properties prop = loadConfigFile();
-            return setupProperties(prop);
-        } catch (IOException e) {
-            System.err.println("Cound not load configuration file: " + e.getMessage());
-            System.exit(-1);
-        }
-        return null;
+    	if (instance==null) {
+	        try {
+	            Properties prop = loadConfigFile();
+	            instance = setupProperties(prop);
+	        } catch (IOException e) {
+	            System.err.println("Cound not load configuration file: " + e.getMessage());
+	            System.exit(-1);
+	        }
+    	}
+    	return instance;
     }
 
     private static Properties loadConfigFile() throws IOException {

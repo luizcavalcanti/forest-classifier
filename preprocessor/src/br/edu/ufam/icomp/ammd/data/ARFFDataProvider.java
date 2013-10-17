@@ -36,6 +36,28 @@ public class ARFFDataProvider {
     	}
         return false;
     }
+    
+    public static BufferedImage getSampleSource() {
+    	try {
+    		String[] lineData = data.get(currentIndex).split(",");
+    		return ImageIO.read(new File(config.getRawDataDirectory()+"/"+lineData[1]));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+    	return null;
+    }
+    
+    public static int getSampleRow() {
+    	String[] lineData = data.get(currentIndex).split(",");
+    	String[] sampleData = lineData[0].split("_");
+    	return Integer.valueOf(sampleData[1]);
+    }
+    
+    public static int getSampleColumn() {
+    	String[] lineData = data.get(currentIndex).split(",");
+    	String[] sampleData = lineData[0].split("_");
+    	return Integer.valueOf(sampleData[2].split("[.]")[0]);
+    }
 
     public static BufferedImage getNextSample() {
     	if (data.size()>currentIndex+1) {
@@ -58,5 +80,13 @@ public class ARFFDataProvider {
     	data.remove(currentIndex);
     	data.add(currentIndex, content+classification);
     }
+
+	public static void saveAndCloseFile() {
+        DataManager.createARFFFile();
+        for (String line : data) {
+        	DataManager.appendARFFData(line);
+        }
+        DataManager.persistARFFFile();
+	}
 
 }
