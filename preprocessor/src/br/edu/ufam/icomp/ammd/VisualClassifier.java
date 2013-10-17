@@ -19,22 +19,3 @@ public class VisualClassifier {
     }
 
 }
-
-// class DataEntry {
-
-//     private String filename;
-//     private String class;
-
-//     public void setFilename(String value) {
-//         filename = value;
-//     }
-
-//     public String getFilename() {
-//         return filename;
-//     }
-
-//     public void setClass() {
-
-//     }
-
-// }
