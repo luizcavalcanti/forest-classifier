@@ -10,6 +10,9 @@ import java.util.List;
 
 import javax.imageio.ImageIO;
 
+import br.edu.ufam.icomp.ammd.data.DataManager;
+import br.edu.ufam.icomp.ammd.data.ImageUtil;
+
 public class Main {
 
     private static Configuration config;

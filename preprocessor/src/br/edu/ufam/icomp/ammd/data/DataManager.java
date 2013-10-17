@@ -1,4 +1,4 @@
-package br.edu.ufam.icomp.ammd;
+package br.edu.ufam.icomp.ammd.data;
 
 import java.io.BufferedWriter;
 import java.io.File;

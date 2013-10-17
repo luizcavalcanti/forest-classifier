@@ -1,46 +1,21 @@
 package br.edu.ufam.icomp.ammd;
 
-import java.awt.image.BufferedImage;
+import java.io.IOException;
 
-import javax.swing.JFrame;
+import br.edu.ufam.icomp.ammd.data.ARFFDataProvider;
+import br.edu.ufam.icomp.ammd.ui.VisualClassifierFrame;
 
 public class VisualClassifier {
 
-    public static void main(String[] args) {
-        if (args.length != 2) {
-            System.err.println("Parameters needed: arff-file config-file");
-        }
-        String arffFilePath = args[0];
-        ARFFDataProvider.loadData(arffFilePath);
-        new ManualClassifierFrame().setVisible(true);
-    }
+    private static final String ARFF_FILENAME = "forest.arff";
 
-}
-
-class ManualClassifierFrame extends JFrame {
-
-	private static final long serialVersionUID = 1L;
-
-	public ManualClassifierFrame() {
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    }
-
-}
-
-class ARFFDataProvider {
-
-    public static void loadData(String arffFilePath) {
-    }
-
-    public static boolean hasUnclassifiedData() {
-        return false;
-    }
-
-    public static BufferedImage getNextSample() {
-        return null;
-    }
-
-    public static void setSampleClassification() {
+	public static void main(String[] args) {
+        try {
+			ARFFDataProvider.loadData(ARFF_FILENAME);
+			new VisualClassifierFrame().setVisible(true);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
     }
 
 }
