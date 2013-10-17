@@ -1,4 +1,4 @@
-package br.edu.ufam.icomp.ammd;
+package br.edu.ufam.icomp.ammd.data;
 
 import java.io.FileInputStream;
 import java.io.IOException;

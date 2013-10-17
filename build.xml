@@ -8,7 +8,6 @@
 
     <target name="build" depends="clean">
         <ant antfile="preprocessor/build.xml" target="build" />
-        <ant antfile="tools/build.xml" target="build" />
         <copy file="config.properties" tofile="dist/config.properties" />
     </target>
 

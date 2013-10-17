@@ -9,9 +9,9 @@
         <javac srcdir="preprocessor/src" destdir="preprocessor/bin" includeantruntime="false" />
 
         <jar destfile="dist/preprocessor.jar" basedir="preprocessor/bin">
-            <manifest>
+<!--             <manifest>
                 <attribute name="Main-Class" value="br.edu.ufam.icomp.ammd.Main"/>
-            </manifest>
+            </manifest> -->
         </jar>
     </target>
 

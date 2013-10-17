@@ -10,10 +10,11 @@ import java.util.List;
 
 import javax.imageio.ImageIO;
 
+import br.edu.ufam.icomp.ammd.data.Configuration;
 import br.edu.ufam.icomp.ammd.data.DataManager;
 import br.edu.ufam.icomp.ammd.data.ImageUtil;
 
-public class Main {
+public class ImagePreprocessor {
 
     private static Configuration config;
     private static List<String> imageList;

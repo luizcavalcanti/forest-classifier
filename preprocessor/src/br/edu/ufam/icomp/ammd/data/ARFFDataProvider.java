@@ -11,8 +11,6 @@ import java.util.List;
 
 import javax.imageio.ImageIO;
 
-import br.edu.ufam.icomp.ammd.Configuration;
-
 public class ARFFDataProvider {
 
 	private static final Configuration config = Configuration.loadConfiguration();
