@@ -16,9 +16,9 @@ Experiment on how to recognize forest regions from aerial images
 * <del>Visual classification (for training and test data)</del>
 
 #### classifier ####
-* kNN (KIM et al. 2012)
-* Decision trees (SHIBA et al. 2005)
-* SVM (SHIBA et al. 2005)
+* <del>kNN (KIM et al. 2012)</del>
+* <del>Decision trees (SHIBA et al. 2005)</del>
+* <del>SVM (SHIBA et al. 2005)</del>
 * Compare methods
 * GUI for presentation
 
