@@ -12,14 +12,15 @@ Experiment on how to recognize forest regions from aerial images
     * Contrast enhancing prior to color collection?
 * <del>Export processed data to .arff format</del>
 
-#### database tools ####
-* <del>Visual classification (for training and test data)</del>
+#### database####
+* <del>GUI for manual classification (for training and test sets)</del>
+* <del>Split dataset into training and test sets</del>
 
 #### classifier ####
 * <del>kNN (KIM et al. 2012)</del>
 * <del>Decision trees (SHIBA et al. 2005)</del>
 * <del>SVM (SHIBA et al. 2005)</del>
-* Compare methods
+* <del>Generate logs for comparison among methods</del>
 * GUI for presentation
 
 
