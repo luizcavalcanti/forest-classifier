@@ -9,7 +9,8 @@ Experiment on how to recognize forest regions from aerial images
 * <del>Original image segmentation (the stupid way)</del>
 * Attribute collecting
     * <del>Average color of region</del>
-    * Contrast enhancing prior to color collection?
+    * <del>Average grey level for preprocessed region</del>
+    * Histogram data
 * <del>Export processed data to .arff format</del>
 
 #### database####
