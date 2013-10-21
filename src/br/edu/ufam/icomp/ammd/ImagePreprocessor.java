@@ -61,7 +61,9 @@ public class ImagePreprocessor {
                             + ".jpg");
                     ImageIO.write(chunk, "jpg", output);
                     Color c = ImageUtil.getAverageColor(chunk);
-                    String data = output.getName()+","+source.getName()+","+c.getRed()+","+c.getGreen()+","+c.getBlue()+",";
+                    int greyAverage = (c.getRed()+c.getBlue()+c.getGreen())/3;
+                    //Color grey = new Color(totalAverage, totalAverage, totalAverage);
+                    String data = output.getName()+","+source.getName()+","+c.getRed()+","+c.getGreen()+","+c.getBlue()+","+greyAverage+",";
                     DataManager.appendARFFData(data);
                 }
             }

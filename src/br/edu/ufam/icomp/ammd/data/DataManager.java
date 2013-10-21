@@ -21,6 +21,7 @@ public class DataManager {
         arffBuffer.append("@ATTRIBUTE averageRed NUMERIC\n");
         arffBuffer.append("@ATTRIBUTE averageGreen NUMERIC\n");
         arffBuffer.append("@ATTRIBUTE averageBlue NUMERIC\n");
+        arffBuffer.append("@ATTRIBUTE averageGray NUMERIC\n");
         arffBuffer.append("@ATTRIBUTE class {Forest,Non-forest}\n");
         arffBuffer.append('\n');
         arffBuffer.append("@DATA\n");
