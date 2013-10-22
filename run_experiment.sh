@@ -17,4 +17,8 @@ java -cp lib/weka.jar weka.classifiers.lazy.IBk -K 1 -t forest_train.arff -T for
 java -cp lib/weka.jar weka.classifiers.lazy.IBk -K 3 -t forest_train.arff -T forest_test.arff > log/knn_3.log
 
 # classify with SVM
-java -cp lib/weka.jar:lib/libsvm.jar weka.classifiers.functions.LibSVM -t forest_train.arff -T forest_test.arff > log/svm.log
+# java -cp lib/weka.jar:lib/libsvm.jar weka.classifiers.functions.LibSVM -t forest_train.arff -T forest_test.arff > log/svm.log
+java -cp lib/weka.jar:lib/libsvm.jar weka.classifiers.functions.LibSVM -K 0 -G 0.1 -t forest_train.arff -T forest_test.arff > log/svm.log
+java -cp lib/weka.jar:lib/libsvm.jar weka.classifiers.functions.LibSVM -K 1 -G 0.1 -t forest_train.arff -T forest_test.arff >> log/svm.log
+java -cp lib/weka.jar:lib/libsvm.jar weka.classifiers.functions.LibSVM -K 2 -G 0.1 -t forest_train.arff -T forest_test.arff >> log/svm.log
+java -cp lib/weka.jar:lib/libsvm.jar weka.classifiers.functions.LibSVM -K 3 -G 0.1 -t forest_train.arff -T forest_test.arff >> log/svm.log
