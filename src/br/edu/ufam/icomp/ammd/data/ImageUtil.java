@@ -35,21 +35,4 @@ public class ImageUtil {
         return histogram;
     }
 
-//    public static BufferedImage normalizeContrast(BufferedImage bitmap) {
-//        BufferedImage result = copyImage(bitmap);
-//        for (int y = 0; y < result.getHeight(); y++) {
-//            for (int x = 0; x < result.getWidth(); x++) {
-//                int color = result.getRGB(x, y);
-//                result.setRGB(x, y, color | );
-//            }
-//        }
-//        return result;
-//    }
-//
-//    private static BufferedImage copyImage(BufferedImage source) {
-//        ColorModel cm = source.getColorModel();
-//        WritableRaster raster = source.copyData(null);
-//        return new BufferedImage(cm, raster, cm.isAlphaPremultiplied(), null);
-//    }
-
 }
