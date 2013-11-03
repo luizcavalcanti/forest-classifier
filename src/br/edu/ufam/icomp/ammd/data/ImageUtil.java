@@ -22,6 +22,19 @@ public class ImageUtil {
         return new Color((int)(redBucket/pixelCount), (int)(greenBucket/pixelCount), (int)(blueBucket/pixelCount));
     }
 
+    public static int[] generateBWHistogram(BufferedImage bitmap, int bucketCount) {
+        int[] histogram = new int[bucketCount];
+        for (int y = 0; y < bitmap.getHeight(); y++) {
+            for (int x = 0; x < bitmap.getWidth(); x++) {
+                Color c = new Color(bitmap.getRGB(x, y));
+                int grey = (c.getRed() + c.getBlue() + c.getGreen())/3;
+                int index = grey % bucketCount;
+                histogram[index]++;
+            }
+        }
+        return histogram;
+    }
+
 //    public static BufferedImage normalizeContrast(BufferedImage bitmap) {
 //        BufferedImage result = copyImage(bitmap);
 //        for (int y = 0; y < result.getHeight(); y++) {
