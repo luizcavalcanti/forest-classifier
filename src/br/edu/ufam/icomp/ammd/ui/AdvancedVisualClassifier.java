@@ -16,9 +16,13 @@ import java.text.DecimalFormat;
 
 import javax.swing.ButtonGroup;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JSlider;
 import javax.swing.JToggleButton;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 import br.edu.ufam.icomp.ammd.data.ARFFDataProvider;
 import br.edu.ufam.icomp.ammd.data.Configuration;
@@ -36,8 +40,11 @@ public class AdvancedVisualClassifier extends JFrame {
     private JToggleButton btnForest;
     private JToggleButton btnRoad;
     private JToggleButton btnWater;
+    private JLabel lblBrushSize;
+    private JSlider sldBrushSize;
 
     private String selectedClass;
+    private int brushSize = 10;
 
     public AdvancedVisualClassifier() {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -54,6 +61,25 @@ public class AdvancedVisualClassifier extends JFrame {
     }
 
     private void initComponents() {
+        lblBrushSize = new JLabel();
+        lblBrushSize.setText("Brush size: " + brushSize);
+
+        sldBrushSize = new JSlider();
+        sldBrushSize.setMinimum(1);
+        sldBrushSize.setMaximum(50);
+        sldBrushSize.setValue(brushSize);
+        sldBrushSize.addChangeListener(new ChangeListener() {
+            @Override
+            public void stateChanged(ChangeEvent e) {
+                updateBrushSize();
+            }
+        });
+
+        JPanel brushPanel = new JPanel();
+        brushPanel.setLayout(new FlowLayout());
+        brushPanel.add(lblBrushSize);
+        brushPanel.add(sldBrushSize);
+
         btnForest = new JToggleButton("Forest");
         btnForest.setSelected(true);
         btnForest.addActionListener(new ActionListener() {
@@ -91,8 +117,15 @@ public class AdvancedVisualClassifier extends JFrame {
         buttonPanel.add(btnWater);
 
         getContentPane().setLayout(new BorderLayout());
+        getContentPane().add(brushPanel, BorderLayout.NORTH);
         getContentPane().add(buttonPanel, BorderLayout.SOUTH);
         pack();
+    }
+
+    protected void updateBrushSize() {
+        brushSize = sldBrushSize.getValue();
+        lblBrushSize.setText("Brush size: " + brushSize);
+        imageCanvas.setBrushSize(brushSize);
     }
 
     private void showNextData() {
@@ -150,7 +183,7 @@ public class AdvancedVisualClassifier extends JFrame {
             }
         });
 
-        getContentPane().add(imageCanvas, BorderLayout.NORTH);
+        getContentPane().add(imageCanvas, BorderLayout.CENTER);
 
         pack();
     }
@@ -170,12 +203,17 @@ class ImageCanvas extends Canvas {
     private BufferedImage baseImage;
     private BufferedImage overlay;
     private int covered;
+    private int brushSize = 10;
 
     public ImageCanvas(BufferedImage baseImage) {
         classesData = new String[baseImage.getWidth()][baseImage.getHeight()];
         setSize(baseImage.getWidth(), baseImage.getHeight());
         this.baseImage = baseImage;
         overlay = new BufferedImage(this.getWidth(), this.getHeight(), BufferedImage.TYPE_INT_ARGB);
+    }
+
+    public void setBrushSize(int brushSize) {
+        this.brushSize = brushSize;
     }
 
     @Override
@@ -186,7 +224,6 @@ class ImageCanvas extends Canvas {
     }
 
     public void setClass(int x, int y, String c) {
-        int brushSize = 50;
         if (x >= 0 && x < getWidth() && y >= 0 && y < getHeight()) {
             int startX = Math.max(0, x - brushSize / 2);
             int endX = Math.min(getWidth() - 1, x + brushSize / 2);
