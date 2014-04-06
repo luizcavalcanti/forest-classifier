@@ -10,3 +10,4 @@ preprocessor.jar
 
 # generated files #
 *.arff
+*.DS_Store

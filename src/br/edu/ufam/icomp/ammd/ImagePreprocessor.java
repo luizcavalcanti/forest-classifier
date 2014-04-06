@@ -104,10 +104,12 @@ public class ImagePreprocessor {
         File rawDir = new File(config.getRawDataDirectory());
         File[] files = rawDir.listFiles();
         for (File f : files) {
-            imageList.add(f.getAbsolutePath());
+            if (f.getName().endsWith(".jpg")) {
+                imageList.add(f.getAbsolutePath());
+            }
         }
         long listEnd = System.currentTimeMillis();
-        System.out.println("Image list composed in " + (listEnd - listStart) + "ms");
+        System.out.println("Image list (" + imageList.size() + ") composed in " + (listEnd - listStart) + "ms");
     }
 
 }
