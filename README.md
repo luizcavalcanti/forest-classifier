@@ -1,14 +1,20 @@
 ForestClassifier
 ================
 
-Experiment on how to recognize forest regions from aerial images
+Experiment on image recognition for aerial images (mainly forestal areas)
 
-Current sample features:
+Classes
+* Forest
+* Water
+* Road
+* Building
+
+Used features
 * color components (R, G and B)
 * grey mean
 * histogram on grey values
 
-Current classifiers:
+Learning algorithms
 * kNN (IBk)
 * Decision trees (J48)
 * SVM (libSVM)
