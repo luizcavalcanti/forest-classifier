@@ -70,31 +70,31 @@ public class ImagePreprocessor {
 
     private static void collectData(BufferedImage chunk, File source, File output) {
         Color c = ImageUtil.getAverageColor(chunk);
-        int greyAverage = (c.getRed()+c.getBlue()+c.getGreen())/3;
+        int greyAverage = (c.getRed() + c.getBlue() + c.getGreen()) / 3;
         int[] histogram = ImageUtil.generateBWHistogram(chunk, 16);
         StringBuilder sb = new StringBuilder();
-        sb.append(output.getName()+',');
-        sb.append(source.getName()+',');
-        sb.append(c.getRed()+",");
-        sb.append(c.getGreen()+",");
-        sb.append(c.getBlue()+",");
-        sb.append(greyAverage+",");
-        sb.append(histogram[0]+",");
-        sb.append(histogram[1]+",");
-        sb.append(histogram[2]+",");
-        sb.append(histogram[3]+",");
-        sb.append(histogram[4]+",");
-        sb.append(histogram[5]+",");
-        sb.append(histogram[6]+",");
-        sb.append(histogram[7]+",");
-        sb.append(histogram[8]+",");
-        sb.append(histogram[9]+",");
-        sb.append(histogram[10]+",");
-        sb.append(histogram[11]+",");
-        sb.append(histogram[12]+",");
-        sb.append(histogram[13]+",");
-        sb.append(histogram[14]+",");
-        sb.append(histogram[15]+",");
+        sb.append(output.getName() + ',');
+        sb.append(source.getName() + ',');
+        sb.append(c.getRed() + ",");
+        sb.append(c.getGreen() + ",");
+        sb.append(c.getBlue() + ",");
+        sb.append(greyAverage + ",");
+        sb.append(histogram[0] + ",");
+        sb.append(histogram[1] + ",");
+        sb.append(histogram[2] + ",");
+        sb.append(histogram[3] + ",");
+        sb.append(histogram[4] + ",");
+        sb.append(histogram[5] + ",");
+        sb.append(histogram[6] + ",");
+        sb.append(histogram[7] + ",");
+        sb.append(histogram[8] + ",");
+        sb.append(histogram[9] + ",");
+        sb.append(histogram[10] + ",");
+        sb.append(histogram[11] + ",");
+        sb.append(histogram[12] + ",");
+        sb.append(histogram[13] + ",");
+        sb.append(histogram[14] + ",");
+        sb.append(histogram[15] + ",");
         DataManager.appendARFFData(sb.toString());
     }
 
