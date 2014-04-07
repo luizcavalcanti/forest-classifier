@@ -15,6 +15,7 @@ import java.io.IOException;
 import java.text.DecimalFormat;
 
 import javax.swing.ButtonGroup;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -24,11 +25,10 @@ import javax.swing.JToggleButton;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
-import br.edu.ufam.icomp.ammd.data.ARFFDataProvider;
 import br.edu.ufam.icomp.ammd.data.Configuration;
 import br.edu.ufam.icomp.ammd.data.ImageDataProvider;
 
-public class AdvancedVisualClassifier extends JFrame {
+public class VisualClassifierForm extends JFrame {
 
     private static final long serialVersionUID = 1L;
     private static final String TITLE = "Manual Classifier";
@@ -37,16 +37,19 @@ public class AdvancedVisualClassifier extends JFrame {
     private ImageDataProvider dataProvider;
 
     private ImageCanvas imageCanvas;
+    private JButton btnPrevious;
+    private JButton btnNext;
+    private JLabel lblBrushSize;
+    private JSlider sldBrushSize;
     private JToggleButton btnForest;
     private JToggleButton btnRoad;
     private JToggleButton btnWater;
-    private JLabel lblBrushSize;
-    private JSlider sldBrushSize;
+    private JToggleButton btnBuilding;
 
     private String selectedClass;
     private int brushSize = 10;
 
-    public AdvancedVisualClassifier() {
+    public VisualClassifierForm() {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         initDataProvider();
         initComponents();
@@ -105,20 +108,48 @@ public class AdvancedVisualClassifier extends JFrame {
             }
         });
 
+        btnBuilding = new JToggleButton("Building");
+        btnBuilding.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                selectedClass = Classification.BUILDING;
+            }
+        });
+
         ButtonGroup buttonGroup = new ButtonGroup();
         buttonGroup.add(btnForest);
         buttonGroup.add(btnRoad);
         buttonGroup.add(btnWater);
+        buttonGroup.add(btnBuilding);
 
         JPanel buttonPanel = new JPanel();
         buttonPanel.setLayout(new FlowLayout());
         buttonPanel.add(btnForest);
         buttonPanel.add(btnRoad);
         buttonPanel.add(btnWater);
+        buttonPanel.add(btnBuilding);
+
+        btnPrevious = new JButton();
+        btnPrevious.setText("<");
+        btnPrevious.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                showPreviousData();
+            }
+        });
+
+        btnNext = new JButton();
+        btnNext.setText(">");
+        btnNext.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                showNextData();
+            }
+        });
 
         getContentPane().setLayout(new BorderLayout());
         getContentPane().add(brushPanel, BorderLayout.NORTH);
         getContentPane().add(buttonPanel, BorderLayout.SOUTH);
+        getContentPane().add(btnPrevious, BorderLayout.WEST);
+        getContentPane().add(btnNext, BorderLayout.EAST);
         pack();
     }
 
@@ -135,17 +166,32 @@ public class AdvancedVisualClassifier extends JFrame {
         } catch (IOException e) {
             JOptionPane.showMessageDialog(this, "Error: " + e.getMessage());
         }
-        if (img != null) {
+        if (img == null) {
+            JOptionPane.showMessageDialog(this, "No more images");
+        } else {
             sourceImage = img;
             updateScreen();
+        }
+    }
+
+    private void showPreviousData() {
+        BufferedImage img = null;
+        try {
+            img = dataProvider.getPreviousImage();
+        } catch (IOException e) {
+            JOptionPane.showMessageDialog(this, "Error: " + e.getMessage());
+        }
+        if (img == null) {
+            JOptionPane.showMessageDialog(this, "You are already on the first image");
         } else {
-            JOptionPane.showMessageDialog(this, "All done. Off you go.");
-            ARFFDataProvider.saveAndCloseFile();
-            this.dispose();
+            sourceImage = img;
+            updateScreen();
         }
     }
 
     private void updateScreen() {
+        if (imageCanvas != null)
+            getContentPane().remove(imageCanvas);
         imageCanvas = new ImageCanvas(sourceImage);
         imageCanvas.addMouseMotionListener(new MouseMotionListener() {
             @Override
@@ -250,11 +296,13 @@ class ImageCanvas extends Canvas {
 
     private Color getClassColor(String string) {
         if (string.equals(Classification.FOREST)) {
-            return new Color(0, 1, 0, .2f);
+            return new Color(0, 1, 0, .3f);
         } else if (string.equals(Classification.ROAD)) {
-            return new Color(1, 1, 1, .2f);
+            return new Color(1, 1, 1, .3f);
         } else if (string.equals(Classification.WATER)) {
-            return new Color(0, 0, 1, .2f);
+            return new Color(0, 0, 1, .3f);
+        } else if (string.equals(Classification.BUILDING)) {
+            return new Color(1, 0, 1, .2f);
         }
         return Color.BLACK;
     }
@@ -269,4 +317,5 @@ class Classification {
     public static final String ROAD = "road";
     public static final String FOREST = "forest";
     public static final String WATER = "water";
+    public static final String BUILDING = "building";
 }

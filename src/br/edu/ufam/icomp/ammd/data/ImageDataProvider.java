@@ -19,9 +19,15 @@ public class ImageDataProvider {
     }
 
     public BufferedImage getNextImage() throws IOException {
-        if (currentIndex+1 >= imageList.length)
+        if (currentIndex + 1 >= imageList.length)
             return null;
         return ImageIO.read(imageList[++currentIndex]);
+    }
+
+    public BufferedImage getPreviousImage() throws IOException {
+        if (currentIndex == 0)
+            return null;
+        return ImageIO.read(imageList[--currentIndex]);
     }
 
     public int getImageCount() {
@@ -34,12 +40,10 @@ public class ImageDataProvider {
     }
 
     class ImageFileFilter implements FileFilter {
-
         @Override
         public boolean accept(File pathname) {
             return pathname.getName().endsWith(".jpg");
         }
-
     }
 
 }
