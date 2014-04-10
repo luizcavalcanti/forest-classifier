@@ -55,7 +55,6 @@ public class VisualClassifierForm extends JFrame {
         initComponents();
         showNextData();
         selectedClass = Classification.FOREST;
-        setTitle(TITLE);
     }
 
     private void initDataProvider() {
@@ -160,21 +159,28 @@ public class VisualClassifierForm extends JFrame {
     }
 
     private void showNextData() {
+        if (sourceImage != null) {
+            saveCurrentData();
+        }
         BufferedImage img = null;
         try {
             img = dataProvider.getNextImage();
         } catch (IOException e) {
-            JOptionPane.showMessageDialog(this, "Error: " + e.getMessage());
+            JOptionPane.showMessageDialog(VisualClassifierForm.this, "Error: " + e.getMessage());
         }
         if (img == null) {
-            JOptionPane.showMessageDialog(this, "No more images");
+            JOptionPane.showMessageDialog(VisualClassifierForm.this, "No more images");
         } else {
             sourceImage = img;
             updateScreen();
+            loadCurrentData();
         }
     }
 
     private void showPreviousData() {
+        if (sourceImage != null) {
+            saveCurrentData();
+        }
         BufferedImage img = null;
         try {
             img = dataProvider.getPreviousImage();
@@ -186,6 +192,24 @@ public class VisualClassifierForm extends JFrame {
         } else {
             sourceImage = img;
             updateScreen();
+            loadCurrentData();
+        }
+    }
+
+    private void loadCurrentData() {
+        try {
+            imageCanvas.setClassesData(dataProvider.loadData(sourceImage.getWidth(), sourceImage.getHeight()));
+            updateFrameTitle();
+        } catch (IOException e) {
+            JOptionPane.showMessageDialog(this, e.getMessage());
+        }
+    }
+
+    private void saveCurrentData() {
+        try {
+            dataProvider.saveData(imageCanvas.getClassesData());
+        } catch (IOException e) {
+            JOptionPane.showMessageDialog(this, e.getMessage());
         }
     }
 
@@ -311,11 +335,35 @@ class ImageCanvas extends Canvas {
         return (double) covered / (getWidth() * getHeight());
     }
 
+    public String[][] getClassesData() {
+        return classesData;
+    }
+
+    public void setClassesData(String[][] classesData) {
+        this.classesData = classesData;
+        reloadOverlayData();
+    }
+
+    private void reloadOverlayData() {
+        covered = 0;
+        overlay = new BufferedImage(this.getWidth(), this.getHeight(), BufferedImage.TYPE_INT_ARGB);
+        Graphics g = overlay.getGraphics();
+        for (int x = 0; x < getWidth(); x++) {
+            for (int y = 0; y < getHeight(); y++) {
+                if (classesData[x][y] != null) {
+                    covered++;
+                    g.setColor(getClassColor(classesData[x][y]));
+                    g.fillRect(x, y, 1, 1);
+                }
+            }
+        }
+        repaint();
+    }
 }
 
 class Classification {
-    public static final String ROAD = "road";
-    public static final String FOREST = "forest";
-    public static final String WATER = "water";
-    public static final String BUILDING = "building";
+    public static final String ROAD = "r";
+    public static final String FOREST = "f";
+    public static final String WATER = "w";
+    public static final String BUILDING = "b";
 }
