@@ -7,7 +7,11 @@ processed
 
 # packages #
 preprocessor.jar
+forestclassifier.jar
 
 # generated files #
 *.arff
 *.DS_Store
+*.dat
+.classpath
+.project
