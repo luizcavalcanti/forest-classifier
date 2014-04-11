@@ -322,7 +322,7 @@ class ImageCanvas extends Canvas {
         if (string.equals(Classification.FOREST)) {
             return new Color(0, 1, 0, .3f);
         } else if (string.equals(Classification.ROAD)) {
-            return new Color(1, 1, 1, .3f);
+            return new Color(0.98f, 0.5f, 0.24f, .3f);
         } else if (string.equals(Classification.WATER)) {
             return new Color(0, 0, 1, .3f);
         } else if (string.equals(Classification.BUILDING)) {
