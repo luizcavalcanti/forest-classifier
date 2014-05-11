@@ -196,7 +196,7 @@ public class VisualClassifierForm extends JFrame {
 
     private void loadCurrentData() {
         try {
-            imageCanvas.setClassesData(dataProvider.loadData(sourceImage.getWidth(), sourceImage.getHeight()));
+            imageCanvas.setClassesData(dataProvider.loadCurrentData());
             updateFrameTitle();
         } catch (IOException e) {
             JOptionPane.showMessageDialog(this, e.getMessage());

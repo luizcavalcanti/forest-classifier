@@ -58,7 +58,6 @@ public class ImageDataProvider {
         FileWriter fw = new FileWriter(f);
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < classesData.length; i++) {
-            sb.append('[');
             for (int j = 0; j < classesData[i].length; j++) {
                 if (j != 0) {
                     sb.append(',');
@@ -68,14 +67,16 @@ public class ImageDataProvider {
                     sb.append(data);
                 }
             }
-            sb.append(']');
+            if (i != classesData.length - 1)
+                sb.append("|");
         }
         fw.write(sb.toString());
         fw.close();
     }
 
-    public String[][] loadData(int width, int height) throws IOException {
-        String[][] data = new String[width][height];
+    public String[][] loadCurrentData() throws IOException {
+        BufferedImage img = ImageIO.read(imageList[currentIndex]);
+        String[][] data = new String[img.getWidth()][img.getHeight()];
         File f = new File(imageList[currentIndex].getAbsolutePath() + ".dat");
         if (f.exists()) {
             BufferedReader br = new BufferedReader(new FileReader(f));
@@ -88,11 +89,13 @@ public class ImageDataProvider {
             String fileData = sb.toString();
             int i = 0;
             int j = 0;
-            String[] rows = fileData.substring(1).split("\\[");
+            String[] rows = fileData.split("[|]");
             for (String row : rows) {
+                if (row.trim().length() == 0)
+                    continue;
                 String[] items = row.split(",");
                 for (String item : items) {
-                    if (item.trim().length() > 0) {
+                    if (item.trim().length() > 0 && i < data.length && j < data[i].length) {
                         data[i][j] = item;
                     }
                     j++;
