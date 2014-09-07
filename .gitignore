@@ -10,7 +10,7 @@ preprocessor.jar
 forestclassifier.jar
 
 # generated files #
-*.arff
+#*.arff
 *.DS_Store
 *.dat
 .classpath
