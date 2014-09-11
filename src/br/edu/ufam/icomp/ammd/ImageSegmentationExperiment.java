@@ -17,7 +17,6 @@ import weka.classifiers.AbstractClassifier;
 import weka.classifiers.bayes.NaiveBayes;
 import weka.classifiers.lazy.IBk;
 import weka.classifiers.trees.J48;
-import weka.core.Instances;
 
 public class ImageSegmentationExperiment {
 
