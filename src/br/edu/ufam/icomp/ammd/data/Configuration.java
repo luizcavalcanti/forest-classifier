@@ -6,10 +6,13 @@ import java.util.Properties;
 
 public class Configuration {
 
-	private static Configuration instance;
-	
+    private static Configuration instance;
+
     private String rawDataDirectory;
     private String processedDataDirectory;
+    private String trainingDirectory;
+    private String validationDirectory;
+    private String outputDirectory;
     private int chunkWidth;
     private int chunkHeight;
 
@@ -17,16 +20,16 @@ public class Configuration {
     }
 
     public static Configuration loadConfiguration() {
-    	if (instance==null) {
-	        try {
-	            Properties prop = loadConfigFile();
-	            instance = setupProperties(prop);
-	        } catch (IOException e) {
-	            System.err.println("Cound not load configuration file: " + e.getMessage());
-	            System.exit(-1);
-	        }
-    	}
-    	return instance;
+        if (instance == null) {
+            try {
+                Properties prop = loadConfigFile();
+                instance = setupProperties(prop);
+            } catch (IOException e) {
+                System.err.println("Cound not load configuration file: " + e.getMessage());
+                System.exit(-1);
+            }
+        }
+        return instance;
     }
 
     private static Properties loadConfigFile() throws IOException {
@@ -41,6 +44,9 @@ public class Configuration {
         Configuration config = new Configuration();
         config.setRawDataDirectory(prop.getProperty("path.raw"));
         config.setProcessedDataDirectory(prop.getProperty("path.processed"));
+        config.setTrainingDirectory(prop.getProperty("path.training"));
+        config.setValidationDirectory(prop.getProperty("path.validation"));
+        config.setOutputDirectory(prop.getProperty("path.output"));
         config.setChunkWidth(Integer.parseInt(prop.getProperty("chunk.width")));
         config.setChunkHeight(Integer.parseInt(prop.getProperty("chunk.height")));
         return config;
@@ -95,6 +101,30 @@ public class Configuration {
 
     public void setChunkHeight(int chunkHeight) {
         this.chunkHeight = chunkHeight;
+    }
+
+    public String getTrainingDirectory() {
+        return trainingDirectory;
+    }
+
+    public void setTrainingDirectory(String trainingDirectory) {
+        this.trainingDirectory = trainingDirectory;
+    }
+
+    public String getValidationDirectory() {
+        return validationDirectory;
+    }
+
+    public void setValidationDirectory(String validationDirectory) {
+        this.validationDirectory = validationDirectory;
+    }
+
+    public String getOutputDirectory() {
+        return outputDirectory;
+    }
+
+    public void setOutputDirectory(String outputDirectory) {
+        this.outputDirectory = outputDirectory;
     }
 
 }

@@ -15,14 +15,14 @@ import org.apache.commons.io.FileUtils;
 import trainableSegmentation.WekaSegmentation;
 import weka.classifiers.AbstractClassifier;
 import weka.classifiers.bayes.NaiveBayes;
+import weka.classifiers.functions.LibSVM;
 import weka.classifiers.lazy.IBk;
 import weka.classifiers.trees.J48;
+import br.edu.ufam.icomp.ammd.data.Configuration;
 
 public class ImageSegmentationExperiment {
 
-    private static final File trainingFolder = new File("data/training/");
-    private static final File validationFolder = new File("data/validation/");
-    private static final File outputFolder = new File("data/classified/");
+    private static final Configuration config = Configuration.loadConfiguration();
 
     private static final boolean[] enableFeatures = new boolean[] { true, /* Gaussian_blur */
     true, /* Sobel_filter */
@@ -45,12 +45,17 @@ public class ImageSegmentationExperiment {
     false, /* Entropy */
     false /* Neighbors */
     };
-    
+
     public static void main(String[] args) throws IOException {
         runExperiment(null, "randomforest");
         runExperiment(new J48(), "decisiontree");
         runExperiment(new IBk(5), "knn_2");
         runExperiment(new NaiveBayes(), "naivebayes");
+        LibSVM svm = new LibSVM();
+        svm.setGamma(0.021);
+        svm.setDegree(1);
+        svm.setEps(0.00001);
+        runExperiment(svm, "svm");
     }
 
     private static FilenameFilter imageFilter = new FilenameFilter() {
@@ -60,6 +65,7 @@ public class ImageSegmentationExperiment {
     };
 
     private static void runExperiment(AbstractClassifier cl, String experimentLabel) throws IOException {
+        File trainingFolder = new File(config.getTrainingDirectory());
         ImagePlus ip = new ImagePlus(trainingFolder.getPath() + "/mashup.jpg");
         WekaSegmentation seg = new WekaSegmentation(ip);
         if (cl != null)
@@ -70,6 +76,7 @@ public class ImageSegmentationExperiment {
     }
 
     private static void prepareFileSystem(String experimentLabel) throws IOException {
+        File outputFolder = new File(config.getOutputDirectory());
         File output = new File(outputFolder + "/" + experimentLabel);
         if (output.exists()) {
             if (output.isDirectory()) {
@@ -104,19 +111,16 @@ public class ImageSegmentationExperiment {
     }
 
     private static void classifyImages(WekaSegmentation seg, String experimentLabel) throws IOException {
+        File validationFolder = new File(config.getValidationDirectory());
+        File outputFolder = new File(config.getOutputDirectory());
         seg.loadClassifier(experimentLabel + ".model");
         for (File f : validationFolder.listFiles(imageFilter)) {
             ImagePlus img = new ImagePlus(f.getPath());
-            classifyImage(seg, img, experimentLabel, f.getName());
+            seg.setTrainingImage(img);
+            seg.applyClassifier(false);
+            String ouputPath = outputFolder + "/" + experimentLabel + "/" + f.getName();
+            ImageIO.write(seg.getClassifiedImage().getBufferedImage(), "jpg", new File(ouputPath));
         }
-    }
-
-    private static void classifyImage(WekaSegmentation seg, ImagePlus img, String experimentLabel, String fileName)
-            throws IOException {
-        seg.setTrainingImage(img);
-        seg.applyClassifier(false);
-        String ouputPath = outputFolder + "/" + experimentLabel + "/" + fileName;
-        ImageIO.write(seg.getClassifiedImage().getBufferedImage(), "jpg", new File(ouputPath));
     }
 
 }
