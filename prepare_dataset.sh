@@ -17,6 +17,7 @@ java -cp forestclassifier.jar br.edu.ufam.icomp.ammd.ARFFGenerator forest.arff
 #mv forest_.arff forest.arff
 
 # randomize order
+echo Randomizing order of samples
 java -cp lib/weka.jar weka.filters.unsupervised.instance.Randomize -i forest.arff -o forest_.arff
 mv forest_.arff forest.arff
 
