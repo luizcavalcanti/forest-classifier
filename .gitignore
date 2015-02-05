@@ -2,9 +2,11 @@
 bin
 dist
 processed
+meanshift/out
 
 # binaries #
 *.class
+meanshift/edison
 
 # packages #
 preprocessor.jar
