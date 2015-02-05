@@ -2,6 +2,7 @@
 bin
 dist
 processed
+data/classified
 meanshift/out
 
 # binaries #
@@ -14,7 +15,9 @@ forestclassifier.jar
 
 # generated files #
 #*.arff
+*.model
 *.DS_Store
 *.dat
+*.log
 .classpath
 .project
