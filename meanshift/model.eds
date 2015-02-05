@@ -1,0 +1,9 @@
+SpatialBandwidth = 6;
+RangeBandwidth = 10;
+MinimumRegionArea = 300;
+Speedup = MEDIUM;
+//DisplayProgress ON;
+Load('$IMAGE_PATH', IMAGE);
+Segment;
+Save('$OUTPUT_PATH', PNM, SEGM_IMAGE_BOUNDARIES);
+
