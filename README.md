@@ -1,6 +1,8 @@
 ForestClassifier
 ================
 
+Database used in experiment is hosted <a href="https://github.com/luizcavalcanti/geoma-database">here</a>
+
 Experiment on image recognition for aerial images (mainly forestal areas)
 
 <b>Classes</b>
