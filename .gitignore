@@ -4,6 +4,7 @@ dist
 processed
 data/classified
 meanshift/out
+srm/out
 
 # binaries #
 *.class
