@@ -12,5 +12,4 @@ $MEX srm_boundarygradient.c
 $MEX srm_boundarylen.c
 
 echo "running demo"
-$MATLAB -nodisplay -r "srm_experiment('../data/validation/')"
-
+$MATLAB -nodisplay -r "srm_experiment('../../data/validation/')"

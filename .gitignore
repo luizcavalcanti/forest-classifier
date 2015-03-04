@@ -3,6 +3,7 @@ bin
 dist
 processed
 data/classified
+segmentation/jseg/out
 segmentation/learning/out
 segmentation/meanshift/out
 segmentation/srm/out
@@ -10,6 +11,7 @@ segmentation/srm/out
 # binaries #
 *.class
 segmentation/meanshift/edison
+segmentation/jseg/segdist
 
 # packages #
 preprocessor.jar
