@@ -3,7 +3,7 @@
 DIR_OUTPUT=out
 DIR_IMAGES=$DIR_OUTPUT/images
 DIR_SEGMENTS=$DIR_OUTPUT/segment
-DIR_ORIGINAL_IMAGES=../data/validation
+DIR_ORIGINAL_IMAGES=../../data/validation
 EXECUTABLE=edison
 
 
@@ -42,3 +42,17 @@ echo
 echo "Starting experiment"
 ./edison out/temp.eds
 echo "done"
+
+# converting files back
+echo
+echo "Converting ppm files to jpeg..."
+for file in $DIR_SEGMENTS/*.pnm
+do
+    if [[ -f $file ]]; then
+	filename=`basename $file`
+	filename="${filename%.*}"
+	convert $file $DIR_SEGMENTS/$filename
+    fi
+done
+rm $DIR_SEGMENTS/*.pnm
+echo "done."
