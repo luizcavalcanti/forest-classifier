@@ -3,12 +3,12 @@ bin
 dist
 processed
 data/classified
-meanshift/out
-srm/out
+segmentation/meanshift/out
+segmentation/srm/out
 
 # binaries #
 *.class
-meanshift/edison
+segmentation/meanshift/edison
 
 # packages #
 preprocessor.jar
