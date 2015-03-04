@@ -3,6 +3,7 @@ bin
 dist
 processed
 data/classified
+segmentation/learning/out
 segmentation/meanshift/out
 segmentation/srm/out
 
@@ -13,6 +14,7 @@ segmentation/meanshift/edison
 # packages #
 preprocessor.jar
 forestclassifier.jar
+segmentation/learning/learning-segmentation.jar
 
 # generated files #
 #*.arff
