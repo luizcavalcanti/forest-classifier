@@ -10,9 +10,9 @@ if [ "$RUN_MEANSHIFT" = true ] ; then
     # Run meanshif
     echo Running meanshift experiment...
     STARTTIME=$(date +%s)
-    cd meanshift
+    cd segmentation/meanshift
     ./meanshift.sh
-    cd ..
+    cd ../..
     ENDTIME=$(date +%s)
     echo "done in $(($ENDTIME - $STARTTIME)) seconds."
     echo =============================================
@@ -23,9 +23,9 @@ if [ "$RUN_SRM" = true ] ; then
     # Run SRM
     echo Running SRM experiment...
     STARTTIME=$(date +%s)
-    cd srm
+    cd segmentation/srm
     ./srm.sh
-    cd ..
+    cd ../..
     ENDTIME=$(date +%s)
     echo "done in $(($ENDTIME - $STARTTIME)) seconds."
     echo =============================================
