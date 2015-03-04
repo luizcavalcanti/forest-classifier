@@ -1,10 +1,22 @@
 #!/bin/bash
 
 
+RUN_JSEG=true
 RUN_MEANSHIFT=true
 RUN_SRM=true
-RUN_LEARNING=true
+RUN_LEARNING=false
 
+if [ "$RUN_JSEG" = true ] ; then
+    # Run JSEG
+    echo Running JSEG experiment...
+    STARTTIME=$(date +%s)
+    cd segmentation/jseg
+    ./jseg.sh
+    cd ../..
+    ENDTIME=$(date +%s)
+    echo "done in $(($ENDTIME - $STARTTIME)) seconds."
+    echo =============================================
+fi
 
 if [ "$RUN_MEANSHIFT" = true ] ; then
     # Run meanshif
