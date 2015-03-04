@@ -77,6 +77,9 @@ public class ImageSegmentationExperiment {
 
     private static void prepareFileSystem(String experimentLabel) throws IOException {
         File outputFolder = new File(config.getOutputDirectory());
+        if (outputFolder.exists())
+            FileUtils.deleteDirectory(outputFolder);
+            outputFolder.mkdir();
         File output = new File(outputFolder + "/" + experimentLabel);
         if (output.exists()) {
             if (output.isDirectory()) {
@@ -94,7 +97,7 @@ public class ImageSegmentationExperiment {
         seg.setEnabledFeatures(enableFeatures);
         addExamples(seg);
         seg.trainClassifier();
-        seg.saveClassifier(experimentLabel + ".model");
+        seg.saveClassifier(config.getOutputDirectory() + "/" + experimentLabel + ".model");
     }
 
     private static void addExamples(WekaSegmentation seg) {
@@ -113,7 +116,7 @@ public class ImageSegmentationExperiment {
     private static void classifyImages(WekaSegmentation seg, String experimentLabel) throws IOException {
         File validationFolder = new File(config.getValidationDirectory());
         File outputFolder = new File(config.getOutputDirectory());
-        seg.loadClassifier(experimentLabel + ".model");
+        seg.loadClassifier(config.getOutputDirectory() + "/" + experimentLabel + ".model");
         for (File f : validationFolder.listFiles(imageFilter)) {
             ImagePlus img = new ImagePlus(f.getPath());
             seg.setTrainingImage(img);

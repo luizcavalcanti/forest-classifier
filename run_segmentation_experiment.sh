@@ -36,9 +36,11 @@ if [ "$RUN_LEARNING" = true ] ; then
     # Run learning-based segmentaiton experiment
     echo Running learning-based experiment. This may take a while \(no kidding\)...
     STARTTIME=$(date +%s)
-    java -cp ".:forestclassifier.jar:lib/*" br.edu.ufam.icomp.ammd.ImageSegmentationExperiment
+    cd segmentation/learning
+    ant
+    java -cp ".:learning-segmentation.jar:../../lib/*" br.edu.ufam.icomp.ammd.ImageSegmentationExperiment
     echo Running overlay on output
-    java -cp ".:forestclassifier.jar:lib/*" br.edu.ufam.icomp.ammd.SegmentationOverlay
+    java -cp ".:learning-segmentation.jar:../../lib/*" br.edu.ufam.icomp.ammd.SegmentationOverlay
     ENDTIME=$(date +%s)
     echo "done in $(($ENDTIME - $STARTTIME)) seconds."
     echo =============================================

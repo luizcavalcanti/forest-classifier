@@ -1,0 +1,25 @@
+<project name="learning-segmentation" default="build">
+
+    <path id="full-classpath">
+      <fileset dir="../../lib">
+        <include name="*.jar"/>
+      </fileset>
+    </path>
+
+    <target name="clean">
+        <delete dir="bin" />
+        <delete>
+            <fileset dir="." includes="*.jar"/>
+        </delete>
+    </target>
+
+    <target name="build" depends="clean">
+        <mkdir dir="bin" />
+        <javac srcdir="src" destdir="bin" includeantruntime="false">
+            <classpath refid="full-classpath"/>
+        </javac>
+        <jar destfile="learning-segmentation.jar" basedir="bin" />
+    </target>
+
+
+</project>
