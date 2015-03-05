@@ -8,7 +8,7 @@ DIR_ORIGINAL_IMAGES=../../data/validation
 #building
 cd src
 make
-mv segment ../felzen
+mv segment ../mseg
 cd ..
 
 # recreating output 
@@ -34,7 +34,7 @@ for file in $DIR_IMAGES/*.ppm
 do
     if [[ -f $file ]]; then
     filename=`basename $file`
-    ./felzen 0.8 600 400 $file $DIR_SEGMENTS/$filename
+    ./mseg 0.8 600 400 $file $DIR_SEGMENTS/$filename
     fi
 done
 

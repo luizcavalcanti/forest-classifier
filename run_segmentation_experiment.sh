@@ -1,19 +1,19 @@
 #!/bin/bash
 
-RUN_FELZEN=true
+RUN_MSEG=true
 RUN_JSEG=true
 RUN_MEANSHIFT=true
 RUN_SRM=true
 RUN_LEARNING=false
 
-if [ "$RUN_FELZEN" = true ] ; then
-    # Run felzen
+if [ "$RUN_MSEG" = true ] ; then
+    # Run MSEG
     pwd
-    echo Running felzen experiment...
+    echo Running MSEG experiment...
     STARTTIME=$(date +%s)
-    cd segmentation/felzen
+    cd segmentation/mseg
     pwd
-    ./felzen.sh
+    ./mseg.sh
     cd ../..
     ENDTIME=$(date +%s)
     echo "done in $(($ENDTIME - $STARTTIME)) seconds."
