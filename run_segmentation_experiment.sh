@@ -1,10 +1,24 @@
 #!/bin/bash
 
-
+RUN_FELZEN=true
 RUN_JSEG=true
 RUN_MEANSHIFT=true
 RUN_SRM=true
 RUN_LEARNING=false
+
+if [ "$RUN_FELZEN" = true ] ; then
+    # Run felzen
+    pwd
+    echo Running felzen experiment...
+    STARTTIME=$(date +%s)
+    cd segmentation/felzen
+    pwd
+    ./felzen.sh
+    cd ../..
+    ENDTIME=$(date +%s)
+    echo "done in $(($ENDTIME - $STARTTIME)) seconds."
+    echo =============================================
+fi
 
 if [ "$RUN_JSEG" = true ] ; then
     # Run JSEG
@@ -30,7 +44,6 @@ if [ "$RUN_MEANSHIFT" = true ] ; then
     echo =============================================
 fi
 
-
 if [ "$RUN_SRM" = true ] ; then
     # Run SRM
     echo Running SRM experiment...
@@ -43,9 +56,8 @@ if [ "$RUN_SRM" = true ] ; then
     echo =============================================
 fi
 
-
 if [ "$RUN_LEARNING" = true ] ; then
-    # Run learning-based segmentaiton experiment
+    # Run learning-based segmentation experiment
     echo Running learning-based experiment. This may take a while \(no kidding\)...
     STARTTIME=$(date +%s)
     cd segmentation/learning
