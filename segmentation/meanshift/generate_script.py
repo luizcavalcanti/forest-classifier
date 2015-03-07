@@ -12,7 +12,7 @@ temp_script = open(temp_path, 'w')
 for dirname, dirnames, filenames in os.walk('out/images'):
     for filename in filenames:
         filepath = os.path.join(dirname, filename)
-        output = os.path.join('out/segment', filename.replace(".ppm", ".pnm"))
+        output = os.path.join('out/segment', filename.replace(".ppm", ""))
         entry = template.replace("$IMAGE_PATH", filepath);
         entry = entry.replace("$OUTPUT_PATH", output);
         temp_script.write(entry)
