@@ -10,7 +10,7 @@ function srm_experiment(imagesPath)
         % Creates 9 segmentations
         [mapList,imseg]=srm(image,Qlevels);
         % And plot them
-        generate_seg_file(imseg, mapList, strcat('output/',images(i).name));
+        generate_seg_file(imseg, mapList, strcat('out/',images(i).name));
     end
     exit;
 end
