@@ -10,11 +10,6 @@ public class Configuration {
 
     private String rawDataDirectory;
     private String processedDataDirectory;
-    private String trainingDirectory;
-    private String validationDirectory;
-    private String outputDirectory;
-    private int chunkWidth;
-    private int chunkHeight;
 
     private Configuration() {
     }
@@ -44,11 +39,6 @@ public class Configuration {
         Configuration config = new Configuration();
         config.setRawDataDirectory(prop.getProperty("path.raw"));
         config.setProcessedDataDirectory(prop.getProperty("path.processed"));
-        config.setTrainingDirectory(prop.getProperty("path.training"));
-        config.setValidationDirectory(prop.getProperty("path.validation"));
-        config.setOutputDirectory(prop.getProperty("path.output"));
-        config.setChunkWidth(Integer.parseInt(prop.getProperty("chunk.width")));
-        config.setChunkHeight(Integer.parseInt(prop.getProperty("chunk.height")));
         return config;
     }
 
@@ -59,14 +49,6 @@ public class Configuration {
         }
         if (prop.getProperty("path.processed") == null) {
             System.err.println("configuration path.processed is obligatory");
-            System.exit(-1);
-        }
-        if (prop.getProperty("chunk.width") == null) {
-            System.err.println("configuration chunk.width is obligatory");
-            System.exit(-1);
-        }
-        if (prop.getProperty("chunk.height") == null) {
-            System.err.println("configuration chunk.height is obligatory");
             System.exit(-1);
         }
     }
@@ -85,46 +67,6 @@ public class Configuration {
 
     public void setProcessedDataDirectory(String processedDataDirectory) {
         this.processedDataDirectory = processedDataDirectory;
-    }
-
-    public int getChunkWidth() {
-        return chunkWidth;
-    }
-
-    public void setChunkWidth(int chunkWidth) {
-        this.chunkWidth = chunkWidth;
-    }
-
-    public int getChunkHeight() {
-        return chunkHeight;
-    }
-
-    public void setChunkHeight(int chunkHeight) {
-        this.chunkHeight = chunkHeight;
-    }
-
-    public String getTrainingDirectory() {
-        return trainingDirectory;
-    }
-
-    public void setTrainingDirectory(String trainingDirectory) {
-        this.trainingDirectory = trainingDirectory;
-    }
-
-    public String getValidationDirectory() {
-        return validationDirectory;
-    }
-
-    public void setValidationDirectory(String validationDirectory) {
-        this.validationDirectory = validationDirectory;
-    }
-
-    public String getOutputDirectory() {
-        return outputDirectory;
-    }
-
-    public void setOutputDirectory(String outputDirectory) {
-        this.outputDirectory = outputDirectory;
     }
 
 }

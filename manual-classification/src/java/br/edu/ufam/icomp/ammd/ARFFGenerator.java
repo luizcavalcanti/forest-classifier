@@ -25,7 +25,7 @@ public class ARFFGenerator {
         FileWriter fw = new FileWriter(f);
 
         Configuration conf = Configuration.loadConfiguration();
-        ImageDataProvider provider = new ImageDataProvider(conf.getRawDataDirectory());
+        ImageDataProvider provider = new ImageDataProvider(conf.getRawDataDirectory(), conf.getProcessedDataDirectory());
         BufferedImage currentImage = provider.getNextImage();
         fw.write(DataConverter.ARFF_HEADER);
         while (currentImage != null) {

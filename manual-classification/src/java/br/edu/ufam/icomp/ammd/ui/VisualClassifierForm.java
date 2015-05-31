@@ -56,8 +56,8 @@ public class VisualClassifierForm extends JFrame {
     }
 
     private void initDataProvider() {
-        String path = Configuration.loadConfiguration().getRawDataDirectory();
-        dataProvider = new ImageDataProvider(path);
+        Configuration conf = Configuration.loadConfiguration();
+        dataProvider = new ImageDataProvider(conf.getRawDataDirectory(), conf.getProcessedDataDirectory());
     }
 
     private void initComponents() {

@@ -12,12 +12,14 @@ import javax.imageio.ImageIO;
 
 public class ImageDataProvider {
 
-    private String dataDir;
+    private String imagesDir;
+    private String datDir;
     private File[] imageList;
     private int currentIndex = -1;
 
-    public ImageDataProvider(String imagesDir) {
-        dataDir = imagesDir;
+    public ImageDataProvider(String imagesDir, String datDir) {
+        this.imagesDir = imagesDir;
+        this.datDir = datDir;
         loadImageList();
     }
 
@@ -38,7 +40,7 @@ public class ImageDataProvider {
     }
 
     private void loadImageList() {
-        File rawDir = new File(dataDir);
+        File rawDir = new File(imagesDir);
         imageList = rawDir.listFiles(new ImageFileFilter());
     }
 
@@ -50,7 +52,7 @@ public class ImageDataProvider {
     }
 
     public void saveData(char[][] classesData) throws IOException {
-        File f = new File(imageList[currentIndex].getAbsolutePath() + ".dat");
+        File f = new File(datDir + "/" + imageList[currentIndex].getName() + ".dat");
         if (f.exists()) {
             f.delete();
         }
@@ -76,7 +78,7 @@ public class ImageDataProvider {
     public char[][] loadCurrentData() throws IOException {
         BufferedImage img = ImageIO.read(imageList[currentIndex]);
         char[][] data = new char[img.getWidth()][img.getHeight()];
-        File f = new File(imageList[currentIndex].getAbsolutePath() + ".dat");
+        File f = new File(datDir + "/" + imageList[currentIndex].getName() + ".dat");
         if (f.exists()) {
             BufferedReader br = new BufferedReader(new FileReader(f));
             StringBuilder sb = new StringBuilder();
