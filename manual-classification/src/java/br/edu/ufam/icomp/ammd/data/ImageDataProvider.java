@@ -60,12 +60,14 @@ public class ImageDataProvider {
         for (int i = 0; i < classesData.length; i++) {
             for (int j = 0; j < classesData[i].length; j++) {
                 char data = classesData[i][j];
-                if (data != '\u0000') {
+                if (data == '\u0000') {
+                    sb.append('0');
+                } else {
                     sb.append(data);
                 }
             }
             if (i != classesData.length - 1)
-                sb.append('\n');
+                sb.append('|');
         }
         fw.write(sb.toString());
         fw.close();
@@ -90,10 +92,11 @@ public class ImageDataProvider {
             for (String row : rows) {
                 if (row.trim().length() == 0)
                     continue;
-                String[] items = row.split(",");
-                for (String item : items) {
-                    if (item.trim().length() > 0 && i < data.length && j < data[i].length) {
-                        data[i][j] = item.charAt(0);
+                row = row.trim();
+                for (int k=0; k<row.length(); k++) {
+                    char cls = row.charAt(k);
+                    if (cls != '\u0000' && cls != '0') {
+                        data[i][j] = cls;
                     }
                     j++;
                 }

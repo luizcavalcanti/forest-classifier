@@ -69,6 +69,8 @@ public class ImageCanvas extends Canvas {
                 return new Color(0, 0, 1, .3f);
             case Classification.BUILDING:
                 return new Color(1, 0, 1, .2f);
+            case Classification.NONE:
+                return new Color(0, 0, 0, 0);
             default:
                 return Color.BLACK;
         }
