@@ -5,12 +5,12 @@ import java.awt.image.BufferedImage;
 
 public class DataConverter {
 
-    public static String datToArff(String[][] dat, BufferedImage img) {
+    public static String datToArff(char[][] dat, BufferedImage img) {
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < dat.length; i++) {
             for (int j = 0; j < dat[i].length; j++) {
-                String cls = dat[i][j];
-                if (cls == null || cls.trim().length() == 0)
+                char cls = dat[i][j];
+                if (cls == '\u0000')
                     continue;
                 Color c = new Color(img.getRGB(i, j));
                 sb.append(c.getRed()).append(',');

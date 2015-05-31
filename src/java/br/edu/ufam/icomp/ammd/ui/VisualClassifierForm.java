@@ -44,7 +44,7 @@ public class VisualClassifierForm extends JFrame {
     private JToggleButton btnWater;
     private JToggleButton btnBuilding;
 
-    private String selectedClass;
+    private char selectedClass;
     private int brushSize = 10;
 
     public VisualClassifierForm() {

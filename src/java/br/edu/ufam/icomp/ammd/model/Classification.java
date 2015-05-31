@@ -1,8 +1,8 @@
 package br.edu.ufam.icomp.ammd.model;
 
 public class Classification {
-    public static final String ROAD = "r";
-    public static final String FOREST = "f";
-    public static final String WATER = "w";
-    public static final String BUILDING = "b";
+    public static final char ROAD = 'r';
+    public static final char FOREST = 'f';
+    public static final char WATER = 'w';
+    public static final char BUILDING = 'b';
 }

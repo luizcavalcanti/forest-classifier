@@ -49,7 +49,7 @@ public class ImageDataProvider {
         }
     }
 
-    public void saveData(String[][] classesData) throws IOException {
+    public void saveData(char[][] classesData) throws IOException {
         File f = new File(imageList[currentIndex].getAbsolutePath() + ".dat");
         if (f.exists()) {
             f.delete();
@@ -59,24 +59,21 @@ public class ImageDataProvider {
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < classesData.length; i++) {
             for (int j = 0; j < classesData[i].length; j++) {
-                if (j != 0) {
-                    sb.append(',');
-                }
-                String data = classesData[i][j];
-                if (data != null) {
+                char data = classesData[i][j];
+                if (data != '\u0000') {
                     sb.append(data);
                 }
             }
             if (i != classesData.length - 1)
-                sb.append("|");
+                sb.append('\n');
         }
         fw.write(sb.toString());
         fw.close();
     }
 
-    public String[][] loadCurrentData() throws IOException {
+    public char[][] loadCurrentData() throws IOException {
         BufferedImage img = ImageIO.read(imageList[currentIndex]);
-        String[][] data = new String[img.getWidth()][img.getHeight()];
+        char[][] data = new char[img.getWidth()][img.getHeight()];
         File f = new File(imageList[currentIndex].getAbsolutePath() + ".dat");
         if (f.exists()) {
             BufferedReader br = new BufferedReader(new FileReader(f));
@@ -96,7 +93,7 @@ public class ImageDataProvider {
                 String[] items = row.split(",");
                 for (String item : items) {
                     if (item.trim().length() > 0 && i < data.length && j < data[i].length) {
-                        data[i][j] = item;
+                        data[i][j] = item.charAt(0);
                     }
                     j++;
                 }
