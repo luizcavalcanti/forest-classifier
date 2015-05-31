@@ -3,7 +3,7 @@
 DIR_OUTPUT=out
 DIR_IMAGES=$DIR_OUTPUT/images
 DIR_SEGMENTS=$DIR_OUTPUT/segment
-DIR_ORIGINAL_IMAGES=../../data/validation
+DIR_ORIGINAL_IMAGES=../../../geoma-database/ptv-mao
 EXECUTABLE=edison
 
 
