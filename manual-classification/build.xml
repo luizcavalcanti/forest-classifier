@@ -8,6 +8,7 @@
 
     <target name="clean">
         <delete dir="bin" />
+        <delete dir="dist" />
         <delete>
             <fileset dir="." includes="*.jar"/>
         </delete>
@@ -15,11 +16,11 @@
 
     <target name="build" depends="clean">
         <mkdir dir="bin" />
-        <javac srcdir="src" destdir="bin" includeantruntime="false">
+        <mkdir dir="dist" />
+        <javac srcdir="src/java" destdir="bin" includeantruntime="false">
             <classpath refid="full-classpath"/>
         </javac>
-        <jar destfile="forestclassifier.jar" basedir="bin" />
+        <jar destfile="dist/forestclassifier.jar" basedir="bin" />
     </target>
-
 
 </project>
