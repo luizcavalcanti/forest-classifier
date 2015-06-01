@@ -1,10 +1,12 @@
 #!/bin/bash
 
 RUN_MSEG=true
-RUN_JSEG=true
-RUN_MEANSHIFT=true
-RUN_SRM=true
+RUN_JSEG=false
+RUN_MEANSHIFT=false
+RUN_SRM=false
 RUN_LEARNING=false
+
+IMAGES_DIR=$1
 
 if [ "$RUN_MSEG" = true ] ; then
     # Run MSEG
@@ -13,7 +15,7 @@ if [ "$RUN_MSEG" = true ] ; then
     STARTTIME=$(date +%s)
     cd segmentation/mseg
     pwd
-    ./mseg.sh
+    ./mseg.sh "../../$IMAGES_DIR"
     cd ../..
     ENDTIME=$(date +%s)
     echo "done in $(($ENDTIME - $STARTTIME)) seconds."

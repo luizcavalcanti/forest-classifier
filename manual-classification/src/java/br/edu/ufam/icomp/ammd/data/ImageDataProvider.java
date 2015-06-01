@@ -52,7 +52,8 @@ public class ImageDataProvider {
     }
 
     public void saveData(char[][] classesData) throws IOException {
-        File f = new File(datDir + "/" + imageList[currentIndex].getName() + ".dat");
+        String filename = imageList[currentIndex].getName();
+        File f = new File(datDir + "/" + filename.substring(0, filename.length()-4) + ".dat");
         if (f.exists()) {
             f.delete();
         }
@@ -78,7 +79,8 @@ public class ImageDataProvider {
     public char[][] loadCurrentData() throws IOException {
         BufferedImage img = ImageIO.read(imageList[currentIndex]);
         char[][] data = new char[img.getWidth()][img.getHeight()];
-        File f = new File(datDir + "/" + imageList[currentIndex].getName() + ".dat");
+        String filename = imageList[currentIndex].getName();
+        File f = new File(datDir + "/" + filename.substring(0, filename.length()-4) + ".dat");
         if (f.exists()) {
             BufferedReader br = new BufferedReader(new FileReader(f));
             StringBuilder sb = new StringBuilder();

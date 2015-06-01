@@ -3,7 +3,7 @@
 DIR_OUTPUT=out
 DIR_IMAGES=$DIR_OUTPUT/images
 DIR_SEGMENTS=$DIR_OUTPUT/segment
-DIR_ORIGINAL_IMAGES=../../data/validation
+DIR_ORIGINAL_IMAGES=$1
 
 #building
 cd src
@@ -16,15 +16,16 @@ rm -Rf $DIR_OUTPUT
 mkdir -p $DIR_IMAGES
 mkdir -p $DIR_SEGMENTS
 
-# converting files
+# converting files (only the ones with metadata)
 echo
 echo "Converting jpg files to ppm..."
-for file in $DIR_ORIGINAL_IMAGES/*.jpg
+for file in $DIR_ORIGINAL_IMAGES/*.dat
 do
     if [[ -f $file ]]; then
+        echo $file
         filename=`basename $file`
         filename="${filename%.*}"
-        convert $file $DIR_IMAGES/$filename.ppm
+        convert "${file%.*}".jpg $DIR_IMAGES/$filename.ppm
     fi
 done
 echo "done."
