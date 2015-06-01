@@ -66,7 +66,7 @@ public class VisualClassifierForm extends JFrame {
 
         sldBrushSize = new JSlider();
         sldBrushSize.setMinimum(1);
-        sldBrushSize.setMaximum(50);
+        sldBrushSize.setMaximum(100);
         sldBrushSize.setValue(brushSize);
         sldBrushSize.addChangeListener(new ChangeListener() {
             @Override
