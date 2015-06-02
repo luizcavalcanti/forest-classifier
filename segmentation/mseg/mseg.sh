@@ -50,5 +50,11 @@ do
     convert $file $DIR_SEGMENTS/$filename.jpg
     fi
 done
-rm $DIR_SEGMENTS/*.ppm
+
+# clear results
+rm $DIR_SEGMENTS/*.jpg
+mv $DIR_SEGMENTS/* $DIR_OUTPUT
+rm -Rf $DIR_IMAGES
+rm -Rf $DIR_SEGMENTS
+
 echo "done."
