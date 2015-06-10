@@ -51,7 +51,7 @@ if [ "$RUN_MEANSHIFT" = true ] ; then
     echo Running meanshift experiment...
     STARTTIME=$(date +%s)
     cd segmentation/meanshift
-    ./meanshift.sh out
+    ./meanshift.sh "../../$IMAGES_DIR"
     cd ../..
     ENDTIME=$(date +%s)
     echo "done in $(($ENDTIME - $STARTTIME)) seconds."

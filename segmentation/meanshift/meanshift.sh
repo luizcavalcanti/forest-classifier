@@ -1,9 +1,9 @@
 #!/bin/bash
 
+DIR_ORIGINAL_IMAGES=$1
 DIR_OUTPUT=out
 DIR_IMAGES=$DIR_OUTPUT/images
 DIR_SEGMENTS=$DIR_OUTPUT/segment
-DIR_ORIGINAL_IMAGES=../../../geoma-database/ptv-mao
 EXECUTABLE=edison
 
 
@@ -22,11 +22,12 @@ chmod +x $EXECUTABLE
 # converting files
 echo
 echo "Converting jpg files to ppm..."
-for file in $DIR_ORIGINAL_IMAGES/*.jpg
+for file in $DIR_ORIGINAL_IMAGES/*.dat
 do
     if [[ -f $file ]]; then
         filename=`basename $file`
-        convert $file $DIR_IMAGES/$filename.ppm
+        filename="${filename%.*}"
+        convert "${file%.*}".jpg $DIR_IMAGES/$filename.ppm
     fi
 done
 echo "done."
