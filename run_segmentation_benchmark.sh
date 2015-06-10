@@ -1,5 +1,10 @@
 #!/bin/bash
 
+if [ $# -eq 0 ]; then
+    echo "No arguments. Please provide the image database location as argument"
+    exit 1
+fi
+
 RUN_MSEG=true
 RUN_JSEG=false
 RUN_MEANSHIFT=false
@@ -19,6 +24,10 @@ if [ "$RUN_MSEG" = true ] ; then
     cd ../..
     ENDTIME=$(date +%s)
     echo "done in $(($ENDTIME - $STARTTIME)) seconds."
+
+    echo "Running benchmark..."
+    echo =============================================
+    python segmentation/benchmark/mseg_benchmark.py "$IMAGES_DIR"
     echo =============================================
 fi
 
