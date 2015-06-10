@@ -13,7 +13,15 @@ segmentation/srm/out
 *.class
 segmentation/meanshift/edison
 segmentation/jseg/segdist
+segmentation/jseg/src/jpeg/cjpeg
+segmentation/jseg/src/jpeg/djpeg
+segmentation/jseg/src/jpeg/jpegtran
+segmentation/jseg/src/jpeg/rdjpgcom
+segmentation/jseg/src/jpeg/wrjpgcom
 segmentation/mseg/mseg
+segmentation/meanshift/temp.eds
+segmentation/mseg/src/segment.dSYM
+segmentation/srm/*.mexmaci64
 
 # packages #
 preprocessor.jar
@@ -26,5 +34,6 @@ segmentation/learning/learning-segmentation.jar
 *.DS_Store
 *.dat
 *.log
+*.pyc
 .classpath
 .project
