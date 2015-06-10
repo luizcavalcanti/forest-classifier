@@ -41,6 +41,9 @@ if [ "$RUN_JSEG" = true ] ; then
     ENDTIME=$(date +%s)
     echo "done in $(($ENDTIME - $STARTTIME)) seconds."
     echo =============================================
+    echo "Running benchmark..."
+    python segmentation/benchmark/jseg_benchmark.py "$IMAGES_DIR"
+    echo =============================================
 fi
 
 if [ "$RUN_MEANSHIFT" = true ] ; then
