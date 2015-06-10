@@ -6,7 +6,7 @@ if [ $# -eq 0 ]; then
 fi
 
 RUN_MSEG=true
-RUN_JSEG=false
+RUN_JSEG=true
 RUN_MEANSHIFT=false
 RUN_SRM=false
 RUN_LEARNING=false
@@ -36,7 +36,7 @@ if [ "$RUN_JSEG" = true ] ; then
     echo Running JSEG experiment...
     STARTTIME=$(date +%s)
     cd segmentation/jseg
-    ./jseg.sh
+    ./jseg.sh "../../$IMAGES_DIR"
     cd ../..
     ENDTIME=$(date +%s)
     echo "done in $(($ENDTIME - $STARTTIME)) seconds."
