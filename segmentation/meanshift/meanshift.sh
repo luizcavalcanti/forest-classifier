@@ -41,18 +41,8 @@ echo "done"
 echo
 echo "Starting experiment"
 ./edison out/temp.eds
-echo "done"
 
-# converting files back
-echo
-echo "Converting ppm files to jpeg..."
-for file in $DIR_SEGMENTS/*.pnm
-do
-    if [[ -f $file ]]; then
-	filename=`basename $file`
-	filename="${filename%.*}"
-	convert $file $DIR_SEGMENTS/$filename
-    fi
-done
-rm $DIR_SEGMENTS/*.pnm
+rm -Rf $DIR_IMAGES
+mv $DIR_SEGMENTS/* $DIR_OUTPUT
+rm -Rf $DIR_SEGMENTS
 echo "done."

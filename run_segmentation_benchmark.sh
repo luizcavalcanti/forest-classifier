@@ -7,7 +7,7 @@ fi
 
 RUN_MSEG=true
 RUN_JSEG=true
-RUN_MEANSHIFT=false
+RUN_MEANSHIFT=true
 RUN_SRM=false
 RUN_LEARNING=false
 
@@ -55,6 +55,9 @@ if [ "$RUN_MEANSHIFT" = true ] ; then
     cd ../..
     ENDTIME=$(date +%s)
     echo "done in $(($ENDTIME - $STARTTIME)) seconds."
+    echo =============================================
+    echo "Running benchmark..."
+    python segmentation/benchmark/meanshift_benchmark.py "$IMAGES_DIR"
     echo =============================================
 fi
 
