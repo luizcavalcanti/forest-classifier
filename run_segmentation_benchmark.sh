@@ -25,8 +25,8 @@ if [ "$RUN_MSEG" = true ] ; then
     ENDTIME=$(date +%s)
     echo "done in $(($ENDTIME - $STARTTIME)) seconds."
 
-    echo "Running benchmark..."
     echo =============================================
+    echo "Running benchmark..."
     python segmentation/benchmark/mseg_benchmark.py "$IMAGES_DIR"
     echo =============================================
 fi

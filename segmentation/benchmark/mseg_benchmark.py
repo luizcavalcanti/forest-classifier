@@ -31,9 +31,12 @@ def find_edges(image):
 
     return output_image
 
-def calculate_edge_error(ground_truth, candidade):
-    result = ground_truth - candidade
-    width, height, depth = result.shape
+def calculate_edge_error(ground_truth, candidate):
+    kernel = np.ones((5,5),np.uint8)
+    candidate = cv2.dilate(candidate, kernel, iterations = 1)
+    ground_truth = cv2.dilate(ground_truth, kernel, iterations = 0)
+    result = ground_truth - candidate
+    width, height = result.shape
     non_black = 0
     error_count = 0
     for x in xrange(0, width):
