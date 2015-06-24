@@ -1,17 +1,18 @@
 #!/bin/bash
 
-if [ $# -eq 0 ]; then
-    echo "No arguments. Please provide the image database location as argument"
+if [ $# -lt 2 ]; then
+    echo "Not enough arguments. Please provide path to MATLAB home directory and images directory, in that order"
     exit 1
 fi
 
 RUN_MSEG=true
 RUN_JSEG=true
 RUN_MEANSHIFT=true
-RUN_SRM=false
+RUN_SRM=true
 RUN_LEARNING=false
 
-IMAGES_DIR=$1
+MATLAB_HOME=$1
+IMAGES_DIR=$2
 
 if [ "$RUN_MSEG" = true ] ; then
     # Run MSEG
@@ -74,11 +75,17 @@ if [ "$RUN_SRM" = true ] ; then
     echo Running SRM experiment...
     STARTTIME=$(date +%s)
     cd segmentation/srm
-    ./srm.sh
+    ./srm.sh "$MATLAB_HOME" "../../$IMAGES_DIR"
     cd ../..
     ENDTIME=$(date +%s)
     echo "done in $(($ENDTIME - $STARTTIME)) seconds."
+    echo
     echo =============================================
+    echo "Running benchmark..."
+    python segmentation/benchmark/srm_benchmark.py "$IMAGES_DIR" > benchmark_srm.log
+    echo "done."
+    echo =============================================
+    echo
 fi
 
 if [ "$RUN_LEARNING" = true ] ; then
