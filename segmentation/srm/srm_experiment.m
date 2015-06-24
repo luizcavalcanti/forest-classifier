@@ -1,8 +1,11 @@
 function srm_experiment(imagesPath)
+    dat_files  = dir([imagesPath '*.dat']);
     images  = dir([imagesPath '*.jpg']);
-    for i=1:length(images)
-        disp(['processing ' images(i).name]);
-        image=double(imread([imagesPath images(i).name]));
+    for i=1:length(dat_files)
+        dat_name = dat_files(i).name;
+        image_name = [dat_files(i).name(1:length(dat_name)-3) 'jpg'];
+        disp(['processing ' image_name]);
+        image=double(imread([imagesPath '/' image_name]));
         % Choose different scales
         % Segmentation parameter Q; Q small few segments, Q large may segments
         Qlevels=2.^(8:-1:0);
@@ -10,7 +13,8 @@ function srm_experiment(imagesPath)
         % Creates 9 segmentations
         [mapList,imseg]=srm(image,Qlevels);
         % And plot them
-        generate_seg_file(imseg, mapList, strcat('out/',images(i).name));
+        output_name = [image_name(1:length(image_name)-3) 'ppm'];
+        generate_seg_file(imseg, mapList, strcat('out/', output_name));
     end
     exit;
 end
@@ -37,5 +41,5 @@ function generate_seg_file(imseg,mapList,filename)
 
 
     Iedge=precision-Iedge;
-    imwrite(Iedge, filename);
+    imwrite(Iedge, filename, 'ppm');
 end
