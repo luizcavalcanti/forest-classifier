@@ -24,11 +24,13 @@ if [ "$RUN_MSEG" = true ] ; then
     cd ../..
     ENDTIME=$(date +%s)
     echo "done in $(($ENDTIME - $STARTTIME)) seconds."
-
+    echo
     echo =============================================
     echo "Running benchmark..."
-    python segmentation/benchmark/mseg_benchmark.py "$IMAGES_DIR"
+    python segmentation/benchmark/mseg_benchmark.py "$IMAGES_DIR" > benchmark_mseg.log
+    echo "done."
     echo =============================================
+    echo
 fi
 
 if [ "$RUN_JSEG" = true ] ; then
@@ -40,10 +42,13 @@ if [ "$RUN_JSEG" = true ] ; then
     cd ../..
     ENDTIME=$(date +%s)
     echo "done in $(($ENDTIME - $STARTTIME)) seconds."
+    echo
     echo =============================================
     echo "Running benchmark..."
-    python segmentation/benchmark/jseg_benchmark.py "$IMAGES_DIR"
+    python segmentation/benchmark/jseg_benchmark.py "$IMAGES_DIR" > benchmark_jseg.log
+    echo "done."
     echo =============================================
+    echo
 fi
 
 if [ "$RUN_MEANSHIFT" = true ] ; then
@@ -55,10 +60,13 @@ if [ "$RUN_MEANSHIFT" = true ] ; then
     cd ../..
     ENDTIME=$(date +%s)
     echo "done in $(($ENDTIME - $STARTTIME)) seconds."
+    echo
     echo =============================================
     echo "Running benchmark..."
-    python segmentation/benchmark/meanshift_benchmark.py "$IMAGES_DIR"
+    python segmentation/benchmark/meanshift_benchmark.py "$IMAGES_DIR" > benchmark_meanshift.log
+    echo "done."
     echo =============================================
+    echo
 fi
 
 if [ "$RUN_SRM" = true ] ; then
