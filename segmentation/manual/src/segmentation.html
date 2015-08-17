@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+    <head>
+        <meta charset="utf-8">
+        <link rel="stylesheet" type="text/css" href="css/style.css"/>
+        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.js"></script>
+        <script type="text/javascript" src="js/functions.js"></script>
+    </head>
+    <body>
+        <button id="btnNewRegion">New region</button>
+        <button id="btnSaveRegion">Save region</button>
+        <button id="btnDeleteLast">Delete last region</button>
+        <button id="btnDone">Done</button>
+        <div id="canvasDiv"></div>
+        <script type="text/javascript">
+            $(document).ready(function() {
+                initCanvas(document.getElementById('canvasDiv'), 640, 480);
+            });
+        </script>
+    </body>
+</html>
