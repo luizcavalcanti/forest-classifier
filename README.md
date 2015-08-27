@@ -1,22 +1,19 @@
 ForestClassifier
 ================
 
-Database used in experiment is hosted <a href="https://github.com/luizcavalcanti/geoma-database">here</a>
+Experiment on a multi-level machine learning solution to detect signs of environmental crime on aerial images of the Amazon rain forest.
 
-Experiment on image recognition for aerial images (mainly forestal areas)
+Image database used in this experiment is hosted <a href="https://github.com/luizcavalcanti/geoma-database">here</a>
 
-<b>Classes</b>
-* Forest
-* Water
-* Road
-* Building
+<b>Required tools:</b>
+* JDK 7+
+* Apache Ant
+* Python 2.7 + OpenCV
+* Matlab (only if you need/want SRM segmentation)
+* ImageMagick
 
-<b>Used features</b>
-* color components (R, G and B)
-* grey mean
-* histogram on grey values
-
-<b>Learning algorithms</b>
-* kNN (IBk)
-* Decision trees (J48)
-* SVM (libSVM)
+<b>Benchmarked segmentation algorithms:</b>
+* MSEG
+* JSEG
+* Meanshift
+* SRM
