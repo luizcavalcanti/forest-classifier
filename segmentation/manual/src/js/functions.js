@@ -60,6 +60,8 @@ function registerButtonsEvents() {
         btnClosedRegion.disabled = true;
         btnSaveRegion.disabled = false;
         allowPaint = true;
+        btnStroke.setAttribute('class', 'btn-selected');
+        btnClosedRegion.setAttribute('class', 'btn-unselected');
     });
 
     $('#btnClosedRegion').mousedown(function(e) {
@@ -68,6 +70,8 @@ function registerButtonsEvents() {
         btnClosedRegion.disabled = true;
         btnSaveRegion.disabled = false;
         allowPaint = true;
+        btnClosedRegion.setAttribute('class', 'btn-selected');
+        btnStroke.setAttribute('class', 'btn-unselected');
     });
 
     $('#btnSaveRegion').mousedown(function(e) {
@@ -147,7 +151,11 @@ function saveCurrentRegion() {
     clickX = new Array();
     clickY = new Array();
     regionCount++;
+    btnClosedRegion.setAttribute('class', 'btn-unselected');
+    btnStroke.setAttribute('class', 'btn-unselected');
+    btnStroke.disabled = true;
     btnStroke.disabled = false;
+    btnClosedRegion.disabled = true;
     btnClosedRegion.disabled = false;
     btnSaveRegion.disabled = true;
     btnDeleteLast.disabled = false;

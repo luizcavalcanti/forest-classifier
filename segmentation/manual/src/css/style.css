@@ -3,6 +3,14 @@ body {
     font-family: helvetica sans-serif;
 }
 
+.btn-selected {
+    color: red;
+}
+
+.btn-unselected {
+    /*color: black;*/
+}
+
 /*button {
     margin-bottom: 15px;
     display: inline-block;
@@ -17,9 +25,9 @@ body {
     -webkit-border-radius: 5px;
     border: 1px solid rgba(0,0,0,0.3);
     border-bottom-width: 3px;
-}
+}*/
 
-button:hover {
+/*button:hover {
     background-color: #e3e3e3;
     border-color: rgba(0,0,0,0.5);
 }
