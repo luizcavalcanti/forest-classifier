@@ -3,13 +3,16 @@ var clickX = new Array();
 var clickY = new Array();
 var regionCount = 0;
 var regionHistory = new Array();
+var regionType = new Array();
+var isClosedRegion = false;
 var context;
 var allowPaint;
 var paint;
 var image;
 
 // HTML Elements
-var btnNewRegion;
+var btnStroke;
+var btnClosedRegion;
 var btnSaveRegion;
 var btnDeleteLast;
 
@@ -35,8 +38,11 @@ function initCanvas(canvasDiv, width, height) {
 }
 
 function configureButtons() {
-    btnNewRegion = document.getElementById('btnNewRegion');
-    btnNewRegion.disabled = false;
+    btnStroke = document.getElementById('btnStroke');
+    btnStroke.disabled = false;
+
+    btnClosedRegion = document.getElementById('btnClosedRegion');
+    btnClosedRegion.disabled = false;
     
     btnSaveRegion = document.getElementById('btnSaveRegion');
     btnSaveRegion.disabled = true;
@@ -48,8 +54,18 @@ function configureButtons() {
 }
 
 function registerButtonsEvents() {
-    $('#btnNewRegion').mousedown(function(e) {
-        btnNewRegion.disabled = true;
+    $('#btnStroke').mousedown(function(e) {
+        isClosedRegion = false;
+        btnStroke.disabled = true;
+        btnClosedRegion.disabled = true;
+        btnSaveRegion.disabled = false;
+        allowPaint = true;
+    });
+
+    $('#btnClosedRegion').mousedown(function(e) {
+        isClosedRegion = true;
+        btnStroke.disabled = true;
+        btnClosedRegion.disabled = true;
         btnSaveRegion.disabled = false;
         allowPaint = true;
     });
@@ -63,6 +79,7 @@ function registerButtonsEvents() {
         if (regionCount>0) {
             regionCount--;
             regionHistory.splice(regionHistory.length-1,1);
+            regionType.splice(regionType.length-1,1);
             redraw();
             if (regionCount===0) {
                 btnDeleteLast.disabled = true;
@@ -76,6 +93,7 @@ function registerButtonsEvents() {
         if (reallyDone) {
             if (clickX.length>0) {
                 saveCurrentRegion();
+                redraw();
             }
             console.log("TODO: Save region data on backend");
         }
@@ -124,10 +142,13 @@ function addClick(x, y) {
 
 function saveCurrentRegion() {
     regionHistory.push([clickX, clickY]);
+    console.log(isClosedRegion?'cr':'pt');
+    regionType.push(isClosedRegion?'cr':'pt');
     clickX = new Array();
     clickY = new Array();
     regionCount++;
-    btnNewRegion.disabled = false;
+    btnStroke.disabled = false;
+    btnClosedRegion.disabled = false;
     btnSaveRegion.disabled = true;
     btnDeleteLast.disabled = false;
     allowPaint = false;
@@ -156,8 +177,12 @@ function drawPreviousRegions() {
         for(var j=0; j < xPoints.length; j++) {
             context.lineTo(xPoints[j], yPoints[j]);
         }
-        context.closePath();
-        context.fill();
+        if (regionType[i]=='cr') {
+            context.closePath();
+            context.fill();
+        } else {
+            context.stroke();
+        }
     }
 }
 
@@ -166,6 +191,8 @@ function drawCurrentRegion() {
     for(var i=0; i < clickX.length; i++) {
         context.lineTo(clickX[i], clickY[i]);
     }
-    context.closePath();
+    if (isClosedRegion) {
+        context.closePath();
+    }
     context.stroke();
 }
