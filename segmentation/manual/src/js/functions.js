@@ -100,6 +100,7 @@ function registerButtonsEvents() {
                 redraw();
             }
             console.log("TODO: Save region data on backend");
+            loadCanvasImage();
         }
     });
 }
@@ -136,7 +137,23 @@ function loadCanvasImage() {
     image.onload = function() {
         context.drawImage(image, 0, 0);
     };
-    image.src = '../../../../geoma-database/ptv-mao/00002.jpg';
+    var http = new XMLHttpRequest();
+    http.open("POST", "/getNewImage", true);
+    var params = "uid=asdasd";
+
+    //Send the proper header information along with the request
+    http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    http.setRequestHeader("Content-length", params.length);
+    http.setRequestHeader("Connection", "close");
+
+    http.onreadystatechange = function() {
+        if(http.readyState == 4 && http.status == 200) {
+            console.log(http.response);
+            image.src = "data:image/jpg;base64," + http.response;
+            //'http://localhost:8080/getNewImage?uid=teste';
+        }
+    }
+    http.send(params);
 }
 
 function addClick(x, y) {

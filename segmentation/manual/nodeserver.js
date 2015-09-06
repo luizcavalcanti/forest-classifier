@@ -1,9 +1,69 @@
-var sys = require("sys"),
-my_http = require("http");
-my_http.createServer(function(request,response){
-    sys.puts("I got kicked");
+var http = require("http");
+var url = require("url");
+var fs = require("fs");
+var btoa = require("btoa"); // Binaty to base 64
+// var bodyParser = require('body-parser');
+
+var port = 8080;
+var server = http.createServer(callback);
+server.listen(port);
+console.log("Server Running on "+port);
+
+/* CALLBACKS */
+function callback(request, response) {
+    console.log('['+request.method+']'+request.url);
+    if (request.method == 'POST') {
+        var parsedURL = url.parse(request.url, true);
+        var operation = parsedURL.pathname;
+        var params = "";
+        response.end(processOperation(operation, params, response));
+    } else if (request.method == 'GET') {
+        var parsedURL = url.parse(request.url, true);
+        var content = parsedURL.pathname;
+        response.end(returnStaticContent(content));
+    }
+};
+
+function returnStaticContent(content) {
+    return fs.readFileSync('src/'+content);
+}
+
+function processOperation(operation, parameters, response) {
+    switch (operation) {
+        case '/getNewImage':
+            processNewImage(parameters, response);
+            break;
+        case '/saveData':
+            processSaveData(parameters, response);
+            break;
+        default:
+            processInvalidOperation(operation, response);
+    }
+}
+
+function processNewImage(params, response) {
+    var uid = params.uid;
+    var number = Math.ceil(Math.random()*100);
+    var fileContent = fs.readFileSync('/Users/luiz/Workspace/geoma-database/ptv-mao/000'+number+'.jpg');
+    response.writeHeader(200, {"Content-Type": "image/jpeg"});
+    response.write(btoa(fileContent));
+}
+
+function processSaveData(params, response) {
+    var uid = params.uid;
+    var segments = params.segments;
+    console.log(segments);
     response.writeHeader(200, {"Content-Type": "text/plain"});
-    response.write("Hello World!!");
-    response.end();
-}).listen(8080);
-sys.puts("Server Running on 8080"); 
+    response.write("ok");
+}
+
+function processInvalidOperation(operation, response) {
+    var msg = "Operation "+operation+" is not valid";
+    console.log(msg);
+    response.writeHeader(200, {"Content-Type": "text/plain"});
+    response.write(msg);
+}
+
+function endsWith(text, ending) {
+    return text.indexOf(ending, text.length - ending.length) !== -1;
+};
