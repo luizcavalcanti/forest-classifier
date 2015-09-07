@@ -63,6 +63,7 @@ function registerButtonsEvents() {
         btnStroke.disabled = true;
         btnClosedRegion.disabled = true;
         btnSaveRegion.disabled = false;
+        btnDeleteLast.disabled = true;
         allowPaint = true;
         btnStroke.setAttribute('class', 'btn-selected');
         btnClosedRegion.setAttribute('class', 'btn-unselected');
@@ -73,6 +74,7 @@ function registerButtonsEvents() {
         btnStroke.disabled = true;
         btnClosedRegion.disabled = true;
         btnSaveRegion.disabled = false;
+        btnDeleteLast.disabled = true;
         allowPaint = true;
         btnClosedRegion.setAttribute('class', 'btn-selected');
         btnStroke.setAttribute('class', 'btn-unselected');
@@ -104,7 +106,6 @@ function registerButtonsEvents() {
                 redraw();
             }
             saveImageData();
-            loadCanvasImage();
         }
     });
 }
