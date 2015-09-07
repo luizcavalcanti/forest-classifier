@@ -6,10 +6,15 @@ var querystring = require('querystring');
 
 var port = 8080;
 var imagesPath = "/Users/luiz/Workspace/geoma-database/ptv-mao/";
+var datDir = imagesPath+"/dat";
 
 
 var server = http.createServer(callback);
 server.listen(port);
+
+if (!fs.existsSync(datDir)) {
+    fs.mkdirSync(datDir);
+}
 console.log("Server Running on "+port);
 
 /* CALLBACKS */
@@ -51,10 +56,17 @@ function processOperation(operation, parameters, response) {
 }
 
 function processNewImage(params, response) {
-    var uid = params.uid;
     var number = Math.ceil(Math.random()*100);
-    var fileContent = fs.readFileSync(imagesPath+'/000'+number+'.jpg');
-    console.log("TODO: get actually relevant image");
+    var userDir = datDir+"/"+params.uid;
+
+    if (!fs.existsSync(userDir)) {
+        fs.mkdirSync(userDir);
+    }
+
+    var files = fs.readdirSync(userDir);
+    var nextFile = ("00000" + (files.length+1)).slice(-5);
+    var fileContent = fs.readFileSync(imagesPath+'/'+nextFile+'.jpg');
+
     response.writeHeader(200, {"Content-Type": "image/jpeg"});
     response.write(btoa(fileContent));
 }
