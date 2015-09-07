@@ -1,8 +1,8 @@
 var http = require("http");
 var url = require("url");
 var fs = require("fs");
-var btoa = require("btoa"); // Binaty to base 64
-// var bodyParser = require('body-parser');
+var btoa = require("btoa");
+var querystring = require('querystring');
 
 var port = 8080;
 var imagesPath = "/Users/luiz/Workspace/geoma-database/ptv-mao/";
@@ -16,10 +16,16 @@ console.log("Server Running on "+port);
 function callback(request, response) {
     console.log('['+request.method+']'+request.url);
     if (request.method == 'POST') {
-        var parsedURL = url.parse(request.url, true);
-        var operation = parsedURL.pathname;
-        var params = "";
-        response.end(processOperation(operation, params, response));
+        var fullBody = '';
+        request.on('data', function(chunk) {
+            fullBody += chunk.toString();
+        });
+        request.on('end', function() {
+            var parsedURL = url.parse(request.url, true);
+            var operation = parsedURL.pathname;
+            var params = querystring.parse(fullBody);
+            response.end(processOperation(operation, params, response));
+        });
     } else if (request.method == 'GET') {
         var parsedURL = url.parse(request.url, true);
         var content = parsedURL.pathname;
