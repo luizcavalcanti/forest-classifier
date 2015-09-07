@@ -1,4 +1,4 @@
-// Global vars
+// Drawing vars
 var clickX = new Array();
 var clickY = new Array();
 var regionCount = 0;
@@ -9,6 +9,10 @@ var context;
 var allowPaint;
 var paint;
 var image;
+
+// Session vars
+var userID = "cavalcanti.luiz@gmail.com";
+console.log("TODO: set userID to lowercase");
 
 // HTML Elements
 var btnStroke;
@@ -133,9 +137,13 @@ function registerCanvasEvents() {
 }
 
 function saveImageData() {
-    var params = {'uid': 'bullshit', 'regions': regionHistory, 'types': regionType};
+    var params = {'uid': userID, 'regions': regionHistory, 'types': regionType};
     $.post('/saveData', params, function(data) {
-        alert(data);
+        if (data==="ok") {
+            loadCanvasImage();
+        } else {
+            alert("There was an error contacting the server.\nPlease try again in a few seconds.");
+        }
     });
 }
 
@@ -144,7 +152,7 @@ function loadCanvasImage() {
     image.onload = function() {
         context.drawImage(image, 0, 0);
     };
-    $.post('/getNewImage', {'uid': 'bullshit'}, function(data) {
+    $.post('/getNewImage', {'uid': userID}, function(data) {
         image.src = "data:image/jpg;base64," + data;
     });
 }
