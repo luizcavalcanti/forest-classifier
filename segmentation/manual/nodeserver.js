@@ -5,6 +5,9 @@ var btoa = require("btoa"); // Binaty to base 64
 // var bodyParser = require('body-parser');
 
 var port = 8080;
+var imagesPath = "/Users/luiz/Workspace/geoma-database/ptv-mao/";
+
+
 var server = http.createServer(callback);
 server.listen(port);
 console.log("Server Running on "+port);
@@ -44,7 +47,8 @@ function processOperation(operation, parameters, response) {
 function processNewImage(params, response) {
     var uid = params.uid;
     var number = Math.ceil(Math.random()*100);
-    var fileContent = fs.readFileSync('/Users/luiz/Workspace/geoma-database/ptv-mao/000'+number+'.jpg');
+    var fileContent = fs.readFileSync(imagesPath+'/000'+number+'.jpg');
+    console.log("TODO: get actually relevant image");
     response.writeHeader(200, {"Content-Type": "image/jpeg"});
     response.write(btoa(fileContent));
 }
@@ -54,6 +58,7 @@ function processSaveData(params, response) {
     var segments = params.segments;
     console.log(segments);
     response.writeHeader(200, {"Content-Type": "text/plain"});
+    console.log("TODO: save data");
     response.write("ok");
 }
 
