@@ -165,11 +165,13 @@ function addClick(x, y) {
 }
 
 function saveCurrentRegion() {
-    regionHistory.push([clickX, clickY]);
-    regionType.push(isClosedRegion?'cr':'pt');
+    if (clickX.length > 0) {
+        regionHistory.push([clickX, clickY]);
+        regionType.push(isClosedRegion?'cr':'pt');
+        regionCount++;
+    }
     clickX = new Array();
     clickY = new Array();
-    regionCount++;
     btnClosedRegion.setAttribute('class', 'btn-unselected');
     btnStroke.setAttribute('class', 'btn-unselected');
     btnStroke.disabled = true;
