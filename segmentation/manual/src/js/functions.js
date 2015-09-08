@@ -138,7 +138,7 @@ function registerCanvasEvents() {
 }
 
 function saveImageData() {
-    var params = {'uid': userID, 'regions': regionHistory, 'types': regionType};
+    var params = {'uid': userID, 'regionCount': regionCount, 'regions[]': regionHistory, 'types[]': regionType};
     $.post('/saveData', params, function(data) {
         if (data==="ok") {
             loadCanvasImage();
@@ -165,7 +165,6 @@ function addClick(x, y) {
 
 function saveCurrentRegion() {
     regionHistory.push([clickX, clickY]);
-    console.log(isClosedRegion?'cr':'pt');
     regionType.push(isClosedRegion?'cr':'pt');
     clickX = new Array();
     clickY = new Array();

@@ -66,10 +66,17 @@ function processNewImage(params, response) {
 
 function processSaveData(params, response) {
     var uid = params.uid;
-    var segments = params.segments;
-    console.log(segments);
+    var regionCount = params.regionCount;
+    var regions = params['regions[]'];
+    var types = params['types[]'];
+
+    var userDir = datDir+"/"+params.uid;
+    var nextFile = ("00000" + getCurrentImageNumber(uid)).slice(-5);
+
+    var fileData = createDatFileContent(regions, types, regionCount);
+    fs.writeFileSync(userDir+'/'+nextFile+'.dat', fileData);
+
     response.writeHeader(200, {"Content-Type": "text/plain"});
-    console.log("TODO: save data");
     response.write("ok");
 }
 
