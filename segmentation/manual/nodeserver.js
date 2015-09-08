@@ -56,15 +56,8 @@ function processOperation(operation, parameters, response) {
 }
 
 function processNewImage(params, response) {
-    var number = Math.ceil(Math.random()*100);
-    var userDir = datDir+"/"+params.uid;
-
-    if (!fs.existsSync(userDir)) {
-        fs.mkdirSync(userDir);
-    }
-
-    var files = fs.readdirSync(userDir);
-    var nextFile = ("00000" + (files.length+1)).slice(-5);
+    var uid = params.uid;
+    var nextFile = ("00000" + getCurrentImageNumber(uid)).slice(-5);
     var fileContent = fs.readFileSync(imagesPath+'/'+nextFile+'.jpg');
 
     response.writeHeader(200, {"Content-Type": "image/jpeg"});
@@ -89,4 +82,40 @@ function processInvalidOperation(operation, response) {
 
 function endsWith(text, ending) {
     return text.indexOf(ending, text.length - ending.length) !== -1;
-};
+}
+
+function getCurrentImageNumber(userID) {
+    var userDir = datDir+"/"+userID;
+    if (!fs.existsSync(userDir)) fs.mkdirSync(userDir);
+    var files = fs.readdirSync(userDir);
+    files = files.filter(datFileFilter);
+    return files.length+1;
+}
+
+function datFileFilter(value) {
+  return endsWith(value, ".dat");
+}
+
+function createDatFileContent(regions, types, regionCount) {
+    var fileContent = regionCount+"\n";
+    if (regionCount > 1) {
+        for (var i=0; i<regionCount; i++) {
+            fileContent += types[i]+"\n";
+            var coords = regions[i].split(",");
+            var points = coords.length/2;
+            for (var j=0; j<points; j++) {
+                fileContent += '['+coords[j]+','+coords[j+points]+']';
+            }
+            fileContent += '\n';
+        }
+    } else if (regionCount == 1) {
+        fileContent += types+"\n";
+        var coords = regions.split(",");
+        var points = coords.length/2;
+        for (var j=0; j<points; j++) {
+            fileContent += '['+coords[j]+','+coords[j+points]+']';
+        }
+        fileContent += '\n';
+    }
+    return fileContent;
+}
