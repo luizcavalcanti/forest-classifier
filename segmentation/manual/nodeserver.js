@@ -4,8 +4,14 @@ var fs = require("fs");
 var btoa = require("btoa");
 var querystring = require('querystring');
 
-var port = 8080;
-var imagesPath = "/Users/luiz/Workspace/geoma-database/ptv-mao/";
+var argc = process.argv.length;
+if (argc !== 4) {
+    console.log('Usage: node nodeserver.js <port number> <image database path>');
+    process.exit(1);
+}
+
+var port = process.argv[2];
+var imagesPath = process.argv[3];
 var datDir = imagesPath+"/dat";
 
 
