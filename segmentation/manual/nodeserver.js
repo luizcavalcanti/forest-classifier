@@ -29,17 +29,27 @@ function callback(request, response) {
             var parsedURL = url.parse(request.url, true);
             var operation = parsedURL.pathname;
             var params = querystring.parse(fullBody);
-            response.end(processOperation(operation, params, response));
+            processOperation(operation, params, response);
+            response.end();
         });
     } else if (request.method == 'GET') {
         var parsedURL = url.parse(request.url, true);
         var content = parsedURL.pathname;
-        response.end(returnStaticContent(content));
+        getStaticContent(content, response);
+        response.end();
     }
 };
 
-function returnStaticContent(content) {
-    return fs.readFileSync('src/'+content);
+function getStaticContent(content, response) {
+    if (content === '/') {
+        content = 'index.html';
+    }
+    var filepath = 'src/'+content;
+    if (fs.existsSync(filepath)) {
+        response.write(fs.readFileSync(filepath))
+    } else {
+        response.writeHeader(404);
+    }
 }
 
 function processOperation(operation, parameters, response) {
