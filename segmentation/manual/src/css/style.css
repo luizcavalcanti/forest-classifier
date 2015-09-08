@@ -1,6 +1,6 @@
 body {
     text-align: center;
-    font-family: helvetica sans-serif;
+    font-family: Helvetica Neue,Helvetica,Arial,sans-serif;
 }
 
 .btn-selected {
@@ -11,6 +11,14 @@ body {
     /*color: black;*/
 }
 
+#loginDiv {
+    margin: 20px;
+}
+
+#disclaimerDiv {
+    text-align: center;
+    width: 55%;
+}
 /*button {
     margin-bottom: 15px;
     display: inline-block;
