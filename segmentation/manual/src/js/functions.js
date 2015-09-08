@@ -11,8 +11,7 @@ var paint;
 var image;
 
 // Session vars
-var userID = "cavalcanti.luiz@gmail.com";
-console.log("TODO: set userID to lowercase");
+var userID;
 
 // HTML Elements
 var btnStroke;
@@ -20,10 +19,24 @@ var btnClosedRegion;
 var btnSaveRegion;
 var btnDeleteLast;
 
+function initApp() {
+    userID = getParameterByName('uid');
+    if (userID === '') {
+        alert("It's necessary to identify yourself beforehand.");
+        window.location.href = "index.html"
+    } else {
+        userID = userID.toLowerCase();
+        initCanvas();
+    }
+}
+
 // Create the canvas itself
-function initCanvas(canvasDiv, width, height) {
-    configureButtons();
+function initCanvas(width, height) {
     var canvasDiv = document.getElementById('canvasDiv');
+    var width = 640;
+    var height = 480;
+
+    configureButtons();
 
     canvas = document.createElement('canvas');
     canvas.setAttribute('width', width);
@@ -232,4 +245,11 @@ function clearDrawingVariables() {
     regionCount = 0;
     regionHistory = new Array();
     regionType = new Array();
+}
+
+function getParameterByName(name) {
+    name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+    var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+        results = regex.exec(location.search);
+    return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
 }
