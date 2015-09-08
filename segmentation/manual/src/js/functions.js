@@ -155,6 +155,7 @@ function loadCanvasImage() {
     };
     $.post('/getNewImage', {'uid': userID}, function(data) {
         image.src = "data:image/jpg;base64," + data;
+        clearDrawingVariables();
     });
 }
 
@@ -221,4 +222,12 @@ function drawCurrentRegion() {
         context.closePath();
     }
     context.stroke();
+}
+
+function clearDrawingVariables() {
+    clickX = new Array();
+    clickY = new Array();
+    regionCount = 0;
+    regionHistory = new Array();
+    regionType = new Array();
 }
