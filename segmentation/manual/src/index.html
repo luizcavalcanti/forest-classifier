@@ -3,9 +3,26 @@
     <head>
         <meta charset="utf-8">
         <link rel="stylesheet" type="text/css" href="css/style.css"/>
+        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.js"></script>
     </head>
     <body>
-        TODO: Add instructions <br/>
-        TODO: Add login field <br/>
+        <center>
+            <div id="disclaimerDiv">
+                <p>Welcome to the manual segmentation tool. To start helping to segment the images, please insert your identification below. If you already been here, please enter the same identification as before, so you can continue from the place you stopped.</p>
+                <p>If you need further instructions, please proceed to the <a href="help.html">help section</a>. This section will also be shown in your first login.</p>
+            </div>
+            <div id="loginDiv">
+                Username: <input type="text" id="username" name="username">
+                <button id="btnLogin">Start/Continue</button>
+            </div>
+        </center>
+        <script type="text/javascript">
+            $('#btnLogin').mousedown(function(e) {
+                var uid = $('#username')['0'].value;
+                if (uid.length > 0) {
+                    window.location.href = "segmentation.html?uid="+uid;
+                }
+            });
+        </script>
     </body>
 </html>
