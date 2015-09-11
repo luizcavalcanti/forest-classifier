@@ -16,11 +16,9 @@ IMAGES_DIR=$2
 
 if [ "$RUN_MSEG" = true ] ; then
     # Run MSEG
-    pwd
     echo Running MSEG experiment...
     STARTTIME=$(date +%s)
     cd segmentation/mseg
-    pwd
     ./mseg.sh "../../$IMAGES_DIR"
     cd ../..
     ENDTIME=$(date +%s)
@@ -53,7 +51,7 @@ if [ "$RUN_JSEG" = true ] ; then
 fi
 
 if [ "$RUN_MEANSHIFT" = true ] ; then
-    # Run meanshif
+    # Run meanshift
     echo Running meanshift experiment...
     STARTTIME=$(date +%s)
     cd segmentation/meanshift
