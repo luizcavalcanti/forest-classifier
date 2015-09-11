@@ -1,12 +1,9 @@
 import cv2
 import numpy as np
 
-def convert_dat_to_image(dat):
+def convert_dat_to_image(dat, width, height):
     lines = dat.split('\n')
     regions = int(lines[0])
-    print str(regions) + " regions"
-    width = 640
-    height = 480
     image = np.zeros((height, width, 1), np.uint8)
 
     for i in range(1,regions+1):
@@ -31,38 +28,19 @@ def draw_region_on_image(image, coords):
         cv2.line(image, (int(c1[0]), int(c1[1])), (int(c2[0]), int(c2[1])), (255,255,255),1)
 
 def find_edges(image):
-    width, height, depth = image.shape
-    output_image = np.zeros((width, height, 1), np.uint8)
-
-    # vertical scan
-    for x in xrange(0, width):
-        for y in xrange(0, height):
-            up = image[x, y-1]
-            left = image[x-1, y]
-            current = image[x, y]
-
-            if y > 0 and not (up == current).all():
-                    output_image[x, y] = 255
-            if x > 0 and not (left == current).all():
-                    output_image[x, y] = 255
-
-    return output_image
+    return cv2.Canny(image, 200, 255)
 
 def calculate_edge_error(ground_truth, candidate):
     kernel = np.ones((5,5),np.uint8)
     candidate = cv2.dilate(candidate, kernel, iterations = 1)
     ground_truth = cv2.dilate(ground_truth, kernel, iterations = 0)
     result = ground_truth - candidate
-    width, height = result.shape
-    non_black = 0
-    error_count = 0
-    for x in xrange(0, width):
-        for y in xrange(0, height):
-            if ground_truth[x,y] == 255:
-                non_black += 1
-            if result[x,y] == 255:
-                error_count += 1
-    if non_black == 0:
+
+    gt_non_black = (ground_truth == 255).sum()
+    cd_non_black = (candidate == 255).sum()
+    error_count = (result == 255).sum()
+
+    if gt_non_black == 0 or cd_non_black == 0: # if ground truth or candidate is a single region, error is zero (meh)
         return 0
     else:
-        return float(error_count)/float(non_black)
+        return float(error_count)/float(cd_non_black)

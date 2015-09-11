@@ -18,12 +18,12 @@ for i in xrange(0, len(file_list)):
     img_file = seg_folder + "/" + file_list[i][0:-4] + ".ppm"
 
     dat = open(dat_file, 'r').read()
-    im_dat = bench.convert_dat_to_image(dat)
-    im_mseg = cv2.imread(img_file)
+    im_seg = cv2.imread(img_file)
+    height, width, depth = im_seg.shape
+    im_dat = bench.convert_dat_to_image(dat, width, height)
 
-    e_mseg = bench.find_edges(im_mseg)
-    e_dat = bench.find_edges(im_dat)
-    current_error = bench.calculate_edge_error(e_dat, e_mseg)
+    e_mseg = bench.find_edges(im_seg)
+    current_error = bench.calculate_edge_error(im_dat, e_mseg);
 
     count += 1
     total_error += current_error
