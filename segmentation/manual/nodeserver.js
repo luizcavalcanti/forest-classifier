@@ -13,7 +13,7 @@ if (argc !== 4) {
 var port = process.argv[2];
 var imagesPath = process.argv[3];
 var datDir = imagesPath+"/dat";
-
+var maxPerImage = 5;
 
 var server = http.createServer(callback);
 server.listen(port);
@@ -110,9 +110,38 @@ function endsWith(text, ending) {
 function getCurrentImageNumber(userID) {
     var userDir = datDir+"/"+userID;
     if (!fs.existsSync(userDir)) fs.mkdirSync(userDir);
+
     var files = fs.readdirSync(userDir);
     files = files.filter(datFileFilter);
-    return files.length+1;
+
+    files = files.sort();
+    var last = 0;
+    if (files.length > 0) {
+        last = Number(files[files.length-1].split('.')[0]);
+    }
+    var fileIndex = last+1;
+    while (countFileOccurrences(fileIndex) >= maxPerImage) {
+        fileIndex += 1;
+    }
+    return fileIndex;
+}
+
+function countFileOccurrences(fileIndex) {
+    var filename = ("00000" + fileIndex).slice(-5) + ".dat";
+    return dirWalkCount(datDir, filename);
+}
+
+var dirWalkCount = function(dir, filename) {
+    var count = 0;
+    var files = fs.readdirSync(dir);
+    files.forEach(function(file) {
+        if (fs.statSync(dir +'/'+ file).isDirectory()) {
+            count += dirWalkCount(dir +'/'+ file + '/', filename);
+        } else if (file===filename){
+            count += 1;
+        }
+    });
+    return count;
 }
 
 function datFileFilter(value) {
