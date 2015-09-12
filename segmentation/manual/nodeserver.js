@@ -6,10 +6,10 @@ var querystring = require('querystring');
 
 var argc = process.argv.length;
 var port = 80;
-var imagesPath = "../../database/ptv-mao/"
+var imagesPath = "../../database/ptv-mao/";
 
 // WORKAROUND TO FUNCTION PROPERLY ON PM2
-if (argc!=0) { // it's not on PM2
+if (argc>2) { // if there is more than 2 args, it's not on PM2
     if (argc !== 4) {
         console.log('Usage: node nodeserver.js <port number> <image database path>');
         process.exit(1);
