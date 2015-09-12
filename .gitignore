@@ -1,8 +1,8 @@
 # dirs #
-bin
-dist
-processed
-data/classified
+logs
+results
+manual-segmentation/dist
+manual-segmentaiton/bin
 segmentation/mseg/out
 segmentation/jseg/out
 segmentation/learning/out
