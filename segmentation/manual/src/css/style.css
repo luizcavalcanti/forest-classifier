@@ -6,6 +6,8 @@ body {
 
 .body-help {
     text-align: justify;
+    width: 80%;
+    margin-left: 40px;
 }
 
 .btn-selected {
