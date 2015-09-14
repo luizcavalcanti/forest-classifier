@@ -6,5 +6,77 @@
         <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.js"></script>
     </head>
     <body class="body-help">
+        <h1>Objectives</h1>
+        <p>Segment aerial images on the Amazon rainforest according to terrain coverage/type</p>
+
+        <h3>What are segments?</h3>
+        <p>Segments are closed regions on images that separate some elements in the image from the rest. Take figure 1, for example:</p>
+
+        <figure>
+            <img src="imgs/fig1.gif"/>
+            <figcaption>Fig. 1 - An image where a parts of it were segmented from the rest</figcaption>
+        </figure>
+
+        <p>This figure was divided in several segments. One could say that the person or algorithm segmented this image to separate different kinds of vegetation, other would argue that it was divided simply by dominant color. The point is that there is no correct or proper segmentation unless you know what are you trying to separate or analyse in the image.</p>
+
+        <p>Segmentations can also vary by granularity. Let's observe figure 2:</p>
+
+        <figure>
+            <img src="imgs/fig2.jpg"/>
+            <figcaption>Fig. 2 - The same image segmented with different granularities</figcaption>
+        </figure>
+
+        <p>All those images segment the same image with seemingly the same valid critera, but with different granularity. This is also perfecly normal in human or manual segmentation, since we tend to describe or view objects with different levels of detail.</p>
+
+        <h1>What do you need to do?</h1>
+        <p>Your mission is to manually segment the given images as acurrately as possible, according to your own judgment.</p>
+
+        <p>The criteria here is terrain coverage. So, we would like to separate different vegetations, geological formations and human-made objects. Let's have an example with figure 3:</p>
+
+        <figure>
+            <img src="imgs/fig3a.jpg" width="45%"/> <img src="imgs/fig3b.jpg" width="45%"/>
+            <figcaption>Fig. 3 - An original image and a plausible segmentation for it, according to this experiment's criteria</figcaption>
+        </figure>
+
+        <p>The pink/magenta line on the rightmost picture separates different types of terrain coverage and objetcs. An overly obsessed person would maybe segment every tree in the forest patch on that imagem, but that's not necessary.</p>
+
+        <p>If we look closer on the lower right corner, we can see several human-made structures. In this example, the person that segmented the image chose to put all buildings in a single segment. Other person would choose to define a segment for every individual building. None are wrong, they just decide to segment the image on a different granularity.</p>
+
+        <p>To help you segment the images in the experiment, a fairly simple tool is available. The following section describe how it works.</p>
+
+        <h1>The segmentation tool</h1>
+
+        <p>As figure 4 shows, the segmentation tool interface is divided in two parts. The toolbar on the top, with all the commands necessary for the segmentation of the image, and the canvas on the botton, where the user can actualy segment the image.</p>
+
+        <figure>
+            <img src="imgs/fig4.jpg"/>
+            <figcaption>Fig. 4 - Segmentation tool interface</figcaption>
+        </figure>
+
+        <p>When a new image is given, you must chose which drawing tool he will use. For segments that crosses the image from one edge to the other or subdivides previous segments, the "free brush" is the ideal tool. It allows you to draw freely on the canvas, defining the segment border as you go, describing an open-ended path (figure 5).</p>
+
+        <figure>
+            <img src="imgs/fig5.jpg"/>
+            <figcaption>Fig. 5 - Using the "free brush" tool to draw an open-ended path</figcaption>
+        </figure>
+
+        <p>The "closed region" tool, as the name implies, forces the drawn segment to be a closed on. It's ideal for internal segments of the image, those segments that don't collide with previous ones and don't touch the borders of the image (figure 6 shows an example).</p>
+
+        <figure>
+            <img src="imgs/fig6.jpg"/>
+            <figcaption>Fig. 6 - Using the "closed region" tool to determine a internal segment on the image</figcaption>
+        </figure>
+
+        <p>For both drawing tools, you have two ways of interaction. You can draw continuously, as you would do in any drawing computer drawing tool, of you can just click on key point to create a path. Experiment on those two ways until you feel confortable.</p>
+
+        <p>After you create a segment, the next step is to select the "save segmentation". This register the current segment and changes it colour. Now you can select a new segment and start drawing it, if necessary/desired.</p>
+
+        <p>If you feel that a previous segment was not adequate, you can click the "delete last segmentation" option. As the name implies, it will remove the last defined segment on the image. You can continue to use this option until there is no more defined segments on the current image.</p>
+
+        <p>Once you feel that the image is properly segmented, you should select the "done" option. A brief confirmation box will appear. If you are sure that the work in this image is done, you can confirm it. In this moment, all data regarding your segmentation will be sent to the experiment server and a new image will be shown.</p>
+
+        <p>We understand that manually segmenting images can be a tiresome process. If you feel tired, please stop. It's better to return when you feel refreshed and willing to help. You just need to use the same user identifier on the login page to pick the segmentation experiment where you left it.</p>
+
+        <h3>Thank you so much for your help. Try to have some good time :)</h3>
     </body>
 </html>
