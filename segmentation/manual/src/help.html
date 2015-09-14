@@ -42,32 +42,39 @@
 
         <p>If we look closer on the lower right corner, we can see several human-made structures. In this example, the person that segmented the image chose to put all buildings in a single segment. Other person would choose to define a segment for every individual building. None are wrong, they just decide to segment the image on a different granularity.</p>
 
+        <p>If an image is homogeneous, or in other words, if it has a single type of terrain/coverage, no segmentation is needed. An example of our dataset of that case is show in figure 4</p>
+
+        <figure>
+            <img src="imgs/fig4.jpg"/>
+            <figcaption>Fig. 4 - An homogeneous image. Makes little sense to segment it at all</figcaption>
+        </figure>
+
         <p>To help you segment the images in the experiment, a fairly simple tool is available. The following section describe how it works.</p>
 
         <h1>The segmentation tool</h1>
 
-        <p>As figure 4 shows, the segmentation tool interface is divided in two parts. The toolbar on the top, with all the commands necessary for the segmentation of the image, and the canvas on the botton, where the user can actualy segment the image.</p>
-
-        <figure>
-            <img src="imgs/fig4.jpg"/>
-            <figcaption>Fig. 4 - Segmentation tool interface</figcaption>
-        </figure>
-
-        <p>When a new image is given, you must chose which drawing tool he will use. For segments that crosses the image from one edge to the other or subdivides previous segments, the "free brush" is the ideal tool. It allows you to draw freely on the canvas, defining the segment border as you go, describing an open-ended path (figure 5).</p>
+        <p>As figure 5 shows, the segmentation tool interface is divided in two parts. The toolbar on the top, with all the commands necessary for the segmentation of the image, and the canvas on the botton, where the user can actualy segment the image.</p>
 
         <figure>
             <img src="imgs/fig5.jpg"/>
-            <figcaption>Fig. 5 - Using the "free brush" tool to draw an open-ended path</figcaption>
+            <figcaption>Fig. 5 - Segmentation tool interface</figcaption>
         </figure>
 
-        <p>The "closed region" tool, as the name implies, forces the drawn segment to be a closed on. It's ideal for internal segments of the image, those segments that don't collide with previous ones and don't touch the borders of the image (figure 6 shows an example).</p>
+        <p>When a new image is given, you must chose which drawing tool he will use. For segments that crosses the image from one edge to the other or subdivides previous segments, the "free brush" is the ideal tool. It allows you to draw freely on the canvas, defining the segment border as you go, describing an open-ended path (figure 6).</p>
 
         <figure>
             <img src="imgs/fig6.jpg"/>
-            <figcaption>Fig. 6 - Using the "closed region" tool to determine a internal segment on the image</figcaption>
+            <figcaption>Fig. 6 - Using the "free brush" tool to draw an open-ended path</figcaption>
         </figure>
 
-        <p>For both drawing tools, you have two ways of interaction. You can draw continuously, as you would do in any drawing computer drawing tool, of you can just click on key point to create a path. Experiment on those two ways until you feel confortable.</p>
+        <p>The "closed region" tool, as the name implies, forces the drawn segment to be a closed on. It's ideal for internal segments of the image, those segments that don't collide with previous ones and don't touch the borders of the image (figure 7 shows an example).</p>
+
+        <figure>
+            <img src="imgs/fig7.jpg"/>
+            <figcaption>Fig. 7 - Using the "closed region" tool to determine a internal segment on the image</figcaption>
+        </figure>
+
+        <p>For both drawing tools, you have two ways of interaction. You can draw continuously, as you would do in any computer-aided drawing tool, of you can just click on key point to create a path. Experiment on those two ways until you feel confortable.</p>
 
         <p>After you create a segment, the next step is to select the "save segmentation". This register the current segment and changes it colour. Now you can select a new segment and start drawing it, if necessary/desired.</p>
 
