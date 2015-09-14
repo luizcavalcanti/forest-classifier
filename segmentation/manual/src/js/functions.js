@@ -202,10 +202,8 @@ function redraw() {
     context.lineJoin = "round";
     context.lineWidth = 4;
     // Draw past regions
-    // historyColor = "rgba(0, 0, 0, 0.8)";
     historyColor = "#FF00FF";
     context.strokeStyle = historyColor;
-    // context.fillStyle = historyColor;
     drawPreviousRegions();
     // Draw current region
     context.strokeStyle = "#FF0000";
@@ -222,7 +220,7 @@ function drawPreviousRegions() {
         }
         if (regionType[i]=='cr') {
             context.closePath();
-            // context.fill();
+            context.stroke();
         } else {
             context.stroke();
         }
