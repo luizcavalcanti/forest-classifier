@@ -8,11 +8,14 @@
         <title>Amazon rainforest image segmentation experiment</title>
     </head>
     <body>
-        <button id="btnStroke">Free brush</button>
-        <button id="btnClosedRegion">Closed region</button>
-        <button id="btnSaveRegion">Save segment</button>
-        <button id="btnDeleteLast">Delete last segmentation</button>
-        <button id="btnDone">Done</button>
+        <div id="buttonsDiv">
+            <button id="btnStroke">Free brush</button>
+            <button id="btnClosedRegion">Closed region</button>
+            <button id="btnSaveRegion">Save segment</button>
+            <button id="btnDeleteLast">Delete last segmentation</button>
+            <button id="btnDone">Done</button>
+            <a href="#"><img src="imgs/help.png" width="24" height="24" onclick="window.open('help.html', 'help', 'menubar=0, scrollbars=1, resizable=1, height=500, width=1024', true);" /></a>
+        </div>
         <div id="canvasDiv"></div>
         <script type="text/javascript">
             $(document).ready(function() {

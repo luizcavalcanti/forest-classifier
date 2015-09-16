@@ -29,6 +29,14 @@ body {
     width: 60%;
 }
 
+#buttonsDiv {
+    vertical-align: middle;
+}
+
+#buttonsDiv a img{
+    vertical-align: middle;
+}
+
 .welcome-text {
     color: navy;
     font-size: 20px;
