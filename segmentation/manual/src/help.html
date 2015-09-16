@@ -8,6 +8,16 @@
         <title>Amazon rainforest image segmentation experiment</title>
     </head>
     <body class="body-help">
+        <p id="user-disclaimer" />
+
+        <script type="text/javascript">
+            var disclaimerText = "It seems it's the first time you're here, so we need you to read the instructions to the experiment. In the end of the help section you will find instructions to begin the experiment itself."
+            var uid = getParameterByName("uid");
+            if (uid != "") {
+                document.getElementById("user-disclaimer").innerHTML = disclaimerText;
+            }
+        </script>
+
         <h1>Objectives</h1>
         <p>Segment aerial images on the Amazon rainforest according to terrain coverage/type</p>
 
@@ -87,5 +97,20 @@
         <p>We understand that manually segmenting images can be a tiresome process. If you feel tired, please stop. It's better to return when you feel refreshed and willing to help. You just need to use the same user identifier on the login page to pick the segmentation experiment where you left it.</p>
 
         <h3>Thank you so much for your help. Try to have some good time :)</h3>
+
+        <button id="btnProceed" >Proceed to the experiment</button>
+
+        <script type="text/javascript">
+            var uid = getParameterByName("uid");
+            var button = document.getElementById("btnProceed");
+            if (uid != "") {
+                button.style.visibility = 'visible';
+                $('#btnProceed').mousedown(function(e) {
+                    window.location.href = "segmentation.html?uid="+uid;
+                });
+            } else {
+                button.style.visibility = 'hidden';
+            }
+        </script>
     </body>
 </html>

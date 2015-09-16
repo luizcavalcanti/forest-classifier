@@ -42,3 +42,14 @@ body {
     color: red;
     font-size: 14px;
 }
+
+#user-disclaimer {
+    color: red;
+    font-size: 20px;
+}
+
+#btnProceed {
+    color: red;
+    font-weight: bold;
+    font-size: 20px;
+}
