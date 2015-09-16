@@ -72,6 +72,9 @@ function processOperation(operation, parameters, response) {
         case '/saveData':
             processSaveData(parameters, response);
             break;
+        case '/checkUserState':
+            processCheckUserState(parameters, response);
+            break;
         default:
             processInvalidOperation(operation, response);
     }
@@ -100,6 +103,15 @@ function processSaveData(params, response) {
 
     response.writeHeader(200, {"Content-Type": "text/plain"});
     response.write("ok");
+}
+
+function processCheckUserState(params, response) {
+    var uid = params.uid;
+    var userDir = datDir+"/"+params.uid;
+    var userState = "old";
+    if (!fs.existsSync(userDir)) userState = "new";
+    response.writeHeader(200, {"Content-Type": "text/plain"});
+    response.write(userState);
 }
 
 function processInvalidOperation(operation, response) {
