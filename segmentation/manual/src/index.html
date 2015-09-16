@@ -22,7 +22,15 @@
             $('#btnLogin').mousedown(function(e) {
                 var uid = $('#username')['0'].value;
                 if (uid.length > 0) {
-                    window.location.href = "segmentation.html?uid="+uid;
+                    var params = {'uid': uid};
+                    $.post('/checkUserState', params, function(data) {
+                        console.log(data);
+                        if (data === "new") {
+                            window.location.href = "help.html?uid="+uid;
+                        } else {
+                            window.location.href = "segmentation.html?uid="+uid;
+                        }
+                    });
                 }
             });
         </script>
