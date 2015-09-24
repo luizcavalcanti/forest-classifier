@@ -18,6 +18,7 @@ var btnStroke;
 var btnClosedRegion;
 var btnSaveRegion;
 var btnDeleteLast;
+var btnUndo;
 
 function initApp() {
     userID = getParameterByName('uid');
@@ -60,6 +61,9 @@ function configureButtons() {
 
     btnClosedRegion = document.getElementById('btnClosedRegion');
     btnClosedRegion.disabled = false;
+
+    btnUndo = document.getElementById('btnUndo');
+    btnUndo.disabled = true;
     
     btnSaveRegion = document.getElementById('btnSaveRegion');
     btnSaveRegion.disabled = true;
@@ -75,6 +79,7 @@ function registerButtonsEvents() {
         isClosedRegion = false;
         btnStroke.disabled = true;
         btnClosedRegion.disabled = true;
+        btnUndo.disabled = false;
         btnSaveRegion.disabled = false;
         btnDeleteLast.disabled = true;
         allowPaint = true;
@@ -86,6 +91,7 @@ function registerButtonsEvents() {
         isClosedRegion = true;
         btnStroke.disabled = true;
         btnClosedRegion.disabled = true;
+        btnUndo.disabled = false;
         btnSaveRegion.disabled = false;
         btnDeleteLast.disabled = true;
         allowPaint = true;
@@ -95,6 +101,11 @@ function registerButtonsEvents() {
 
     $('#btnSaveRegion').mousedown(function(e) {
         saveCurrentRegion();
+        redraw();
+    });
+
+    $('#btnUndo').mousedown(function(e) {
+        undo();
         redraw();
     });
 
@@ -191,9 +202,17 @@ function saveCurrentRegion() {
     btnStroke.disabled = false;
     btnClosedRegion.disabled = true;
     btnClosedRegion.disabled = false;
+    btnUndo.disabled = true;
     btnSaveRegion.disabled = true;
     btnDeleteLast.disabled = false;
     allowPaint = false;
+}
+
+function undo() {
+    if (clickX.length>0) {
+        clickX.splice(clickX.length-1,1);
+        clickY.splice(clickY.length-1,1);
+    }
 }
 
 function redraw() {
