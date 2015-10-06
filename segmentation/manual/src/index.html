@@ -15,11 +15,11 @@
             </div>
             <div id="loginDiv">
                 User identification: <input type="text" id="username" name="username">
-                <button id="btnLogin">Start/Continue</button>
+                <button id="btnLogin" type="submit">Start/Continue</button>
             </div>
         </center>
         <script type="text/javascript">
-            $('#btnLogin').mousedown(function(e) {
+            tryLogin = function() {
                 var uid = $('#username')['0'].value;
                 if (uid.length > 0) {
                     var params = {'uid': uid};
@@ -32,6 +32,12 @@
                         }
                     });
                 }
+            };
+            $('#btnLogin').mousedown(tryLogin);
+            $('#btnLogin').keypress(tryLogin);
+            $('#username').keypress(function(e) {
+                if (e.keyCode==13)
+                    tryLogin();
             });
         </script>
     </body>
