@@ -5,16 +5,18 @@
         <link rel="stylesheet" type="text/css" href="css/style.css"/>
         <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.js"></script>
         <script type="text/javascript" src="js/functions.js"></script>
+        <script type="text/javascript" src="js/jquery.hotkeys.js"></script>
         <title>Amazon rainforest image segmentation experiment</title>
     </head>
     <body>
         <div id="buttonsDiv">
-            <button id="btnStroke">Free brush</button>
-            <button id="btnClosedRegion">Closed region</button>
-            <button id="btnUndo">Undo</button>
-            <button id="btnSaveRegion">Save segment</button>
-            <button id="btnDeleteLast">Delete last segmentation</button>
-            <button id="btnDone">Done</button>
+            <p class="alert-text">NEW HOTKEYS! hover buttons to see them</p>
+            <button id="btnStroke" title="alt + 1">Free brush</button>
+            <button id="btnClosedRegion" title="alt + 2">Closed region</button>
+            <button id="btnUndo" title="ctrl + z">Undo</button>
+            <button id="btnSaveRegion" title="alt + s">Save segment</button>
+            <button id="btnDeleteLast" title="alt + k">Delete last segmentation</button>
+            <button id="btnDone" title="alt + return">Done</button>
             <a href="#"><img src="imgs/help.png" width="24" height="24" onclick="window.open('help.html', 'help', 'menubar=0, scrollbars=1, resizable=1, height=500, width=1024', true);" /></a>
         </div>
         <div id="canvasDiv"></div>

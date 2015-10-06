@@ -132,6 +132,32 @@ function registerButtonsEvents() {
             saveImageData();
         }
     });
+
+    $(document).bind('keydown', 'alt+1', function hotkey() {
+        if (!btnStroke.disabled)
+            $("#btnStroke").trigger(jQuery.Event("mousedown"));
+    });
+
+    $(document).bind('keydown', 'alt+2', function hotkey() {
+        if (!btnClosedRegion.disabled)
+            $("#btnClosedRegion").trigger(jQuery.Event("mousedown"));
+    });
+
+    $(document).bind('keydown', 'ctrl+z', function hotkey() {
+        $("#btnUndo").trigger(jQuery.Event("mousedown"));
+    });
+
+    $(document).bind('keydown', 'alt+s', function hotkey() {
+        $("#btnSaveRegion").trigger(jQuery.Event("mousedown"));
+    });
+
+    $(document).bind('keydown', 'alt+k', function hotkey() {
+        $("#btnDeleteLast").trigger(jQuery.Event("mousedown"));
+    });
+
+    $(document).bind('keydown', 'alt+return', function hotkey() {
+        $("#btnDone").trigger(jQuery.Event("mousedown"));
+    });
 }
 
 function registerCanvasEvents() {
