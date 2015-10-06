@@ -49,6 +49,7 @@ body {
 .alert-text {
     color: red;
     font-size: 14px;
+    font-weight: bold;
 }
 
 #user-disclaimer {
