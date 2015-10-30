@@ -30,4 +30,4 @@ for i in xrange(0, len(file_list)):
 
     print img_file, current_error
 
-print "Average edge error:", (total_error/count)
+print "Average edge error: %.5f" % (total_error/count)
