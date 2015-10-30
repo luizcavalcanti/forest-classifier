@@ -5,11 +5,11 @@ if [ $# -lt 2 ]; then
     exit 1
 fi
 
-RUN_MANUAL=false
-RUN_MSEG=false
-RUN_JSEG=false
+RUN_MANUAL=true
+RUN_MSEG=true
+RUN_JSEG=true
 RUN_MEANSHIFT=true
-RUN_SRM=false
+RUN_SRM=true
 RUN_LEARNING=false
 
 MATLAB_HOME=$1
