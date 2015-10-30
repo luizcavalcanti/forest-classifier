@@ -5,10 +5,11 @@ if [ $# -lt 2 ]; then
     exit 1
 fi
 
-RUN_MSEG=true
-RUN_JSEG=true
+RUN_MANUAL=false
+RUN_MSEG=false
+RUN_JSEG=false
 RUN_MEANSHIFT=true
-RUN_SRM=true
+RUN_SRM=false
 RUN_LEARNING=false
 
 MATLAB_HOME=$1
@@ -20,6 +21,17 @@ rm -rf $LOG_DIR
 mkdir $LOG_DIR
 rm -rf $RESULTS_DIR
 mkdir $RESULTS_DIR
+
+if [ "$RUN_MANUAL" = true ] ; then
+    # Run manual segmentation
+    echo "Running Manual Segmentation branchmark..."
+    STARTTIME=$(date +%s)
+    python segmentation/benchmark/manual_benchmark.py "$IMAGES_DIR" > "$RESULTS_DIR"/benchmark_manual.log
+    ENDTIME=$(date +%s)
+    echo "done"
+    echo "took $(($ENDTIME - $STARTTIME)) seconds"
+    echo
+fi
 
 if [ "$RUN_MSEG" = true ] ; then
     # Run MSEG
