@@ -54,7 +54,7 @@ def _render_graphs(results):
             gces.append(result[0])
             lces.append(result[1])
 
-    plt.hist(gces, histtype='stepfilled', color='b', edgecolor='none', bins=100)
+    plt.hist(gces, histtype='stepfilled', color='r', edgecolor='none', bins=100)
     plt.xlim([0,0.2])
     plt.title('Segmentacao Manual - GCE')
     plt.ylabel('Imagens')
@@ -62,7 +62,7 @@ def _render_graphs(results):
     plt.savefig("results/manual_gce.jpg")
     plt.close()
 
-    plt.hist(lces, histtype='stepfilled', color='b', edgecolor='none', bins=100)
+    plt.hist(lces, histtype='stepfilled', color='r', edgecolor='none', bins=100)
     plt.xlim([0,0.2])
     plt.title('Segmentacao Manual - LCE')
     plt.ylabel('Imagens')
