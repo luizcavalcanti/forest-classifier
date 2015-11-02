@@ -17,3 +17,4 @@ Image database used in this experiment is hosted <a href="https://github.com/lui
 * JSEG
 * Meanshift
 * SRM
+* Manual segmentation

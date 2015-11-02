@@ -24,9 +24,9 @@ mkdir $RESULTS_DIR
 
 if [ "$RUN_MANUAL" = true ] ; then
     # Run manual segmentation
-    echo "Running Manual Segmentation branchmark..."
+    echo "Running Manual Segmentation benchmark..."
     STARTTIME=$(date +%s)
-    python segmentation/benchmark/manual_benchmark.py "$IMAGES_DIR" > "$RESULTS_DIR"/benchmark_manual.log
+    python segmentation/benchmark/manual_benchmark.py "$IMAGES_DIR"
     ENDTIME=$(date +%s)
     echo "done"
     echo "took $(($ENDTIME - $STARTTIME)) seconds"
