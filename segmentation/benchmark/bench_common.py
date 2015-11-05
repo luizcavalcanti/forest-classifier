@@ -1,5 +1,17 @@
+import os
 import cv2 as cv
 import numpy as np
+import matplotlib.pyplot as plt
+
+def load_dat_files(dat_folder):
+    file_list = {}
+    for path, subdirs, files in os.walk(dat_folder):
+        for name in files:
+            if name.endswith(".dat"):
+                if name not in file_list:
+                    file_list[name] = []
+                file_list[name].append(os.path.join(path, name))
+    return file_list
 
 def convert_dat_to_image(dat, width, height):
     lines = dat.split('\n')
@@ -15,13 +27,13 @@ def convert_dat_to_image(dat, width, height):
         if region_type == 'cr': # Closed region
             start = coords[0].split(',')
             end = coords[len(coords)-2].split(',')
-            draw_region_on_image(image, coords)
+            _draw_region_on_image(image, coords)
             cv.line(image, (int(end[0]), int(end[1])), (int(start[0]), int(start[1])), (255,255,255),1)
         elif region_type == 'pt': # Path/Stroke
-            draw_region_on_image(image, coords)
+            _draw_region_on_image(image, coords)
     return image
 
-def draw_region_on_image(image, coords):
+def _draw_region_on_image(image, coords):
     for c in range(0, len(coords)-2):
         c1 = coords[c].split(',')
         c2 = coords[c+1].split(',')
@@ -83,3 +95,83 @@ def _compare_segmentations(img_a, img_b):
         error.append(set_difference_count)
 
     return error
+
+def run_validation_for_image(original_image, dat_array):
+    height, width = original_image.shape
+    imgs = []
+    for f in dat_array:
+        dat = open(f, 'r').read()
+        img = convert_dat_to_image(dat, width, height)
+        imgs.append(img)
+
+    results = []
+    lces = []
+    gces = []
+    for dat_img in imgs:
+        gce, lce = calculate_consistency_error(original_image, dat_img)
+        gces.append(gce)
+        lces.append(lce)
+
+    results.append(gces)
+    results.append(lces)
+    return results
+
+def render_graphs(identifier, title, results):
+    gces = []
+    lces = []
+    for image_file in results.keys():
+        result = results[image_file]
+        gces += result[0]
+        lces += result[1]
+
+    plt.hist(gces, color='r', histtype='stepfilled', edgecolor='none')
+    plt.xlim([0,1])
+    plt.title('%s - GCE' % title)
+    plt.ylabel('Imagens')
+    plt.xlabel('Erro')
+    plt.savefig("results/%s_dist_gce.jpg" % identifier)
+    plt.close()
+
+    plt.hist(lces, color='r', histtype='stepfilled', edgecolor='none')
+    plt.xlim([0,1])
+    plt.title('%s - LCE' % title)
+    plt.ylabel('Imagens')
+    plt.xlabel('Erro')
+    plt.savefig("results/%s_dist_lce.jpg" % identifier)
+    plt.close()
+
+    flat_gces = []
+    flat_lces = []
+    for key in results.keys():
+        if sum(results[key][0]) > 0:
+            flat_gces.append(results[key][0])
+            flat_lces.append(results[key][1])
+
+    plt.boxplot(flat_gces, showfliers=False)
+    plt.ylim([0,1])
+    plt.xticks(np.arange(len(flat_gces), 10))
+    plt.title('%s - GCE (var.)')
+    plt.xlabel('Imagens')
+    plt.ylabel('Erro')
+    plt.savefig("results/%s_range_gce.jpg" % identifier)
+    plt.close()
+
+    plt.boxplot(flat_lces, showfliers=False)
+    plt.ylim([0,1])
+    plt.xticks(np.arange(len(flat_gces), 10))
+    plt.title('%s - LCE (var.)')
+    plt.xlabel('Imagens')
+    plt.ylabel('Erro')
+    plt.savefig("results/%s_range_lce.jpg" % identifier)
+    plt.close()
+
+def print_results(results):
+    total_gce = 0
+    total_lce = 0
+    count = 0
+    for key in results.keys():
+        total_gce += sum(results[key][0])
+        total_lce += sum(results[key][1])
+        count += len(results[key][0])
+    print "Average GCE: %.5f" % (total_gce/count)
+    print "Average LCE: %.5f" % (total_lce/count)
