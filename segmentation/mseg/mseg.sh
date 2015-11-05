@@ -19,7 +19,7 @@ mkdir -p $DIR_SEGMENTS
 # converting files (only the ones with metadata)
 echo
 echo "Converting jpg files to ppm..."
-for file in $DIR_ORIGINAL_IMAGES/*.dat
+for file in $DIR_ORIGINAL_IMAGES/*.jpg
 do
     if [[ -f $file ]]; then
         echo $file

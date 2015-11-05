@@ -42,7 +42,7 @@ if [ "$RUN_MSEG" = true ] ; then
     cd ../..
     ENDTIME=$(date +%s)
     echo "Running benchmark..."
-    python segmentation/benchmark/mseg_benchmark.py "$IMAGES_DIR" > "$RESULTS_DIR"/benchmark_mseg.log
+    python segmentation/benchmark/mseg_benchmark.py "$IMAGES_DIR"
     echo "done"
     echo "took $(($ENDTIME - $STARTTIME)) seconds"
     echo
