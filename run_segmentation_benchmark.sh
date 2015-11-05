@@ -72,7 +72,7 @@ if [ "$RUN_MEANSHIFT" = true ] ; then
     cd ../..
     ENDTIME=$(date +%s)
     echo "Running benchmark..."
-    python segmentation/benchmark/meanshift_benchmark.py "$IMAGES_DIR" > "$RESULTS_DIR"/benchmark_meanshift.log
+    python segmentation/benchmark/meanshift_benchmark.py "$IMAGES_DIR"
     echo "done"
     echo "took $(($ENDTIME - $STARTTIME)) seconds"
     echo
