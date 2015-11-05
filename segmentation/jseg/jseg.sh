@@ -22,7 +22,7 @@ fi
 rm -Rf $DIR_OUTPUT
 mkdir $DIR_OUTPUT
 
-for file in $DIR_ORIGINAL_IMAGES/*.dat
+for file in $DIR_ORIGINAL_IMAGES/*.jpg
 do
     if [[ -f $file ]]; then
         filename=`basename $file`

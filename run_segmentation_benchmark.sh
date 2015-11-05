@@ -57,7 +57,7 @@ if [ "$RUN_JSEG" = true ] ; then
     cd ../..
     ENDTIME=$(date +%s)
     echo "Running benchmark..."
-    python segmentation/benchmark/jseg_benchmark.py "$IMAGES_DIR" > "$RESULTS_DIR"/benchmark_jseg.log
+    python segmentation/benchmark/jseg_benchmark.py "$IMAGES_DIR"
     echo "done"
     echo "took $(($ENDTIME - $STARTTIME)) seconds"
     echo
