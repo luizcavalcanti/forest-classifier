@@ -87,7 +87,7 @@ if [ "$RUN_SRM" = true ] ; then
     cd ../..
     ENDTIME=$(date +%s)
     echo "Running benchmark..."
-    python segmentation/benchmark/srm_benchmark.py "$IMAGES_DIR" > "$RESULTS_DIR"/benchmark_srm.log
+    python segmentation/benchmark/srm_benchmark.py "$IMAGES_DIR"
     echo "done"
     echo "took $(($ENDTIME - $STARTTIME)) seconds"
     echo

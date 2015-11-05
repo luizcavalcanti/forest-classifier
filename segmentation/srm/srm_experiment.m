@@ -1,9 +1,7 @@
 function srm_experiment(imagesPath)
-    dat_files  = dir([imagesPath '*.dat']);
     images  = dir([imagesPath '*.jpg']);
-    for i=1:length(dat_files)
-        dat_name = dat_files(i).name;
-        image_name = [dat_files(i).name(1:length(dat_name)-3) 'jpg'];
+    for i=1:length(images)
+        image_name = images(i).name;
         disp(['processing ' image_name]);
         image=double(imread([imagesPath '/' image_name]));
         % Choose different scales
