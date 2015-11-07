@@ -1,16 +1,22 @@
 #!/bin/bash
 
-if [ $# -lt 2 ]; then
-    echo "Not enough arguments. Please provide path to MATLAB home directory and images directory, in that order"
-    exit 1
-fi
-
-RUN_MANUAL=true
 RUN_MSEG=true
 RUN_JSEG=true
 RUN_MEANSHIFT=true
 RUN_SRM=true
 RUN_LEARNING=false
+
+if [ "$RUN_SRM" = true ]; then
+    if [ $# -lt 2 ]; then
+        echo "Not enough arguments. Please provide path to MATLAB home directory and images directory, in that order"
+        exit 1
+    fi
+else
+    if [ $# -ne 1 ]; then
+        echo "Too much or too few arguments. Please provide path to images database"
+        exit 1
+    fi
+fi
 
 MATLAB_HOME=$1
 IMAGES_DIR=$2
@@ -22,17 +28,6 @@ mkdir $LOG_DIR
 rm -rf $RESULTS_DIR
 mkdir $RESULTS_DIR
 
-if [ "$RUN_MANUAL" = true ] ; then
-    # Run manual segmentation
-    echo "Running Manual Segmentation benchmark..."
-    STARTTIME=$(date +%s)
-    python segmentation/benchmark/manual_benchmark.py "$IMAGES_DIR"
-    ENDTIME=$(date +%s)
-    echo "done"
-    echo "took $(($ENDTIME - $STARTTIME)) seconds"
-    echo
-fi
-
 if [ "$RUN_MSEG" = true ] ; then
     # Run MSEG
     echo "Running MSEG experiment..."
@@ -41,8 +36,6 @@ if [ "$RUN_MSEG" = true ] ; then
     ./mseg.sh "../../$IMAGES_DIR" > "../../$LOG_DIR"/mseg.log
     cd ../..
     ENDTIME=$(date +%s)
-    echo "Running benchmark..."
-    python segmentation/benchmark/mseg_benchmark.py "$IMAGES_DIR"
     echo "done"
     echo "took $(($ENDTIME - $STARTTIME)) seconds"
     echo
@@ -56,8 +49,6 @@ if [ "$RUN_JSEG" = true ] ; then
     ./jseg.sh "../../$IMAGES_DIR" > "../../$LOG_DIR"/jseg.log
     cd ../..
     ENDTIME=$(date +%s)
-    echo "Running benchmark..."
-    python segmentation/benchmark/jseg_benchmark.py "$IMAGES_DIR"
     echo "done"
     echo "took $(($ENDTIME - $STARTTIME)) seconds"
     echo
@@ -71,8 +62,6 @@ if [ "$RUN_MEANSHIFT" = true ] ; then
     ./meanshift.sh "../../$IMAGES_DIR" > "../../$LOG_DIR"/meanshift.log
     cd ../..
     ENDTIME=$(date +%s)
-    echo "Running benchmark..."
-    python segmentation/benchmark/meanshift_benchmark.py "$IMAGES_DIR"
     echo "done"
     echo "took $(($ENDTIME - $STARTTIME)) seconds"
     echo
@@ -86,8 +75,6 @@ if [ "$RUN_SRM" = true ] ; then
     ./srm.sh "$MATLAB_HOME" "../../$IMAGES_DIR" > "../../$LOG_DIR"/srm.log
     cd ../..
     ENDTIME=$(date +%s)
-    echo "Running benchmark..."
-    python segmentation/benchmark/srm_benchmark.py "$IMAGES_DIR"
     echo "done"
     echo "took $(($ENDTIME - $STARTTIME)) seconds"
     echo
@@ -107,3 +94,11 @@ if [ "$RUN_LEARNING" = true ] ; then
     echo "took $(($ENDTIME - $STARTTIME)) seconds"
     echo
 fi
+
+echo "Running benchmark"
+STARTTIME=$(date +%s)
+python segmentation/benchmark/benchmark.py "$IMAGES_DIR"
+ENDTIME=$(date +%s)
+echo "done"
+echo "took $(($ENDTIME - $STARTTIME)) seconds"
+echo
