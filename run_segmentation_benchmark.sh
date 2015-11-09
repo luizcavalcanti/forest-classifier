@@ -1,22 +1,16 @@
 #!/bin/bash
 
+if [ $# -lt 2 ]; then
+    echo "Not enough arguments. Please provide path to MATLAB home directory and images directory, in that order"
+    exit 1
+fi
+
 RUN_MSEG=true
 RUN_JSEG=true
 RUN_MEANSHIFT=true
 RUN_SRM=true
+RUN_FSEG=true
 RUN_LEARNING=false
-
-if [ "$RUN_SRM" = true ]; then
-    if [ $# -lt 2 ]; then
-        echo "Not enough arguments. Please provide path to MATLAB home directory and images directory, in that order"
-        exit 1
-    fi
-else
-    if [ $# -ne 1 ]; then
-        echo "Too much or too few arguments. Please provide path to images database"
-        exit 1
-    fi
-fi
 
 MATLAB_HOME=$1
 IMAGES_DIR=$2
@@ -73,6 +67,19 @@ if [ "$RUN_SRM" = true ] ; then
     STARTTIME=$(date +%s)
     cd segmentation/srm
     ./srm.sh "$MATLAB_HOME" "../../$IMAGES_DIR" > "../../$LOG_DIR"/srm.log
+    cd ../..
+    ENDTIME=$(date +%s)
+    echo "done"
+    echo "took $(($ENDTIME - $STARTTIME)) seconds"
+    echo
+fi
+
+if [ "$RUN_FSEG" = true ] ; then
+    # Run SRM
+    echo "Running FSEG experiment..."
+    STARTTIME=$(date +%s)
+    cd segmentation/fseg
+    ./fseg.sh "$MATLAB_HOME" "../../$IMAGES_DIR" #> "../../$LOG_DIR"/fseg.log
     cd ../..
     ENDTIME=$(date +%s)
     echo "done"

@@ -11,6 +11,7 @@ segmentation/srm/out
 
 # binaries #
 *.class
+*.mexmaci64
 segmentation/meanshift/edison
 segmentation/jseg/segdist
 segmentation/jseg/src/jpeg/cjpeg
@@ -21,7 +22,6 @@ segmentation/jseg/src/jpeg/wrjpgcom
 segmentation/mseg/mseg
 segmentation/meanshift/temp.eds
 segmentation/mseg/src/segment.dSYM
-segmentation/srm/*.mexmaci64
 
 # packages #
 preprocessor.jar
