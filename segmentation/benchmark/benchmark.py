@@ -1,8 +1,5 @@
-# import os
 import sys
 import cv2
-# import matplotlib.pyplot as plt
-# import numpy as np
 import bench_common as bench
 
 dat_folder = sys.argv[1]
