@@ -10,6 +10,7 @@ RUN_JSEG=true
 RUN_MEANSHIFT=true
 RUN_SRM=true
 RUN_FSEG=true
+RUN_GPB=true
 RUN_LEARNING=false
 
 MATLAB_HOME=$1
@@ -80,6 +81,19 @@ if [ "$RUN_FSEG" = true ] ; then
     STARTTIME=$(date +%s)
     cd segmentation/fseg
     ./fseg.sh "$MATLAB_HOME" "../../$IMAGES_DIR" #> "../../$LOG_DIR"/fseg.log
+    cd ../..
+    ENDTIME=$(date +%s)
+    echo "done"
+    echo "took $(($ENDTIME - $STARTTIME)) seconds"
+    echo
+fi
+
+if [ "$RUN_GPB" = true ] ; then
+    # Run SRM
+    echo "Running gPb experiment..."
+    STARTTIME=$(date +%s)
+    cd segmentation/gpb
+    ./gpb.sh "$MATLAB_HOME" "../../$IMAGES_DIR" #> "../../$LOG_DIR"/gpb.log
     cd ../..
     ENDTIME=$(date +%s)
     echo "done"

@@ -3,13 +3,16 @@ logs
 results
 manual-segmentation/dist
 manual-segmentaiton/bin
-segmentation/mseg/out
+segmentation/gpb/out
 segmentation/jseg/out
 segmentation/learning/out
 segmentation/meanshift/out
+segmentation/mseg/out
 segmentation/srm/out
 
+
 # binaries #
+*.o
 *.class
 *.mexmaci64
 segmentation/meanshift/edison
