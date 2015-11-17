@@ -7,6 +7,7 @@ mseg_folder = "segmentation/mseg/out"
 jseg_folder = "segmentation/jseg/out"
 meanshift_folder = "segmentation/meanshift/out"
 srm_folder = "segmentation/srm/out"
+gpb_folder = "segmentation/gpb/out"
 
 dat_files = bench.load_dat_files(dat_folder)
 
@@ -42,6 +43,10 @@ for i, key in enumerate(dat_files.keys()):
     img_srm = (255-img_srm)
     srm_results[key] = bench.run_validation_for_image(img_srm, dat_files[key])
 
+    # GPB
+    img_gpb = cv2.imread(gpb_folder + "/" + key[0:-4] + ".ppm", cv2.IMREAD_GRAYSCALE)
+    gpb_results[key] = bench.run_validation_for_image(img_gpb, dat_files[key])
+
 bench.render_graphs('manual', 'Segmentacao Manual', manual_results)
 print("\nManual")
 bench.print_results(manual_results)
@@ -61,3 +66,7 @@ bench.print_results(meanshift_results)
 bench.render_graphs('srm', 'SRM', srm_results)
 print("\nSRM")
 bench.print_results(srm_results)
+
+bench.render_graphs('gpb', 'gPb', gpb_results)
+print("\ngPb")
+bench.print_results(gpb_results)
