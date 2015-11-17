@@ -16,10 +16,11 @@ mseg_results = {}
 jseg_results = {}
 meanshift_results = {}
 srm_results = {}
-
+gpb_results = {}
 
 for i, key in enumerate(dat_files.keys()):
     print("%s (%d of %d)" % (key, i, len(dat_files)))
+
     # MANUAL
     file_count = len(dat_files[key])
     if file_count > 2:
