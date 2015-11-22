@@ -7,6 +7,7 @@ mseg_folder = "segmentation/mseg/out"
 jseg_folder = "segmentation/jseg/out"
 meanshift_folder = "segmentation/meanshift/out"
 srm_folder = "segmentation/srm/out"
+fseg_folder = "segmentation/fseg/out"
 gpb_folder = "segmentation/gpb/out"
 
 dat_files = bench.load_dat_files(dat_folder)
@@ -16,10 +17,11 @@ mseg_results = {}
 jseg_results = {}
 meanshift_results = {}
 srm_results = {}
+fseg_results = {}
 gpb_results = {}
 
 for i, key in enumerate(dat_files.keys()):
-    print("%s (%d of %d)" % (key, i, len(dat_files)))
+    print("%s (%d of %d)" % (key, (i+1), len(dat_files)))
 
     # MANUAL
     file_count = len(dat_files[key])
@@ -48,6 +50,11 @@ for i, key in enumerate(dat_files.keys()):
     img_gpb = cv2.imread(gpb_folder + "/" + key[0:-4] + ".ppm", cv2.IMREAD_GRAYSCALE)
     gpb_results[key] = bench.run_validation_for_image(img_gpb, dat_files[key])
 
+    # FSEG
+    img_fseg = cv2.imread(fseg_folder + "/" + key[0:-4] + ".ppm")
+    edg_fseg = bench.find_edges(img_fseg)
+    fseg_results[key] = bench.run_validation_for_image(edg_fseg, dat_files[key])
+
 bench.render_graphs('manual', 'Segmentacao Manual', manual_results)
 print("\nManual")
 bench.print_results(manual_results)
@@ -71,3 +78,7 @@ bench.print_results(srm_results)
 bench.render_graphs('gpb', 'gPb', gpb_results)
 print("\ngPb")
 bench.print_results(gpb_results)
+
+bench.render_graphs('fseg', 'FSEG', gpb_results)
+print("\nFSEG")
+bench.print_results(fseg_results)

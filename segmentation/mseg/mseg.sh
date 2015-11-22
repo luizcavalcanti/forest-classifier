@@ -12,7 +12,7 @@ mv segment ../mseg
 cd ..
 
 # recreating output 
-rm -Rf $DIR_OUTPUT
+# rm -Rf $DIR_OUTPUT
 mkdir -p $DIR_IMAGES
 mkdir -p $DIR_SEGMENTS
 
