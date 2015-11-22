@@ -9,7 +9,7 @@ segmentation/learning/out
 segmentation/meanshift/out
 segmentation/mseg/out
 segmentation/srm/out
-
+segmentation/fseg/out
 
 # binaries #
 *.o
