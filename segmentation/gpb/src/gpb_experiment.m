@@ -22,4 +22,5 @@ function gpb_experiment(imagesPath)
             imwrite(bdry, outFile, 'ppm');
         end
     end
+    exit;
 end
