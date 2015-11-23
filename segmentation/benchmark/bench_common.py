@@ -14,7 +14,7 @@ def load_dat_files(dat_folder):
     return file_list
 
 def find_edges(image):
-    return cv.Canny(image, 200, 255)
+    return cv.Canny(image, 0, 10)
 
 def run_validation_for_image(original_image, dat_array):
     height, width = original_image.shape
