@@ -122,4 +122,4 @@ python segmentation/benchmark/benchmark.py "$IMAGES_DIR"
 ENDTIME=$(date +%s)
 echo "done"
 echo "took $(($ENDTIME - $STARTTIME)) seconds"
-echo
+echo ""

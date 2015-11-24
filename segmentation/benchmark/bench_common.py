@@ -145,9 +145,10 @@ def __draw_region_on_image(image, coords):
         cv.line(image, (int(c1[0]), int(c1[1])), (int(c2[0]), int(c2[1])), (255,255,255),1)
 
 def __compare_segmentations(img_a, img_b):
-    # contours, hierarchy = cv.findContours(image, mode, method[, contours[, hierarchy[, offset]]])
-    ct_img_a, h_a = cv.findContours(img_a, cv.RETR_TREE, cv.CHAIN_APPROX_NONE)
-    ct_img_b, h_b = cv.findContours(img_b, cv.RETR_TREE, cv.CHAIN_APPROX_NONE)
+    # image, contours, hierarchy = cv.findContours(image, mode, method[, contours[, hierarchy[, offset]]]) [opencv3]
+    # contours, hierarchy = cv.findContours(image, mode, method[, contours[, hierarchy[, offset]]]) [opencv2]
+    out_img_a, ct_img_a, h_a = cv.findContours(img_a, cv.RETR_TREE, cv.CHAIN_APPROX_NONE)
+    out_img_b, ct_img_b, h_b = cv.findContours(img_b, cv.RETR_TREE, cv.CHAIN_APPROX_NONE)
 
     error = []
 
