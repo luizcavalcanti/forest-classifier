@@ -8,8 +8,8 @@ Image database used in this experiment is hosted <a href="https://github.com/lui
 <b>Required tools:</b>
 * JDK 7+
 * Apache Ant
-* Python 2.7 + OpenCV
-* Matlab (only if you need/want SRM segmentation)
+* Python 2.7 + OpenCV 3
+* Matlab + Image processing toolkit + stattistics toolkit (not sure what's the minimum version)
 * ImageMagick
 
 <b>Benchmarked segmentation algorithms:</b>
@@ -17,4 +17,12 @@ Image database used in this experiment is hosted <a href="https://github.com/lui
 * JSEG
 * Meanshift
 * SRM
+* FSEG
+* gPb-owt-ucm
 * Manual segmentation
+
+<b>Running segmentation benchmark</b>
+
+Unix/linux/mac os X STRONGLY recommended.
+
+    $ ./run_segmentation_benchmark.sh <MATLAB home> <image database folder>
