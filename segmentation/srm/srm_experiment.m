@@ -6,38 +6,19 @@ function srm_experiment(imagesPath)
         image=double(imread([imagesPath '/' image_name]));
         % Choose different scales
         % Segmentation parameter Q; Q small few segments, Q large may segments
-        Qlevels=2.^(8:-1:0);
+        Qlevels=2.^(8:-1:2);
         % This creates the following list of Qs [256 128 64 32 16 8 4 2 1]
         % Creates 9 segmentations
-        [mapList,imseg]=srm(image,Qlevels);
+        [mapList,~]=srm(image,Qlevels);
         % And plot them
         output_name = [image_name(1:length(image_name)-3) 'ppm'];
-        generate_seg_file(imseg, mapList, strcat('out/', output_name));
+        generate_seg_file(mapList, strcat('out/', output_name));
     end
     exit;
 end
 
-
-function generate_seg_file(imseg,mapList,filename)
+function generate_seg_file(mapList, file_color)
     precision=numel(mapList);
-    Iedge=zeros([size(imseg{1},1),size(imseg{1},2)]);
-
-    quick_I1 = cell(precision,1);
-    quick_I2 = cell(precision,1);
-
-    for k=1:precision
-        map=reshape(mapList{k},size(Iedge));
-        quick_I1{k} = srm_randimseg(map) ;
-        quick_I2{k} = imseg{k} ;
-        figure(101);vl_tightsubplot(precision, k) ;
-        imagesc(quick_I1{k});axis off;
-        figure(102);vl_tightsubplot(precision, k) ;
-        imagesc(uint8(quick_I2{k}));axis off;
-        borders = srm_getborders(map);
-        Iedge(borders) = Iedge(borders) + 1;
-    end
-
-
-    Iedge=precision-Iedge;
-    imwrite(Iedge, filename, 'ppm');
+    color_image = srm_randimseg(mapList{precision});
+    imwrite(color_image, file_color, 'ppm');
 end

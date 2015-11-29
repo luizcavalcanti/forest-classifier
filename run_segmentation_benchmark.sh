@@ -80,7 +80,7 @@ if [ "$RUN_FSEG" = true ] ; then
     echo "Running FSEG experiment..."
     STARTTIME=$(date +%s)
     cd segmentation/fseg
-    ./fseg.sh "$MATLAB_HOME" "../../$IMAGES_DIR" #> "../../$LOG_DIR"/fseg.log
+    ./fseg.sh "$MATLAB_HOME" "../../$IMAGES_DIR" > "../../$LOG_DIR"/fseg.log
     cd ../..
     ENDTIME=$(date +%s)
     echo "done"
@@ -93,7 +93,7 @@ if [ "$RUN_GPB" = true ] ; then
     echo "Running gPb experiment..."
     STARTTIME=$(date +%s)
     cd segmentation/gpb
-    ./gpb.sh "$MATLAB_HOME" "../../$IMAGES_DIR" #> "../../$LOG_DIR"/gpb.log
+    ./gpb.sh "$MATLAB_HOME" "../../$IMAGES_DIR" > "../../$LOG_DIR"/gpb.log
     cd ../..
     ENDTIME=$(date +%s)
     echo "done"

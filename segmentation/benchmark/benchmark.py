@@ -30,8 +30,8 @@ for i, key in enumerate(dat_files.keys()):
 
     # MSEG
     img_mseg = cv2.imread(mseg_folder + "/" + key[0:-4] + ".ppm")
-    edg_mseg = bench.find_edges(img_mseg)
-    mseg_results[key] = bench.run_validation_for_image(edg_mseg, dat_files[key])
+    img_mseg = bench.find_edges(img_mseg)
+    mseg_results[key] = bench.run_validation_for_image(img_mseg, dat_files[key])
 
     # JSEG
     img_jseg = cv2.imread(jseg_folder + "/" + key[0:-4] + ".jpg", cv2.IMREAD_GRAYSCALE)
@@ -43,7 +43,7 @@ for i, key in enumerate(dat_files.keys()):
 
     # SRM
     img_srm = cv2.imread(srm_folder + "/" + key[0:-4] + ".ppm", cv2.IMREAD_GRAYSCALE)
-    img_srm = (255-img_srm)
+    img_srm = bench.find_edges(img_srm)
     srm_results[key] = bench.run_validation_for_image(img_srm, dat_files[key])
 
     # GPB
