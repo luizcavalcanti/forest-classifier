@@ -50,7 +50,9 @@ if segn==0 % estimate the segment number
     a=find(lse>omega);
     segn=length(a);  
 end
-
+if segn==1
+    segn=2;
+end
 dimn=segn;
 
 U1=v(:,Idx(1:dimn));

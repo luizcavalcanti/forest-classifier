@@ -1,26 +1,21 @@
 function fseg_experiment(imagesPath)
+    outDir = '../out';
     images  = dir([imagesPath '*.jpg']);
     for i=1:length(images)
         image_name = images(i).name;
         disp(['processing ' image_name]);
-        % image=double(imread([imagesPath '/' image_name]));
         image = imread([imagesPath '/' image_name]);
-        process_image(image)
+        outFile = fullfile(outDir,[image_name(1:end-4) '.ppm']);
+        process_image(image, outFile)
     end
     exit;
 end
 
-function process_image(I)
+function process_image(I, outFile)
     % Segment natural images 
     % The version is intended to generate oversegmented results
-    % clear
-    % tic
     ws=27; % window size for computing features
     segn=0; % number of segment. Determine automatically if set to 0
-
-    % figure(1), imshow(I,[]);
-    % title('Input Image')
-    % pause(.1)
 
     % convert to lab color space
     cf=makecform('srgb2lab');
@@ -35,14 +30,6 @@ function process_image(I)
     Ig=cat(3,single(Ilab),Ig1);
 
     res=FctSeg(Ig,ws,segn,1);
-
-    % Merge segments with color boundaries (Optional)
-    % fg=fspecial('gaussian',[19,19],3.6);
-    % hy=fspecial('prewitt');
-    % fyy=imfilter(fg,hy);
-    % fxx=fyy';
-    % EdgeMap_gr = sqrt((imfilter(double(Igr),fyy)).^2+(imfilter(double(Igr),fxx)).^2);
-    % res=TxtMerge(res, EdgeMap_gr,5);
 
     % output format
     img=single(I);
@@ -65,7 +52,5 @@ function process_image(I)
     res_shw(idx+sz(1)*sz(2))=0;
     res_shw(idx+sz(1)*sz(2)*2)=0;
 
-    % figure(2), imshow(uint8(res_shw));
-    % title('Segmentation result')
-    % toc
+    imwrite(uint8(res_shw), outFile, 'ppm');
 end
