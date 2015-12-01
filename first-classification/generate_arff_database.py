@@ -20,7 +20,7 @@ def get_header():
     header += '@ATTRIBUTE id string\n'
     header += '@ATTRIBUTE class {forest,water,grass,dirty,man-made}\n'
     header += '\n'
-    header += '@DATA\n'
+    header += '@DATA'
     return header
 
 output_file = open(arff_file, "w")
@@ -28,5 +28,6 @@ output_file.write(get_header())
 files = load_image_files(samples_dir)
 for key in files.keys():
     f = files[key]
-    output_file.write("\'%s\',?\n" % key)
+    output_file.write("\n")
+    output_file.write("\'%s\',?" % key)
 output_file.close()
