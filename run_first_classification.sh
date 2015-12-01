@@ -16,4 +16,4 @@ ARFF_PATH=first.arff
 # Uncomment if need to generate initial arff file
 python first-classification/generate_arff_database.py "$TEMP_PATH" "$ARFF_PATH"
 
-# python first-classification/label_samples.py "$ORIGINAL_IMAGES" "$TEMP_PATH" "$ARFF_PATH"
+python first-classification/label_samples.py "$ORIGINAL_IMAGES" "$TEMP_PATH" "$ARFF_PATH"
