@@ -8,7 +8,7 @@ Image database used in this experiment is hosted <a href="https://github.com/lui
 <b>Required tools:</b>
 * JDK 7+
 * Apache Ant
-* Python 2.7 + OpenCV 3
+* Python 2.7 + OpenCV 3 + scipy + scikit-image
 * Matlab + Image processing toolkit + stattistics toolkit (not sure what's the minimum version)
 * ImageMagick
 
