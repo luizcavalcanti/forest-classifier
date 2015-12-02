@@ -60,7 +60,7 @@ def get_header():
     header += '@ATTRIBUTE lbp_histogram_13 numeric\n'
     header += '@ATTRIBUTE lbp_histogram_14 numeric\n'
     header += '@ATTRIBUTE lbp_histogram_15 numeric\n'
-    header += '@ATTRIBUTE class {forest,water,grass,dirty,man-made}\n'
+    header += '@ATTRIBUTE class {forest,water,grass,dirty,human-made}\n'
     header += '\n'
     header += '@DATA'
     return header
