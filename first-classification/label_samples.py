@@ -99,12 +99,8 @@ def update_arff_file(data, arff_path):
             arff_file.write("%f," % sample['gray_histogram_'+str(i)])
         for i in range(0, 16):
             arff_file.write("%f," % sample['lbp_histogram_'+str(i)])
-        # if sample['class']!='?':
-        #     arff_file.write("\'%s\'" % sample['class'])
-        # else:
         arff_file.write("%s" % sample['class'])
         arff_file.write("\n")
-
 
 images_dir = sys.argv[1]
 segmnt_dir = sys.argv[2]
