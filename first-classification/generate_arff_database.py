@@ -88,6 +88,7 @@ def get_texture_features(sample):
     features['lbp_histogram'] = hist
     return features
 
+print('Generating arff file...')
 output_file = open(arff_file, "w")
 output_file.write(get_header())
 files = load_image_files(samples_dir)
