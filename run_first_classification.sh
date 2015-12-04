@@ -35,13 +35,13 @@ java -cp $WEKA_LIBS weka.filters.unsupervised.instance.RemovePercentage -P 34 -i
 java -cp $WEKA_LIBS weka.filters.unsupervised.instance.RemovePercentage -P 34 -i "$FILTERED_ARFF"  -o "$TESTING_ARFF" -V
 
 # print complete dataset stats
-# java -cp $WEKA_LIBS weka.core.Instances "$FILTERED_ARFF"
+java -cp $WEKA_LIBS weka.core.Instances "$FILTERED_ARFF"
 
 # print training dataset stats
-# java -cp $WEKA_LIBS weka.core.Instances "$TRAINING_ARFF"
+java -cp $WEKA_LIBS weka.core.Instances "$TRAINING_ARFF"
 
 # print testing dataset stats
-# java -cp $WEKA_LIBS weka.core.Instances "$TESTING_ARFF"
+java -cp $WEKA_LIBS weka.core.Instances "$TESTING_ARFF"
 
 # run decision tree (J48)
 java -cp $WEKA_LIBS weka.classifiers.trees.J48 -t "$TRAINING_ARFF" -T "$TESTING_ARFF" -C 0.3 -i #-d results/first-j48.model
@@ -58,6 +58,6 @@ java -cp $WEKA_LIBS weka.classifiers.lazy.IBk -t "$TRAINING_ARFF" -T "$TESTING_A
 java -cp $WEKA_LIBS weka.classifiers.functions.LibSVM -t "$TRAINING_ARFF" -T "$TESTING_ARFF" -i #-d results/first-svm.model
 
 # remove temporary datasets
-# rm "$FILTERED_ARFF"
-# rm "$TRAINING_ARFF"
-# rm "$TESTING_ARFF"
+rm "$FILTERED_ARFF"
+rm "$TRAINING_ARFF"
+rm "$TESTING_ARFF"
