@@ -27,15 +27,11 @@ def parse_line(line):
     parsed_line = {}
     attrs = line.split(',')
     parsed_line['id'] = attrs[0].replace('\'', '')
-    parsed_line['mean_r'] = float(attrs[1])
-    parsed_line['mean_g'] = float(attrs[2])
-    parsed_line['mean_b'] = float(attrs[3])
-    parsed_line['mean_intensity'] = float(attrs[4])
-    for i in range(0, 16):
-        parsed_line['gray_histogram_'+str(i)] = float(attrs[5+i])
-    for i in range(0, 16):
-        parsed_line['lbp_histogram_'+str(i)] = float(attrs[21+i])
-    parsed_line['class'] = attrs[37]
+    others = ''
+    for i in range(1,len(attrs)-1):
+        others += attrs[i]+','
+    parsed_line['others'] = others
+    parsed_line['class'] = attrs[len(attrs)-1]
     return parsed_line
 
 def label_samples(samples, original_dir, sample_dir):
@@ -91,14 +87,8 @@ def update_arff_file(data, arff_path):
     for key in samples.keys():
         sample = samples[key]
         arff_file.write('\'%s\',' % sample['id'])
-        arff_file.write("%f," % sample['mean_r'])
-        arff_file.write("%f," % sample['mean_g'])
-        arff_file.write("%f," % sample['mean_b'])
-        arff_file.write("%f," % sample['mean_intensity'])
-        for i in range(0, 16):
-            arff_file.write("%f," % sample['gray_histogram_'+str(i)])
-        for i in range(0, 16):
-            arff_file.write("%f," % sample['lbp_histogram_'+str(i)])
+        if len(sample['others']) > 0:
+            arff_file.write("%s" % sample['others'])
         arff_file.write("%s" % sample['class'])
         arff_file.write("\n")
 

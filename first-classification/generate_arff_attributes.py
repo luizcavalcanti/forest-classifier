@@ -6,20 +6,6 @@ import numpy as np
 from skimage.feature import local_binary_pattern
 from skimage import data
 
-samples_dir = sys.argv[1]
-arff_file = sys.argv[2]
-
-def load_image_files(img_folder):
-    file_list = {}
-    for path, subdirs, files in os.walk(img_folder):
-        for name in files:
-            if name.endswith(".ppm") and not name.endswith('_mask.ppm'):
-                key = name[0:-4]
-                file_list[key] = {}
-                file_list[key]['image_file'] = os.path.abspath(os.path.join(path, key+'.ppm'))
-                file_list[key]['mask_file'] = os.path.abspath(os.path.join(path, key+'_mask.ppm'))
-    return file_list
-
 def get_header():
     header = ""
     header += '@RELATION amazon\n\n'
@@ -60,6 +46,18 @@ def get_header():
     header += '@ATTRIBUTE lbp_histogram_13 numeric\n'
     header += '@ATTRIBUTE lbp_histogram_14 numeric\n'
     header += '@ATTRIBUTE lbp_histogram_15 numeric\n'
+    header += '@ATTRIBUTE lbp_histogram_16 numeric\n'
+    header += '@ATTRIBUTE lbp_histogram_17 numeric\n'
+    header += '@ATTRIBUTE lbp_histogram_18 numeric\n'
+    header += '@ATTRIBUTE lbp_histogram_19 numeric\n'
+    header += '@ATTRIBUTE lbp_histogram_20 numeric\n'
+    header += '@ATTRIBUTE lbp_histogram_21 numeric\n'
+    header += '@ATTRIBUTE lbp_histogram_22 numeric\n'
+    header += '@ATTRIBUTE lbp_histogram_23 numeric\n'
+    header += '@ATTRIBUTE lbp_histogram_24 numeric\n'
+    header += '@ATTRIBUTE lbp_histogram_25 numeric\n'
+    # header += '@ATTRIBUTE lbp_histogram_26 numeric\n'
+    # header += '@ATTRIBUTE lbp_histogram_27 numeric\n'
     header += '@ATTRIBUTE class {forest,water,grass,dirty,human-made}\n'
     header += '\n'
     header += '@DATA'
@@ -83,17 +81,53 @@ def get_texture_features(sample):
     radius = 3
     n_points = 8 * radius
     lbp = local_binary_pattern(image, n_points, radius, 'uniform')
-    n_bins = 16 #lbp.max() + 1
+    n_bins = lbp.max() + 1
     hist, _ = np.histogram(lbp, normed=True, bins=n_bins, range=(0, n_bins))
     features['lbp_histogram'] = hist
     return features
 
-print('Generating arff file...')
+def parse_arff_content(file_content):
+    parsed_content = {}
+    lines = file_content.split('\n')
+    curr_line = 0
+
+    # skip to data section
+    while (lines[curr_line]!="@DATA"):
+        curr_line += 1
+    curr_line += 1
+
+    for line in lines[curr_line:len(lines)-1]:
+        parsed_line = parse_line(line)
+        key = parsed_line['id']
+        parsed_content[key] = parsed_line
+
+    return parsed_content
+
+def parse_line(line):
+    parsed_line = {}
+    attrs = line.split(',')
+    key = attrs[0].replace('\'', '')
+    parsed_line['id'] = key
+    parsed_line['class'] = attrs[len(attrs)-1]
+    parsed_line['image_file'] = os.path.abspath(os.path.join(samples_dir, key+'.ppm'))
+    parsed_line['mask_file'] = os.path.abspath(os.path.join(samples_dir, key+'_mask.ppm'))
+    return parsed_line
+
+samples_dir = sys.argv[1]
+arff_file = sys.argv[2]
+
+input_file = open(arff_file, "r")
+content = input_file.read()
+input_file.close()
+data = parse_arff_content(content)
+
 output_file = open(arff_file, "w")
 output_file.write(get_header())
-files = load_image_files(samples_dir)
-for key in files.keys():
-    sample = files[key]
+
+sys.stdout.write('Extracting sample attributes...')
+sys.stdout.flush()
+for key in data.keys():
+    sample = data[key]
 
     cf = get_color_features(sample)
     tf = get_texture_features(sample)
@@ -108,5 +142,7 @@ for key in files.keys():
         output_file.write("%f," % hist_bin)
     for hist_bin in tf['lbp_histogram']:
         output_file.write("%f," % hist_bin)
-    output_file.write("?")
+    output_file.write("%s" % (sample['class']))
+    sys.stdout.write('.')
+    sys.stdout.flush()
 output_file.close()
