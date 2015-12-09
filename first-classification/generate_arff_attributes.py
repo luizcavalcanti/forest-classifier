@@ -56,8 +56,8 @@ def get_header():
     header += '@ATTRIBUTE lbp_histogram_23 numeric\n'
     header += '@ATTRIBUTE lbp_histogram_24 numeric\n'
     header += '@ATTRIBUTE lbp_histogram_25 numeric\n'
-    # header += '@ATTRIBUTE lbp_histogram_26 numeric\n'
-    # header += '@ATTRIBUTE lbp_histogram_27 numeric\n'
+    header += '@ATTRIBUTE hough_max_rho numeric\n'
+    header += '@ATTRIBUTE hough_length numeric\n'
     header += '@ATTRIBUTE class {forest,water,grass,dirty,human-made}\n'
     header += '\n'
     header += '@DATA'
@@ -84,6 +84,20 @@ def get_texture_features(sample):
     n_bins = lbp.max() + 1
     hist, _ = np.histogram(lbp, normed=True, bins=n_bins, range=(0, n_bins))
     features['lbp_histogram'] = hist
+    return features
+
+def get_shape_features(sample):
+    features = {}
+    mask = cv.imread(sample['mask_file'], cv.IMREAD_GRAYSCALE)
+    edges = cv.Canny(mask, 0, 10)
+    lines = cv.HoughLines(edges, 1, np.pi/180, 80)
+    if lines is not None:
+        max_value = int(max(abs(lines[:,:,0]))[0])
+        features['hough_length'] = len(lines[:,:,0])
+        features['hough_max_rho'] = max_value
+    else:
+        features['hough_length'] = 0
+        features['hough_max_rho'] = 0
     return features
 
 def parse_arff_content(file_content):
@@ -131,6 +145,7 @@ for key in data.keys():
 
     cf = get_color_features(sample)
     tf = get_texture_features(sample)
+    sf = get_shape_features(sample)
 
     output_file.write("\n")
     output_file.write("\'%s\'," % (key))
@@ -142,6 +157,8 @@ for key in data.keys():
         output_file.write("%f," % hist_bin)
     for hist_bin in tf['lbp_histogram']:
         output_file.write("%f," % hist_bin)
+    output_file.write("%d," % (sf['hough_max_rho']))
+    output_file.write("%d," % (sf['hough_length']))
     output_file.write("%s" % (sample['class']))
     sys.stdout.write('.')
     sys.stdout.flush()
