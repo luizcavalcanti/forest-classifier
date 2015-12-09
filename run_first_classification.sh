@@ -47,18 +47,18 @@ python first-classification/generate_arff_attributes.py "$SAMPLES_PATH" "$ARFF_P
 # java -cp $WEKA_LIBS weka.core.Instances "$TESTING_ARFF"
 
 # run decision tree (J48)
-# java -cp $WEKA_LIBS weka.classifiers.trees.J48 -t "$TRAINING_ARFF" -T "$TESTING_ARFF" -C 0.3 -i #-d results/first-j48.model
+# java -cp $WEKA_LIBS weka.classifiers.trees.J48 -t "$TRAINING_ARFF" -T "$TESTING_ARFF" -C 0.3 -i -d results/first-j48.model > logs/j48.log
 
 # run random forest
-# java -cp $WEKA_LIBS weka.classifiers.trees.RandomForest -t "$TRAINING_ARFF" -T "$TESTING_ARFF" -K 10 -I 200 -i #-d results/first-randomforest.model
+# java -cp $WEKA_LIBS weka.classifiers.trees.RandomForest -t "$TRAINING_ARFF" -T "$TESTING_ARFF" -K 10 -I 200 -i -d results/first-randomforest.model > logs/randomforest.log
 
 # run kNN (IBk)
-# java -cp $WEKA_LIBS weka.classifiers.lazy.IBk -t "$TRAINING_ARFF" -T "$TESTING_ARFF" -K 1 -i #-d results/first-knn-1.model
-# java -cp $WEKA_LIBS weka.classifiers.lazy.IBk -t "$TRAINING_ARFF" -T "$TESTING_ARFF" -K 2 -i #-d results/first-knn-2.model
-# java -cp $WEKA_LIBS weka.classifiers.lazy.IBk -t "$TRAINING_ARFF" -T "$TESTING_ARFF" -K 3 -i #-d results/first-knn-3.model
+# java -cp $WEKA_LIBS weka.classifiers.lazy.IBk -t "$TRAINING_ARFF" -T "$TESTING_ARFF" -K 1 -i -d results/first-knn-1.model > logs/knn1.log
+# java -cp $WEKA_LIBS weka.classifiers.lazy.IBk -t "$TRAINING_ARFF" -T "$TESTING_ARFF" -K 2 -i -d results/first-knn-2.model > logs/knn2.log
+# java -cp $WEKA_LIBS weka.classifiers.lazy.IBk -t "$TRAINING_ARFF" -T "$TESTING_ARFF" -K 3 -i -d results/first-knn-3.model > logs/knn3.log
 
 # run SVM
-# java -cp $WEKA_LIBS weka.classifiers.functions.LibSVM -t "$TRAINING_ARFF" -T "$TESTING_ARFF" -i #-d results/first-svm.model
+# java -cp $WEKA_LIBS weka.classifiers.functions.LibSVM -t "$TRAINING_ARFF" -T "$TESTING_ARFF" -i -d results/first-svm.model > logs/svm.log
 
 # remove temporary datasets
 # rm "$FILTERED_ARFF"
