@@ -26,41 +26,41 @@ python first-classification/generate_arff_attributes.py "$SAMPLES_PATH" "$ARFF_P
 ####################################
 ## run classification experiments ##
 ####################################
-# FILTERED_ARFF=filtered_$ARFF_PATH
-# TRAINING_ARFF=train_$ARFF_PATH
-# TESTING_ARFF=test_$ARFF_PATH
+FILTERED_ARFF=filtered_$ARFF_PATH
+TRAINING_ARFF=train_$ARFF_PATH
+TESTING_ARFF=test_$ARFF_PATH
 
 # remove useless attribute (sample id)
-# java -cp $WEKA_LIBS weka.filters.unsupervised.attribute.Remove -R 1 -i "$ARFF_PATH" -o "$FILTERED_ARFF"
+java -cp $WEKA_LIBS weka.filters.unsupervised.attribute.Remove -R 1 -i "$ARFF_PATH" -o "$FILTERED_ARFF"
 
 # split dataset into training and test datasets (66-33 split)
-# java -cp $WEKA_LIBS weka.filters.unsupervised.instance.RemovePercentage -P 34 -i "$FILTERED_ARFF"  -o "$TRAINING_ARFF"
-# java -cp $WEKA_LIBS weka.filters.unsupervised.instance.RemovePercentage -P 34 -i "$FILTERED_ARFF"  -o "$TESTING_ARFF" -V
+java -cp $WEKA_LIBS weka.filters.unsupervised.instance.RemovePercentage -P 34 -i "$FILTERED_ARFF"  -o "$TRAINING_ARFF"
+java -cp $WEKA_LIBS weka.filters.unsupervised.instance.RemovePercentage -P 34 -i "$FILTERED_ARFF"  -o "$TESTING_ARFF" -V
 
-# print complete dataset stats
-# java -cp $WEKA_LIBS weka.core.Instances "$FILTERED_ARFF"
+# run complete dataset analysis
+java -cp $WEKA_LIBS weka.core.Instances "$FILTERED_ARFF"  > results/first-database-analysis.txt
 
-# print training dataset stats
-# java -cp $WEKA_LIBS weka.core.Instances "$TRAINING_ARFF"
+# run training dataset analysis
+java -cp $WEKA_LIBS weka.core.Instances "$TRAINING_ARFF" > results/first-training-database-analysis.txt
 
-# print testing dataset stats
-# java -cp $WEKA_LIBS weka.core.Instances "$TESTING_ARFF"
+# run testing dataset analysis
+java -cp $WEKA_LIBS weka.core.Instances "$TESTING_ARFF" > results/first-testing-database-analysis.txt
 
 # run decision tree (J48)
-# java -cp $WEKA_LIBS weka.classifiers.trees.J48 -t "$TRAINING_ARFF" -T "$TESTING_ARFF" -C 0.3 -i -d results/first-j48.model > logs/j48.log
+java -cp $WEKA_LIBS weka.classifiers.trees.J48 -t "$TRAINING_ARFF" -T "$TESTING_ARFF" -C 0.3 -i -d results/first-j48.model > results/first-j48-results.txt
 
 # run random forest
-# java -cp $WEKA_LIBS weka.classifiers.trees.RandomForest -t "$TRAINING_ARFF" -T "$TESTING_ARFF" -K 10 -I 200 -i -d results/first-randomforest.model > logs/randomforest.log
+java -cp $WEKA_LIBS weka.classifiers.trees.RandomForest -t "$TRAINING_ARFF" -T "$TESTING_ARFF" -K 10 -I 200 -i -d results/first-randomforest.model > results/first-randomforest-results.txt
 
 # run kNN (IBk)
-# java -cp $WEKA_LIBS weka.classifiers.lazy.IBk -t "$TRAINING_ARFF" -T "$TESTING_ARFF" -K 1 -i -d results/first-knn-1.model > logs/knn1.log
-# java -cp $WEKA_LIBS weka.classifiers.lazy.IBk -t "$TRAINING_ARFF" -T "$TESTING_ARFF" -K 2 -i -d results/first-knn-2.model > logs/knn2.log
-# java -cp $WEKA_LIBS weka.classifiers.lazy.IBk -t "$TRAINING_ARFF" -T "$TESTING_ARFF" -K 3 -i -d results/first-knn-3.model > logs/knn3.log
+java -cp $WEKA_LIBS weka.classifiers.lazy.IBk -t "$TRAINING_ARFF" -T "$TESTING_ARFF" -K 1 -i -d results/first-knn-1.model > results/first-knn1-results.txt
+java -cp $WEKA_LIBS weka.classifiers.lazy.IBk -t "$TRAINING_ARFF" -T "$TESTING_ARFF" -K 2 -i -d results/first-knn-2.model > results/first-knn2-results.txt
+java -cp $WEKA_LIBS weka.classifiers.lazy.IBk -t "$TRAINING_ARFF" -T "$TESTING_ARFF" -K 3 -i -d results/first-knn-3.model > results/first-knn3-results.txt
 
 # run SVM
-# java -cp $WEKA_LIBS weka.classifiers.functions.LibSVM -t "$TRAINING_ARFF" -T "$TESTING_ARFF" -i -d results/first-svm.model > logs/svm.log
+java -cp $WEKA_LIBS weka.classifiers.functions.LibSVM -t "$TRAINING_ARFF" -T "$TESTING_ARFF" -i -d results/first-svm.model > results/first-svm-results.txt
 
 # remove temporary datasets
-# rm "$FILTERED_ARFF"
-# rm "$TRAINING_ARFF"
-# rm "$TESTING_ARFF"
+rm "$FILTERED_ARFF"
+rm "$TRAINING_ARFF"
+rm "$TESTING_ARFF"
