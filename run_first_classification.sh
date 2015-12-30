@@ -5,6 +5,7 @@ SAMPLES_PATH=tmp
 ORIGINAL_IMAGES=database/ptv-mao
 SEGMENTED_IMAGES=segmentation/srm/out/
 ARFF_PATH=first.arff
+SPLIT_DATASET=true
 
 # Uncomment if need to run segmentation all over again
 # ./srm.sh "$MATLAB_HOME" "../../$IMAGES_DIR"
@@ -30,37 +31,48 @@ FILTERED_ARFF=filtered_$ARFF_PATH
 TRAINING_ARFF=train_$ARFF_PATH
 TESTING_ARFF=test_$ARFF_PATH
 
-# remove useless attribute (sample id)
+echo "remove useless attribute (sample id)"
 java -cp $WEKA_LIBS weka.filters.unsupervised.attribute.Remove -R 1 -i "$ARFF_PATH" -o "$FILTERED_ARFF"
 
-# split dataset into training and test datasets (66-33 split)
-java -cp $WEKA_LIBS weka.filters.unsupervised.instance.RemovePercentage -P 34 -i "$FILTERED_ARFF"  -o "$TRAINING_ARFF"
-java -cp $WEKA_LIBS weka.filters.unsupervised.instance.RemovePercentage -P 34 -i "$FILTERED_ARFF"  -o "$TESTING_ARFF" -V
+echo "executing attribute selection (CFS & BestFirst)"
+java -cp $WEKA_LIBS weka.filters.supervised.attribute.AttributeSelection -E "weka.attributeSelection.CfsSubsetEval -P 4 -E 4" -S "weka.attributeSelection.BestFirst -D 2 -N 5" -i "$FILTERED_ARFF" -o "tmp-$FILTERED_ARFF"
+mv "tmp-$FILTERED_ARFF" "$FILTERED_ARFF"
 
-# run complete dataset analysis
+echo "running complete dataset analysis"
 java -cp $WEKA_LIBS weka.core.Instances "$FILTERED_ARFF"  > results/first-database-analysis.txt
 
-# run training dataset analysis
-java -cp $WEKA_LIBS weka.core.Instances "$TRAINING_ARFF" > results/first-training-database-analysis.txt
+# enabled training/test dataset split?
+if $SPLIT_DATASET; then
+    echo "splitling dataset into training and test datasets (66-33 split)"
+    java -cp $WEKA_LIBS weka.filters.unsupervised.instance.RemovePercentage -P 34 -i "$FILTERED_ARFF"  -o "$TRAINING_ARFF"
+    java -cp $WEKA_LIBS weka.filters.unsupervised.instance.RemovePercentage -P 34 -i "$FILTERED_ARFF"  -o "$TESTING_ARFF" -V
 
-# run testing dataset analysis
-java -cp $WEKA_LIBS weka.core.Instances "$TESTING_ARFF" > results/first-testing-database-analysis.txt
+    echo "running training dataset analysis"
+    java -cp $WEKA_LIBS weka.core.Instances "$TRAINING_ARFF" > results/first-training-database-analysis.txt
 
-# run decision tree (J48)
-java -cp $WEKA_LIBS weka.classifiers.trees.J48 -t "$TRAINING_ARFF" -T "$TESTING_ARFF" -C 0.3 -i -d results/first-j48.model > results/first-j48-results.txt
+    echo "running testing dataset analysis"
+    java -cp $WEKA_LIBS weka.core.Instances "$TESTING_ARFF" > results/first-testing-database-analysis.txt
 
-# run random forest
-java -cp $WEKA_LIBS weka.classifiers.trees.RandomForest -t "$TRAINING_ARFF" -T "$TESTING_ARFF" -K 10 -I 200 -i -d results/first-randomforest.model > results/first-randomforest-results.txt
+    ARFF_OPTIONS="-t $TRAINING_ARFF -T $TESTING_ARFF"
+else
+    ARFF_OPTIONS="-t $FILTERED_ARFF"
+fi
 
-# run kNN (IBk)
-java -cp $WEKA_LIBS weka.classifiers.lazy.IBk -t "$TRAINING_ARFF" -T "$TESTING_ARFF" -K 1 -i -d results/first-knn-1.model > results/first-knn1-results.txt
-java -cp $WEKA_LIBS weka.classifiers.lazy.IBk -t "$TRAINING_ARFF" -T "$TESTING_ARFF" -K 2 -i -d results/first-knn-2.model > results/first-knn2-results.txt
-java -cp $WEKA_LIBS weka.classifiers.lazy.IBk -t "$TRAINING_ARFF" -T "$TESTING_ARFF" -K 3 -i -d results/first-knn-3.model > results/first-knn3-results.txt
+echo "running decision tree (J48)"
+java -cp $WEKA_LIBS weka.classifiers.trees.J48 $ARFF_OPTIONS -C 0.3 -i -d results/first-j48.model > results/first-j48-results.txt
 
-# run SVM
-java -cp $WEKA_LIBS weka.classifiers.functions.LibSVM -t "$TRAINING_ARFF" -T "$TESTING_ARFF" -i -d results/first-svm.model > results/first-svm-results.txt
+echo "running random forest"
+java -cp $WEKA_LIBS weka.classifiers.trees.RandomForest $ARFF_OPTIONS -K 10 -I 200 -i -d results/first-randomforest.model > results/first-randomforest-results.txt
 
-# remove temporary datasets
-rm "$FILTERED_ARFF"
-rm "$TRAINING_ARFF"
-rm "$TESTING_ARFF"
+echo "running kNN (IBk)"
+java -cp $WEKA_LIBS weka.classifiers.lazy.IBk $ARFF_OPTIONS -K 1 -i -d results/first-knn-1.model > results/first-knn1-results.txt
+java -cp $WEKA_LIBS weka.classifiers.lazy.IBk $ARFF_OPTIONS -K 2 -i -d results/first-knn-2.model > results/first-knn2-results.txt
+java -cp $WEKA_LIBS weka.classifiers.lazy.IBk $ARFF_OPTIONS -K 3 -i -d results/first-knn-3.model > results/first-knn3-results.txt
+
+echo "running SVM"
+java -cp $WEKA_LIBS weka.classifiers.functions.LibSVM $ARFF_OPTIONS -i -d results/first-svm.model > results/first-svm-results.txt
+
+echo "removing temporary datasets"
+rm "$FILTERED_ARFF" 2> /dev/null
+rm "$TRAINING_ARFF" 2> /dev/null
+rm "$TESTING_ARFF" 2> /dev/null
