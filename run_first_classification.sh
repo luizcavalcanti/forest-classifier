@@ -5,7 +5,7 @@ SAMPLES_PATH=tmp
 ORIGINAL_IMAGES=database/ptv-mao
 SEGMENTED_IMAGES=segmentation/srm/out/
 ARFF_PATH=first.arff
-SPLIT_DATASET=true
+SPLIT_DATASET=false
 
 # Uncomment if need to run segmentation all over again
 # ./srm.sh "$MATLAB_HOME" "../../$IMAGES_DIR"
