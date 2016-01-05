@@ -72,6 +72,9 @@ java -cp $WEKA_LIBS weka.classifiers.lazy.IBk $ARFF_OPTIONS -K 3 -i -d results/f
 echo "running SVM"
 java -cp $WEKA_LIBS weka.classifiers.functions.LibSVM $ARFF_OPTIONS -i -d results/first-svm.model > results/first-svm-results.txt
 
+echo "running naive bayes"
+java -cp $WEKA_LIBS weka.classifiers.bayes.NaiveBayes $ARFF_OPTIONS -i -d results/first-naive.model > results/first-naive-results.txt
+
 echo "removing temporary datasets"
 rm "$FILTERED_ARFF" 2> /dev/null
 rm "$TRAINING_ARFF" 2> /dev/null
