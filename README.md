@@ -8,7 +8,8 @@ Image database used in this experiment is hosted <a href="https://github.com/lui
 <b>Required tools:</b>
 * JDK 7+
 * Apache Ant
-* Python 2.7 + OpenCV 3 + scipy + scikit-image
+* Weka 3.7
+* Python + OpenCV 3 + scipy + scikit-image
 * Matlab + Image processing toolkit + stattistics toolkit (not sure what's the minimum version)
 * ImageMagick
 
@@ -23,6 +24,8 @@ Image database used in this experiment is hosted <a href="https://github.com/lui
 
 <b>Running segmentation benchmark</b>
 
-Unix/linux/mac os X STRONGLY recommended.
-
     $ ./run_segmentation_benchmark.sh <MATLAB home> <image database folder>
+
+<b>Running first classification experiment</b>
+
+    $ ./run_first_segmentation
