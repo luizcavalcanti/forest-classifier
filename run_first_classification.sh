@@ -89,11 +89,11 @@ java -cp $WEKA_LIBS weka.classifiers.lazy.IBk $ARFF_OPTIONS_CFS -K 3 -i -d resul
 
 echo "running SVM"
 java -cp $WEKA_LIBS weka.classifiers.functions.LibSVM $ARFF_OPTIONS -i -d results/first-model-svm.model > results/first-result-svm.txt
-java -cp $WEKA_LIBS weka.classifiers.functions.LibSVM $ARFF_OPTIONS -i -d results/first-model-svm-cfs.model > results/first-result-svm-cfs.txt
+java -cp $WEKA_LIBS weka.classifiers.functions.LibSVM $ARFF_OPTIONS_CFS -i -d results/first-model-svm-cfs.model > results/first-result-svm-cfs.txt
 
 echo "running naive bayes"
 java -cp $WEKA_LIBS weka.classifiers.bayes.NaiveBayes $ARFF_OPTIONS -i -d results/first-model-naive.model > results/first-result-naive.txt
-java -cp $WEKA_LIBS weka.classifiers.bayes.NaiveBayes $ARFF_OPTIONS -i -d results/first-model-naive-cfs.model > results/first-result-naive-cfs.txt
+java -cp $WEKA_LIBS weka.classifiers.bayes.NaiveBayes $ARFF_OPTIONS_CFS -i -d results/first-model-naive-cfs.model > results/first-result-naive-cfs.txt
 
 echo "removing temporary datasets"
 rm "$FILTERED_ARFF" 2> /dev/null
