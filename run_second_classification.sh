@@ -11,7 +11,7 @@ FIRST_CLASSIFIER="weka.classifiers.trees.RandomForest -- -K 10 -I 200"
 FIRST_OUTPUT=results/second-initial.txt
 
 # run first classifier on the whole dataset
-#java -cp $WEKA_LIBS weka.classifiers.meta.FilteredClassifier -F $FIRST_FILTERS -t $FIRST_ARFF -T $FIRST_ARFF -p 1 -W $FIRST_CLASSIFIER > $FIRST_OUTPUT
+java -cp $WEKA_LIBS weka.classifiers.meta.FilteredClassifier -F $FIRST_FILTERS -t $FIRST_ARFF -p 1 -W $FIRST_CLASSIFIER > $FIRST_OUTPUT
 
 # create an ARFF file for each class
 python second-classification/separate_arff_by_class.py "$FIRST_OUTPUT"
