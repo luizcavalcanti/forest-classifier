@@ -16,7 +16,7 @@ RUN_LEARNING=false
 MATLAB_HOME=$1
 IMAGES_DIR=$2
 LOG_DIR=logs
-RESULTS_DIR=results
+RESULTS_DIR=results/segmentation/
 
 rm -rf $LOG_DIR
 mkdir $LOG_DIR
