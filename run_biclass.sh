@@ -1,8 +1,8 @@
 #!/bin/bash
 
-####################################
-## run multiclass classifications ##
-####################################
+#################################
+## run biclass classifications ##
+#################################
 WEKA_LIBS=".:manual-classification/lib/*"
 ORIGINAL_ARFF_PATH=segments.arff
 ARFF_PATH=segments-biclass.arff
