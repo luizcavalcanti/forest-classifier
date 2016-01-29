@@ -14,10 +14,11 @@ ARFF_OPTIONS="-t $FILTERED_ARFF"
 ARFF_OPTIONS_CFS="-t $CFS_ARFF"
 
 echo "deleting previous results"
-rm -rf $RESULTS_DIR
+rm -rf $RESULTS_DIR 2> /dev/null
 mkdir $RESULTS_DIR
+rm $ARFF_PATH 2> /dev/null
 
-rm $ARFF_PATH
+echo "converting multiclass dataset to biclass"
 python preparation/convert_multi_to_biclass.py $ORIGINAL_ARFF_PATH $ARFF_PATH
 
 echo "remove useless attribute (sample id)"
