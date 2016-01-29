@@ -26,6 +26,22 @@ Image database used in this experiment is hosted <a href="https://github.com/lui
 
     $ ./run_segmentation_benchmark.sh <MATLAB home> <image database folder>
 
-<b>Running first classification experiment</b>
+<b>Running multiclass experiment</b>
 
-    $ ./run_first_segmentation
+    $ ./run_multiclass.sh
+
+<b>Running binary classification experiment</b>
+
+    $ ./run_biclass.sh
+
+<b>Running one class classification experiment</b>
+
+    $ ./run_uniclass.sh
+
+<b>Running ensemble of one class classifiers experiment</b>
+
+    $ ./run_ensemble.sh
+
+
+<h1>THIS IS WORK IN PROGRESS</h1>
+(but it works well enough so you can test it, I'll try not to break it as I go)
