@@ -1,7 +1,9 @@
 ForestClassifier
 ================
 
-Experiment on a multi-level machine learning solution to detect signs of environmental crime on aerial images of the Amazon rain forest.
+Experiment on an image processing and machine learning solution to detect signs of human activity on aerial images of the Amazon Rain Forest.
+The main goal is to test several state-of-the-art algorithms and find out the most adequate ones to the problem.
+This is also my ongoing master degree work.
 
 Image database used in this experiment is hosted <a href="https://github.com/luizcavalcanti/geoma-database">here</a>
 
