@@ -18,7 +18,7 @@ rm -rf $RESULTS_DIR
 mkdir $RESULTS_DIR
 
 rm $ARFF_PATH
-python biclass/convert_multi_to_biclass.py $ORIGINAL_ARFF_PATH $ARFF_PATH
+python preparation/convert_multi_to_biclass.py $ORIGINAL_ARFF_PATH $ARFF_PATH
 
 echo "remove useless attribute (sample id)"
 java -cp $WEKA_LIBS weka.filters.unsupervised.attribute.Remove -R 1 -i "$ARFF_PATH" -o "$FILTERED_ARFF"
