@@ -18,19 +18,18 @@ curr_line += 1
 
 header = lines[0:curr_line]
 # replace classes declaration to a biclass one
-header[classes_declaration] = '@ATTRIBUTE class {natural, outlier}'
+header[classes_declaration] = '@ATTRIBUTE class {target, outlier}'
 
 data = []
 for line in lines[curr_line:]:
-    if '?' not in line:
+    if '?' in line:
         continue
     new_line = line
-    new_line = new_line.replace('forest', 'natural')
-    new_line = new_line.replace('water', 'natural')
-    new_line = new_line.replace('grass', 'natural')
-    new_line = new_line.replace('dirty', 'natural')
+    new_line = new_line.replace('forest', 'target')
+    new_line = new_line.replace('water', 'target')
+    new_line = new_line.replace('grass', 'target')
+    new_line = new_line.replace('dirty', 'target')
     new_line = new_line.replace('human-made', 'outlier')
-    new_line = new_line.replace('?', 'outlier')
     data.append(new_line)
 
 output_file = open(output_path, 'w')
