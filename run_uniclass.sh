@@ -31,11 +31,15 @@ echo "running complete dataset analysis"
 java -cp $WEKA_LIBS weka.core.Instances "$FILTERED_ARFF"  > $RESULTS_DIR/analysis-dataset.txt
 java -cp $WEKA_LIBS weka.core.Instances "$CFS_ARFF"  > $RESULTS_DIR/analysis-dataset-cfs.txt
 
-echo "running one class training"
-java -cp $WEKA_LIBS weka.classifiers.meta.OneClassClassifier $ARFF_OPTIONS -d $RESULTS_DIR/model.model > $RESULTS_DIR/result.txt
+echo "running one class training - REPTree"
+java -cp $WEKA_LIBS weka.classifiers.meta.OneClassClassifier $ARFF_OPTIONS -d $RESULTS_DIR/model-reptree.model > $RESULTS_DIR/result-reptree.txt
+java -cp $WEKA_LIBS weka.classifiers.meta.OneClassClassifier $ARFF_OPTIONS_CFS -d $RESULTS_DIR/model-reptree-cfs.model > $RESULTS_DIR/result-reptree-cfs.txt
 
-echo "running one class training - CFS"
-java -cp $WEKA_LIBS weka.classifiers.meta.OneClassClassifier $ARFF_OPTIONS_CFS -d $RESULTS_DIR/model-cfs.model > $RESULTS_DIR/result-cfs.txt
+
+echo "running one class training - OCSVM"
+java -cp $WEKA_LIBS weka.classifiers.meta.FilteredClassifier -F weka.filters.unsupervised.attribute.RemoveType -W weka.classifiers.functions.LibSVM $ARFF_OPTIONS -d $RESULTS_DIR/model-ocsvm.model > $RESULTS_DIR/result-ocsvm.txt
+java -cp $WEKA_LIBS weka.classifiers.meta.FilteredClassifier -F weka.filters.unsupervised.attribute.RemoveType -W weka.classifiers.functions.LibSVM $ARFF_OPTIONS_CFS -d $RESULTS_DIR/model-ocsvm-cfs.model > $RESULTS_DIR/result-ocsvm-cfs.txt
+
 
 echo "removing temporary datasets"
 rm "$ARFF_PATH" 2> /dev/null
