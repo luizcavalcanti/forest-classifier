@@ -46,7 +46,7 @@ java -cp $WEKA_LIBS weka.classifiers.meta.OneClassClassifier -T ensemble-dirty.a
 java -cp $WEKA_LIBS weka.classifiers.meta.OneClassClassifier -T ensemble-human-made.arff -l $RESULTS_DIR/model-human-made.model -p 1 > $RESULTS_DIR/results-human-made.txt
 
 echo "gathering ensemble results"
-python preparation/gather_ensemble_results.py $ARFF_PATH $RESULTS_DIR/results-forest.txt $RESULTS_DIR/results-water.txt $RESULTS_DIR/results-grass.txt $RESULTS_DIR/results-dirty.txt $RESULTS_DIR/results-human-made.txt > $RESULTS_DIR/voting.csv
+python preparation/gather_ensemble_results.py $ARFF_PATH $RESULTS_DIR/voting.csv $RESULTS_DIR/results-forest.txt $RESULTS_DIR/results-water.txt $RESULTS_DIR/results-grass.txt $RESULTS_DIR/results-dirty.txt $RESULTS_DIR/results-human-made.txt
 
 echo "removing temporary datasets"
 rm ensemble-* 2> /dev/null
