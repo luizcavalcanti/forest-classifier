@@ -19,24 +19,19 @@ echo "running complete dataset analysis"
 java -cp $WEKA_LIBS weka.core.Instances "$ARFF_PATH" > $RESULTS_DIR/analysis-dataset.txt
 
 echo "running one class training for forest"
-#java -cp $WEKA_LIBS weka.classifiers.meta.FilteredClassifier -F weka.filters.unsupervised.attribute.RemoveType -W "weka.classifiers.meta.OneClassClassifier" -t ensemble-forest.arff -d $RESULTS_DIR/model-forest.model > $RESULTS_DIR/result-model-forest-occ.txt
 java -cp $WEKA_LIBS weka.classifiers.meta.FilteredClassifier -F weka.filters.unsupervised.attribute.RemoveType -W weka.classifiers.functions.LibSVM -t ensemble-forest.arff -d $RESULTS_DIR/model-forest.model > $RESULTS_DIR/result-model-forest-ocsvm.txt
 
 echo "running one class training for water"
-#java -cp $WEKA_LIBS weka.classifiers.meta.FilteredClassifier -F weka.filters.unsupervised.attribute.RemoveType -W weka.classifiers.meta.OneClassClassifier -t ensemble-water.arff -d $RESULTS_DIR/model-water.model > $RESULTS_DIR/result-model-water.txt
 java -cp $WEKA_LIBS weka.classifiers.meta.FilteredClassifier -F weka.filters.unsupervised.attribute.RemoveType -W weka.classifiers.functions.LibSVM -t ensemble-water.arff -d $RESULTS_DIR/model-water.model > $RESULTS_DIR/result-model-water-ocsvm.txt
 
 echo "running one class training for grass"
-#java -cp $WEKA_LIBS weka.classifiers.meta.FilteredClassifier -F weka.filters.unsupervised.attribute.RemoveType -W weka.classifiers.meta.OneClassClassifier -t ensemble-grass.arff -d $RESULTS_DIR/model-grass.model > $RESULTS_DIR/result-model-grass.txt
 java -cp $WEKA_LIBS weka.classifiers.meta.FilteredClassifier -F weka.filters.unsupervised.attribute.RemoveType -W weka.classifiers.functions.LibSVM -t ensemble-grass.arff -d $RESULTS_DIR/model-grass.model > $RESULTS_DIR/result-model-grass-ocsvm.txt
 
 echo "running one class training for dirty"
 java -cp $WEKA_LIBS weka.classifiers.meta.FilteredClassifier -F weka.filters.unsupervised.attribute.RemoveType -W weka.classifiers.meta.OneClassClassifier -t ensemble-dirty.arff -d $RESULTS_DIR/model-dirty.model > $RESULTS_DIR/result-model-dirty.txt
-#java -cp $WEKA_LIBS weka.classifiers.meta.FilteredClassifier -F weka.filters.unsupervised.attribute.RemoveType -W weka.classifiers.functions.LibSVM -t ensemble-dirty.arff -d $RESULTS_DIR/model-dirty.model > $RESULTS_DIR/result-model-dirty-ocsvm.txt
 
 echo "running one class training for human-made"
 java -cp $WEKA_LIBS weka.classifiers.meta.FilteredClassifier -F weka.filters.unsupervised.attribute.RemoveType -W weka.classifiers.meta.OneClassClassifier -t ensemble-human-made.arff -d $RESULTS_DIR/model-human-made.model > $RESULTS_DIR/result-model-human-made.txt
-#java -cp $WEKA_LIBS weka.classifiers.meta.FilteredClassifier -F weka.filters.unsupervised.attribute.RemoveType -W weka.classifiers.functions.LibSVM -t ensemble-human-made.arff -d $RESULTS_DIR/model-human-made.model > $RESULTS_DIR/result-model-human-made-ocsvm.txt
 
 echo "classifying samples from orginal database"
 java -cp $WEKA_LIBS weka.classifiers.meta.OneClassClassifier -T ensemble-forest.arff -l $RESULTS_DIR/model-forest.model -p 1 > $RESULTS_DIR/results-forest.txt
