@@ -3,7 +3,7 @@ import sys
 param_num = len(sys.argv) - 1
 
 # weight of each class in voting
-weights = {'forest': 1.5, 'water': 1.1, 'dirty': 1.1, 'grass': 1.0, 'human-made': 2.0}
+weights = {'forest': 1.0, 'water': 1.0, 'dirty': 1.0, 'grass': 1.0}
 
 arff_file = open(sys.argv[1],'r')
 arff_content = arff_file.read().split('\n')
@@ -34,13 +34,16 @@ for i in range(3, param_num+1):
         data[sample_id][filename] = value * weights[filename]
 
 for sample in data.values():
-    winner = max(sample['forest'], sample['water'], sample['grass'], sample['dirty'], sample['human-made'])
+    winner = max(sample['forest'], sample['water'], sample['grass'], sample['dirty'])
     winner_class = ''
     for key in sample.keys():
         if sample[key] == winner:
             winner_class = key
             break
-    sample['prediction'] = winner_class
+    if winner == 0:
+        sample['prediction'] = 'human-made'
+    else:
+        sample['prediction'] = winner_class
 
 hm_fntp = len([data[x] for x in data if data[x]['label'] == 'human-made'])
 hm_tpfp = len([data[x] for x in data if data[x]['prediction'] == 'human-made'])
@@ -48,8 +51,11 @@ hm_tp = len([data[x] for x in data if (data[x]['label'] == 'human-made' and data
 
 hm_precision = float(hm_tp)/float(hm_tpfp)
 hm_recall = float(hm_tp)/float(hm_fntp)
+hm_f1 = 2*((hm_precision*hm_recall)/(hm_precision+hm_recall))
 print("human-made precision: %f" % hm_precision)
 print("human-made recall: %f" % hm_recall)
+print("human-made F1 measure: %f" % hm_f1)
+
 
 ## generate output file
 csv_content = 'id,label,forest,water,dirty,grass,human-made'
@@ -60,8 +66,7 @@ for key in data.keys():
     water = data[key]['water']
     dirty = data[key]['dirty']
     grass = data[key]['grass']
-    humanmade = data[key]['human-made']
-    csv_content += '\n%s,%s,%s,%s,%s,%s,%s' % (key,label,forest,water,dirty,grass,humanmade)
+    csv_content += '\n%s,%s,%s,%s,%s,%s' % (key,label,forest,water,dirty,grass)
 
 output = open(sys.argv[2], 'w')
 output.write(csv_content)
