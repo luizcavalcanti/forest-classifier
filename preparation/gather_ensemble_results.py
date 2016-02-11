@@ -48,14 +48,25 @@ for sample in data.values():
 hm_fntp = len([data[x] for x in data if data[x]['label'] == 'human-made'])
 hm_tpfp = len([data[x] for x in data if data[x]['prediction'] == 'human-made'])
 hm_tp = len([data[x] for x in data if (data[x]['label'] == 'human-made' and data[x]['prediction'] == 'human-made')])
+hm_fp = [data[x]['label'] for x in data if (data[x]['label'] != 'human-made' and data[x]['prediction'] == 'human-made')]
+hm_fn = [data[x]['prediction'] for x in data if (data[x]['label'] == 'human-made' and data[x]['prediction'] != 'human-made')]
 
 hm_precision = float(hm_tp)/float(hm_tpfp)
 hm_recall = float(hm_tp)/float(hm_fntp)
 hm_f1 = 2*((hm_precision*hm_recall)/(hm_precision+hm_recall))
+
+print("\nRESULTS:")
+print("total human-made samples: %d" % hm_fntp)
+print("total human-made preditions: %d" % hm_tpfp)
+print("correct human-made preditions: %d" % hm_tp)
+print("-----------------------------------------")
 print("human-made precision: %f" % hm_precision)
 print("human-made recall: %f" % hm_recall)
 print("human-made F1 measure: %f" % hm_f1)
-
+print("False positives: ")
+print(hm_fp)
+print("False negatives: ")
+print(hm_fn)
 
 ## generate output file
 csv_content = 'id,label,forest,water,dirty,grass,human-made'

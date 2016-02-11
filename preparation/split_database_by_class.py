@@ -18,7 +18,7 @@ curr_line += 1
 
 header = lines[0:curr_line]
 # replace classes declaration for a unary class
-header[classes_declaration] = '@ATTRIBUTE class {target,outlier}'
+header[classes_declaration] = '@ATTRIBUTE class {target}'
 
 classes = ['forest', 'water', 'grass', 'dirty', 'human-made']
 data = {}
@@ -31,7 +31,7 @@ for cls in classes:
         new_line = line.replace(cls, 'target')
         if 'target' not in new_line:
             other_class = new_line.split(',')[-1]
-            new_line = new_line.replace(other_class, 'outlier')
+            new_line = new_line.replace(other_class, '?')
         data[cls].append(new_line)
 
 for key in data.keys():
