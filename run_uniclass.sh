@@ -35,11 +35,17 @@ echo "running one class training - REPTree"
 java -cp $WEKA_LIBS weka.classifiers.meta.OneClassClassifier $ARFF_OPTIONS -d $RESULTS_DIR/model-reptree.model > $RESULTS_DIR/result-reptree.txt
 java -cp $WEKA_LIBS weka.classifiers.meta.OneClassClassifier $ARFF_OPTIONS_CFS -d $RESULTS_DIR/model-reptree-cfs.model > $RESULTS_DIR/result-reptree-cfs.txt
 
+python preparation/convert_outlier_to_oneclass.py $FILTERED_ARFF $FILTERED_ARFF
+python preparation/convert_outlier_to_oneclass.py $CFS_ARFF $CFS_ARFF
 
 echo "running one class training - OCSVM"
-java -cp $WEKA_LIBS weka.classifiers.meta.FilteredClassifier -F weka.filters.unsupervised.attribute.RemoveType -W weka.classifiers.functions.LibSVM $ARFF_OPTIONS -d $RESULTS_DIR/model-ocsvm.model > $RESULTS_DIR/result-ocsvm.txt
-java -cp $WEKA_LIBS weka.classifiers.meta.FilteredClassifier -F weka.filters.unsupervised.attribute.RemoveType -W weka.classifiers.functions.LibSVM $ARFF_OPTIONS_CFS -d $RESULTS_DIR/model-ocsvm-cfs.model > $RESULTS_DIR/result-ocsvm-cfs.txt
+java -cp $WEKA_LIBS weka.classifiers.meta.FilteredClassifier $ARFF_OPTIONS -d $RESULTS_DIR/model-ocsvm.model \
+    -F weka.filters.unsupervised.attribute.RemoveType \
+    -W weka.classifiers.functions.LibSVM -- -S 2 > $RESULTS_DIR/result-ocsvm.txt
 
+java -cp $WEKA_LIBS weka.classifiers.meta.FilteredClassifier $ARFF_OPTIONS_CFS -d $RESULTS_DIR/model-ocsvm-cfs.model \
+    -F weka.filters.unsupervised.attribute.RemoveType \
+    -W weka.classifiers.functions.LibSVM -- -S 2 > $RESULTS_DIR/result-ocsvm-cfs.txt
 
 echo "removing temporary datasets"
 rm "$ARFF_PATH" 2> /dev/null
