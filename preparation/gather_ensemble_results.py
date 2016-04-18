@@ -3,7 +3,24 @@ import sys
 param_num = len(sys.argv) - 1
 
 # weight of each class in voting
-weights = {'forest': 1.0, 'water': 1.0, 'dirty': 1.0, 'grass': 1.0}
+weights = {
+    'forest-ocsvm': 1,
+    'forest-ocsvm-cfs': 0,
+    'forest-rpt': 0,
+    'forest-rpt-cfs': 0,
+    'water-ocsvm': 1,
+    'water-ocsvm-cfs': 0,
+    'water-rpt': 0,
+    'water-rpt-cfs': 0,
+    'grass-ocsvm': 1,
+    'grass-rpt-cfs': 0,
+    'grass-rpt': 0,
+    'grass-ocsvm-cfs': 0,
+    'dirty-ocsvm': 0,
+    'dirty-ocsvm-cfs': 1,
+    'dirty-rpt': 0,
+    'dirty-rpt-cfs': 0
+    }
 
 arff_file = open(sys.argv[1],'r')
 arff_content = arff_file.read().split('\n')
@@ -12,7 +29,7 @@ data = {}
 for line in arff_content:
     if len(line) > 0 and line[0] != '@':
         fields = line.split(',')
-        sample = fields[0][1:-1]
+        sample = fields[0]
         label = fields[-1]
         data[sample] = {}
         data[sample]['label'] = label
@@ -31,10 +48,15 @@ for i in range(3, param_num+1):
             value = float(fields[-2])
         else:
             value = float(0)
+        if sample_id not in data:
+            data[sample_id] = {}
         data[sample_id][filename] = value * weights[filename]
 
 for sample in data.values():
-    winner = max(sample['forest'], sample['water'], sample['grass'], sample['dirty'])
+    winner = max(sample['forest-ocsvm'], sample['forest-rpt'], sample['forest-ocsvm-cfs'], sample['forest-rpt-cfs'],
+                 sample['water-ocsvm'], sample['water-rpt'], sample['water-ocsvm-cfs'], sample['water-rpt-cfs'],
+                 sample['grass-ocsvm'], sample['grass-rpt'], sample['grass-ocsvm-cfs'], sample['grass-rpt-cfs'], 
+                 sample['dirty-ocsvm'], sample['dirty-rpt'], sample['dirty-ocsvm-cfs'], sample['dirty-rpt-cfs'])
     winner_class = ''
     for key in sample.keys():
         if sample[key] == winner:
@@ -63,21 +85,21 @@ print("-----------------------------------------")
 print("human-made precision: %f" % hm_precision)
 print("human-made recall: %f" % hm_recall)
 print("human-made F1 measure: %f" % hm_f1)
-print("False positives: ")
-print(hm_fp)
-print("False negatives: ")
-print(hm_fn)
+# print("False positives: ")
+# print(hm_fp)
+# print("False negatives: ")
+# print(hm_fn)
 
 ## generate output file
-csv_content = 'id,label,forest,water,dirty,grass,human-made'
+csv_content = 'id'#'id,label,forest,water,dirty,grass,human-made'
+for label in data['1'].keys():
+    csv_content += ',' + label
 
 for key in data.keys():
-    label = data[key]['label']
-    forest = data[key]['forest']
-    water = data[key]['water']
-    dirty = data[key]['dirty']
-    grass = data[key]['grass']
-    csv_content += '\n%s,%s,%s,%s,%s,%s' % (key,label,forest,water,dirty,grass)
+    line = key
+    for label in data['1'].keys():
+        line += ',' + str(data[key][label])
+    csv_content += '\n'+line
 
 output = open(sys.argv[2], 'w')
 output.write(csv_content)
