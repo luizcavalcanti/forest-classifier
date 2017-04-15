@@ -1,3 +1,4 @@
+import math
 import os
 import cv2 as cv
 import numpy as np
@@ -109,14 +110,31 @@ def render_graphs(identifier, title, results):
 def print_results(results):
     total_gce = 0
     total_lce = 0
+    avg_gce = 0
+    avg_lce = 0
+    var_gce = 0
+    var_lce = 0
     count = 0
     for key in results.keys():
         if sum(results[key][0]) > 0:
             total_gce += sum(results[key][0])
             total_lce += sum(results[key][1])
             count += len(results[key][0])
-    print "Average GCE: %.5f" % (total_gce/count)
-    print "Average LCE: %.5f" % (total_lce/count)
+
+    avg_gce = (total_gce/count)
+    avg_lce = (total_lce/count)
+
+    for key in results.keys():
+        if sum(results[key][0]) > 0:
+            for result in results[key][0]:
+                var_gce += (result - avg_gce)**2
+                var_lce += (result - avg_lce)**2
+
+    var_gce = var_gce / count;
+    var_lce = var_lce / count;
+
+    print "GCE\nAverage: %.5f\nVariance: %.5f\nStandard deviation: %.5f" % (avg_gce, var_gce, math.sqrt(var_gce))
+    print "LCE\nAverage: %.5f\nVariance: %.5f\nStandard deviation: %.5f" % (avg_lce, var_lce, math.sqrt(var_lce))
 
 def __convert_dat_to_image(dat, width, height):
     lines = dat.split('\n')
