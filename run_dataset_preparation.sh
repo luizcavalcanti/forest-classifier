@@ -18,6 +18,3 @@ python preparation/extract_attributes.py "$SAMPLES_PATH" "$CSV_PATH"
 
 # Uncomment if need to label samples
 # python preparation/label_samples.py "$ORIGINAL_IMAGES" "$SAMPLES_PATH" "$ARFF_PATH"
-
-# Uncomment if need to update arff attributes (it spares id and class only)
-# python preparation/generate_arff_attributes.py "$SAMPLES_PATH" "$ARFF_PATH"
