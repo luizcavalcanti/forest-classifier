@@ -3,9 +3,6 @@ import sys
 import cv2 as cv
 import numpy as np
 
-# export DYLD_FALLBACK_LIBRARY_PATH=/full/path/to/opencv/build/lib:$DYLD_FALLBACK_LIBRARY_PATH 
-# export PYTHONPATH=/full/path/to/opencv/build/lib/python2.7/site-packages:$PYTHONPATH 
-
 def load_image_files(img_folder, seg_folder):
     file_list = {}
     for path, subdirs, files in os.walk(img_folder):
@@ -37,11 +34,12 @@ images_dir = sys.argv[1]
 segmnt_dir = sys.argv[2]
 output_dir = sys.argv[3]
 
-sys.stdout.write('Extracting samples...')
-sys.stdout.flush()
 file_list = load_image_files(images_dir, segmnt_dir)
 for key in file_list.keys():
     f = file_list[key]
     generate_samples(key, f['original'], f['segmented'], output_dir)
-    sys.stdout.write('.')
+    sys.stdout.write('\rExtracting samples: {} of {}'.format(key, len(file_list)))
     sys.stdout.flush()
+
+sys.stdout.write('\ndone.\n\n');
+sys.stdout.flush()
