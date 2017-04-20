@@ -35,11 +35,13 @@ segmnt_dir = sys.argv[2]
 output_dir = sys.argv[3]
 
 file_list = load_image_files(images_dir, segmnt_dir)
+total_files = len(file_list)
+
 for key in file_list.keys():
     f = file_list[key]
     generate_samples(key, f['original'], f['segmented'], output_dir)
-    sys.stdout.write('\rExtracting samples: {} of {}'.format(key, len(file_list)))
+    sys.stdout.write('\rExtracting samples: {} of {}'.format(int(key), total_files))
     sys.stdout.flush()
 
-sys.stdout.write('\ndone.\n\n');
+sys.stdout.write('\n')
 sys.stdout.flush()
