@@ -1,4 +1,5 @@
 #!/bin/bash
+set -euo pipefail
 
 ORIGINAL_IMAGES=database/ptv-mao
 SEGMENTED_IMAGES=segmentation/srm/out/
