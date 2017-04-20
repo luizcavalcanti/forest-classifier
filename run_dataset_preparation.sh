@@ -17,5 +17,5 @@ python preparation/generate_csv_file.py "$SAMPLES_PATH" "$CSV_PATH"
 # Extract attributes from images
 python preparation/extract_attributes.py "$SAMPLES_PATH" "$CSV_PATH"
 
-# Uncomment if need to label samples
-# python preparation/label_samples.py "$ORIGINAL_IMAGES" "$SAMPLES_PATH" "$ARFF_PATH"
+# Utility to label samples
+python preparation/label_samples.py "$ORIGINAL_IMAGES" "$SAMPLES_PATH" "$CSV_PATH"
