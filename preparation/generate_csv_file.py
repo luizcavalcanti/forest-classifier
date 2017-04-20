@@ -14,14 +14,17 @@ def load_image_files(img_folder):
                 file_list.append(key)
     return file_list
 
-print('Loading images...')
+sys.stdout.write('Loading images...')
 files = load_image_files(samples_dir)
+sys.stdout.write('done\n')
 
-print('Generating dataframe file...')
+sys.stdout.write('Generating dataframe file...')
 data = {}
-
 df = pd.DataFrame(columns=['id', 'class'])
+
 for key in files:
     df.loc[df.size] = [key, '?']
 
 df.to_csv(csv_file)
+
+sys.stdout.write('done\n')
