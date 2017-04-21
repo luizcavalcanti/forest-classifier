@@ -113,15 +113,13 @@ for index, sample in dataset.iterrows():
     gray_image = cv2.imread(image_file, cv2.IMREAD_GRAYSCALE)
     mask = cv2.imread(mask_file, cv2.IMREAD_GRAYSCALE)
 
-
     mean_intensity = extract_mean_intensity(gray_image, mask)
     intensity_histogram = extract_intensity_histogram(gray_image, mask)
-    mean_b, mean_g, mean_r = extract_mean_rgb(color_image, mask)
     hough_max_rho, hough_length = extract_hough_features(mask)
+    mean_b, mean_g, mean_r = extract_mean_rgb(color_image, mask)
     lbp_histogram = extract_lbp_histogram(gray_image)
 
-    new_sample = [index,
-                  sample['id'],
+    new_sample = [sample['id'],
                   sample['class'],
                   float(mean_r),
                   float(mean_g),
@@ -133,7 +131,7 @@ for index, sample in dataset.iterrows():
 
     dataset.loc[index] = new_sample
 
+dataset.to_csv(csv_file, index=False)
 
-dataset.to_csv(csv_file)
 sys.stdout.write('\n')
 sys.stdout.flush()

@@ -53,4 +53,4 @@ for index, sample in dataset.iterrows():
             dataset.set_value(index, 'class', '?')
 
 
-dataset.to_csv(csv_file)
+dataset.to_csv(csv_file, index=False)
