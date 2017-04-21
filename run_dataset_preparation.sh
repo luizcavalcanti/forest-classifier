@@ -19,3 +19,6 @@ python preparation/extract_attributes.py "$SAMPLES_PATH" "$CSV_PATH"
 
 # Utility to label samples
 python preparation/label_samples.py "$ORIGINAL_IMAGES" "$SAMPLES_PATH" "$CSV_PATH"
+
+# Remove samples path
+rm -rf "$SAMPLES_PATH"
