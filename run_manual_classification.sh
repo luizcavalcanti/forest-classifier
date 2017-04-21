@@ -1,17 +1,18 @@
 #!/bin/bash
+set -euo pipefail
 
-if [ $# -eq 0 ]; then
-    echo "No arguments. Please provide the image database location as argument"
+ORIGINAL_IMAGES=database/ptv-mao
+SAMPLES_PATH=tmp
+CSV_PATH=segments.csv
+
+if [ ! -d "$SAMPLES_PATH" ]; then
+    echo "Samples directory not found. Please execute dataset preparation script first."
     exit 1
 fi
 
-IMAGES_DIR=$1
+# Utility to label samples
+python preparation/label_samples.py "$ORIGINAL_IMAGES" "$SAMPLES_PATH" "$CSV_PATH"
 
-# go to subproject dir
-cd manual-classification
-
-# make all stuff
-ant build
-
-# call GUI for dataset classification tool
-java -cp dist/forestclassifier.jar br.edu.ufam.icomp.ammd.VisualClassifier "../$IMAGES_DIR"
+# Remove samples path
+echo "Removing samples dir..."
+rm -rf "$SAMPLES_PATH"
