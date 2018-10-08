@@ -33,10 +33,10 @@ for index, sample in dataset.iterrows():
     cv2.imshow('segment', segment)
     cv2.moveWindow('original', 0, 0)
     cv2.moveWindow('mask', original.shape[0], 0)
-    cv2.moveWindow('segment', (original.shape[0]/2), (original.shape[1]+45))
+    cv2.moveWindow('segment', int(original.shape[0]/2), int(original.shape[1]+45))
 
     while (True):
-        pressed = cv.waitKey(0)
+        pressed = cv2.waitKey(0)
         if pressed == 27: #ESC key
             break
         elif pressed == ord('f'):
